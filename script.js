@@ -5,8 +5,8 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const particles = [];
-const numParticles = 80;
-const G = 1; // Gravitational constant
+const numParticles = 100;
+const G = 0.1; // Gravitational constant
 
 class Particle {
     constructor(x, y) {
@@ -68,6 +68,10 @@ function animate() {
 
     requestAnimationFrame(animate);
 }
+
+document.getElementById('navigateButton').addEventListener('click', () => {
+    window.location.href = 'index2.html';
+});
 
 initParticles();
 animate();

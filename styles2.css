@@ -1,16 +1,26 @@
 body {
     margin: 0;
-    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #000;
-    position: relative;
+    background-color: #ffffff;
 }
 
-canvas {
-    display: block;
+.container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: #3498db;
+    transition: transform 1s ease-out;
 }
 
 button {
