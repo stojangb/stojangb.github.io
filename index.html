@@ -25,7 +25,7 @@
         <div class="flex justify-between items-center py-4">
           <div class="text-2xl font-bold tracking-tight">Stojan Gasic</div>
           <div class="flex items-center space-x-1 md:space-x-4" id="nav-buttons">
-            <!-- Se llenará dinámicamente -->
+            <!-- Botones de navegación se insertan dinámicamente -->
           </div>
         </div>
       </div>
@@ -35,7 +35,11 @@
     <main class="max-w-6xl mx-auto py-8 px-4 relative z-10">
       <!-- Cabecera -->
       <div class="flex flex-col items-center text-center mb-16 text-white">
-        <img src="https://via.placeholder.com/150" alt="Stojan Gasic" class="rounded-full border-4 border-indigo-500 shadow-lg mb-6 hover:scale-105 transition-all" />
+        <img 
+          src="https://via.placeholder.com/150" 
+          alt="Stojan Gasic" 
+          class="rounded-full border-4 border-indigo-500 shadow-lg mb-6 hover:scale-105 transition-all"
+        />
         <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">Stojan Gasic Brieva</h1>
         <p class="text-xl md:text-2xl text-indigo-200 max-w-3xl" id="header-title"></p>
       </div>
@@ -53,7 +57,11 @@
                 <p class="font-bold text-xl text-indigo-200 italic" id="mission"></p>
               </div>
               <div class="flex justify-center items-center">
-                <img src="https://via.placeholder.com/400x300" alt="Future Technology" class="rounded-lg shadow-lg hover:shadow-indigo-500/50 transition-all" />
+                <img 
+                  src="https://via.placeholder.com/400x300" 
+                  alt="Future Technology" 
+                  class="rounded-lg shadow-lg hover:shadow-indigo-500/50 transition-all"
+                />
               </div>
             </div>
           </div>
@@ -67,7 +75,11 @@
               <ul class="space-y-3" id="specialization-list">
                 <!-- Elementos se insertan dinámicamente -->
               </ul>
-              <img src="https://via.placeholder.com/400x300" alt="Technology Skills" class="rounded-lg shadow-lg mx-auto hover:shadow-indigo-500/50 transition-all" />
+              <img 
+                src="https://via.placeholder.com/400x300" 
+                alt="Technology Skills" 
+                class="rounded-lg shadow-lg mx-auto hover:shadow-indigo-500/50 transition-all"
+              />
             </div>
           </div>
         </section>
@@ -79,15 +91,40 @@
             <div class="grid grid-cols-2 md:grid-cols-3 gap-6" id="technologies-list">
               <!-- Elementos con iconos se insertan dinámicamente -->
             </div>
-            <div class="grid grid-cols-3 md:grid-cols-4 gap-4 text-center mt-8">
-              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all">Bitbucket</div>
-              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all">Jenkins</div>
-              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all">Rancher</div>
-              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all">GitHub</div>
-              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all">Confluence</div>
-              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all">Jira</div>
-              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all">Blender</div>
-              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all">Unity 3D</div>
+            <!-- Sección extra con imágenes de herramientas -->
+            <div class="grid grid-cols-3 md:grid-cols-4 gap-4 text-center mt-8" id="tools-extra">
+              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all flex flex-col items-center">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Bitbucket-blue-logo.png" alt="Bitbucket" class="h-10 w-10 object-contain mb-2">
+                <span>Bitbucket</span>
+              </div>
+              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all flex flex-col items-center">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/Jenkins_logo.svg" alt="Jenkins" class="h-10 w-10 object-contain mb-2">
+                <span>Jenkins</span>
+              </div>
+              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all flex flex-col items-center">
+                <img src="https://raw.githubusercontent.com/rancher/rancher/master/logo.png" alt="Rancher" class="h-10 w-10 object-contain mb-2">
+                <span>Rancher</span>
+              </div>
+              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all flex flex-col items-center">
+                <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" class="h-10 w-10 object-contain mb-2">
+                <span>GitHub</span>
+              </div>
+              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all flex flex-col items-center">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Atlassian_Confluence_logo.svg" alt="Confluence" class="h-10 w-10 object-contain mb-2">
+                <span>Confluence</span>
+              </div>
+              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all flex flex-col items-center">
+                <img src="https://upload.wikimedia.org/wikipedia/en/3/3f/Jira_logo.svg" alt="Jira" class="h-10 w-10 object-contain mb-2">
+                <span>Jira</span>
+              </div>
+              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all flex flex-col items-center">
+                <img src="https://www.blender.org/wp-content/uploads/2021/09/blender_logo.svg" alt="Blender" class="h-10 w-10 object-contain mb-2">
+                <span>Blender</span>
+              </div>
+              <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all flex flex-col items-center">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Unity_Technologies_logo.svg" alt="Unity 3D" class="h-10 w-10 object-contain mb-2">
+                <span>Unity 3D</span>
+              </div>
             </div>
           </div>
         </section>
@@ -128,20 +165,32 @@
                 </div>
                 <div class="flex items-center gap-4 p-3 rounded-md bg-indigo-900 bg-opacity-40 hover:bg-opacity-60 transition-all">
                   <span>🔗</span>
-                  <a class="text-indigo-200 hover:text-white hover:underline" href="https://linkedin.com/in/stojangasic" target="_blank">
+                  <a 
+                    class="text-indigo-200 hover:text-white hover:underline" 
+                    href="https://linkedin.com/in/stojangasic" 
+                    target="_blank"
+                  >
                     linkedin.com/in/stojangasic
                   </a>
                 </div>
                 <div class="flex items-center gap-4 p-3 rounded-md bg-indigo-900 bg-opacity-40 hover:bg-opacity-60 transition-all">
                   <span>🐱</span>
-                  <a class="text-indigo-200 hover:text-white hover:underline" href="https://github.com/stojangb" target="_blank">
+                  <a 
+                    class="text-indigo-200 hover:text-white hover:underline" 
+                    href="https://github.com/stojangb" 
+                    target="_blank"
+                  >
                     github.com/stojangb
                   </a>
                 </div>
                 <p class="mt-4 text-gray-200" id="contact-text"></p>
               </div>
               <div class="relative">
-                <img src="https://via.placeholder.com/400x250" alt="Contact" class="rounded-lg shadow-lg mx-auto hover:shadow-indigo-500/50 transition-all" />
+                <img 
+                  src="https://via.placeholder.com/400x250" 
+                  alt="Contact" 
+                  class="rounded-lg shadow-lg mx-auto hover:shadow-indigo-500/50 transition-all"
+                />
                 <div class="absolute inset-0 flex items-center justify-center">
                   <button id="contact-button" class="bg-indigo-700 hover:bg-indigo-600 text-lg py-6 px-4 rounded"></button>
                 </div>
@@ -151,7 +200,7 @@
         </section>
       </div>
     </main>
-
+    
     <!-- Footer -->
     <footer class="bg-black bg-opacity-30 text-center p-6 text-white">
       <p id="footer-text"></p>
