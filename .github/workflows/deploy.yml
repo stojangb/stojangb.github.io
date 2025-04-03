@@ -3,7 +3,7 @@ name: Deploy to Google Cloud Storage
 on:
   push:
     branches:
-      - main  # Cambia esto si usas otra rama
+      - main
 
 jobs:
   deploy:
@@ -13,12 +13,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Decode GCP credentials
+      run: |
+        echo "${{ secrets.GCP_SA_KEY_BASE64 }}" | base64 -d > $HOME/gcp-key.json
+
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
       with:
         project_id: my-app-66312
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
-        export_default_credentials: true  # 👈 necesario para que gsutil use las credenciales
+        service_account_key: ${{ secrets.GCP_SA_KEY_BASE64 }}
+        export_default_credentials: true
+
+    - name: Authenticate manually (refuerzo)
+      run: |
+        gcloud auth activate-service-account --key-file=$HOME/gcp-key.json
 
     - name: Sync files to GCS
       run: |
