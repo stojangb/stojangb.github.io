@@ -1,0 +1,25 @@
+name: Deploy to Google Cloud Storage
+
+on:
+  push:
+    branches:
+      - main  # Cambia esto si usas otra rama
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        project_id: my-app-66312
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Sync files to GCS
+      run: |
+        gsutil -m rsync -r ./ gs://www.stojangasic.com/
+        gsutil -m setmeta -h "Cache-Control:no-cache,max-age=0" $(gsutil ls gs://www.stojangasic.com/**)
