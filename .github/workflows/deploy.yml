@@ -18,6 +18,7 @@ jobs:
       with:
         project_id: my-app-66312
         service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true  # 👈 necesario para que gsutil use las credenciales
 
     - name: Sync files to GCS
       run: |
