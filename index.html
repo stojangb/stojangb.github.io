@@ -5,12 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stojan Gasic</title>
   <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="extras/tailwind.js"></script>
   <style>
     @keyframes float {
       0% { transform: translateY(0px); }
       50% { transform: translateY(-20px); }
       100% { transform: translateY(0px); }
+    }
+    
+    /* Keyframes para la rotación del cubo */
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    /* El cubo de Metatrón gira siempre lentamente (20s/vuelta)
+       y, al hacer hover, gira más rápido (5s/vuelta) en sentido inverso */
+    #metatron-cube {
+      animation: rotate 20s linear infinite;
+    }
+    #metatron-cube:hover {
+      animation: rotate 5s linear infinite reverse;
+    }
+    
+    /* Estilo para cada círculo del cubo, con efecto glow celestial */
+    .circle {
+      position: absolute;
+      width: 3rem;
+      height: 3rem;
+      border: 2px solid rgba(165,180,252,0.8);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(165,180,252,0.2) 0%, transparent 70%);
+      box-shadow: 0 0 8px rgba(165,180,252,0.8);
+    }
+    
+    /* Estilos para la animación en Technology Skills (sección Especialización) */
+    #tech-animation svg {
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
@@ -24,26 +57,35 @@
       <div class="max-w-7xl mx-auto px-4">
         <div class="flex justify-between items-center py-4">
           <div class="text-2xl font-bold tracking-tight">Stojan Gasic</div>
-          <div class="flex items-center space-x-1 md:space-x-4" id="nav-buttons">
-            <!-- Botones de navegación se insertan dinámicamente -->
+          <!-- Botón hamburguesa visible en móvil -->
+          <button id="menu-toggle" class="md:hidden focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+          <!-- Contenedor de botones para escritorio -->
+          <div id="nav-buttons" class="hidden md:flex items-center space-x-1 md:space-x-4">
+            <!-- Botones se insertan dinámicamente -->
           </div>
+        </div>
+      </div>
+      <!-- Menú desplegable para móvil -->
+      <div id="mobile-menu" class="md:hidden hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+          <!-- Botones se insertan dinámicamente -->
         </div>
       </div>
     </nav>
 
     <!-- Contenido Principal -->
     <main class="max-w-6xl mx-auto py-8 px-4 relative z-10">
-      <!-- Cabecera -->
-      <div class="flex flex-col items-center text-center mb-16 text-white">
-        <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">Stojan Gasic Brieva</h1>
-        <p class="text-xl md:text-2xl text-indigo-200 max-w-3xl" id="header-title"></p>
-      </div>
-
       <!-- Secciones -->
       <div id="sections">
         <!-- Sección: Sobre Mí -->
         <section id="about" class="section mb-12 transition-opacity duration-500">
           <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg text-white border-none shadow-xl p-8">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">Stojan Gasic Brieva</h1>
             <h2 class="text-3xl font-bold mb-6 text-indigo-300" id="about-title"></h2>
             <div class="grid md:grid-cols-2 gap-8">
               <div>
@@ -54,35 +96,34 @@
               <div class="flex justify-center items-center">
                 <div class="flex justify-center items-center">
                   <div id="metatron-cube" class="relative w-64 h-64 transition-transform duration-300">
-                    <!-- Círculos del Cubo de Metatron -->
-                    <div class="absolute w-12 h-12 rounded-full border-2 border-indigo-300 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-                    <div class="absolute w-12 h-12 rounded-full border-2 border-indigo-300" style="top: 10%; left: 50%; transform: translate(-50%, -50%);"></div>
-                    <div class="absolute w-12 h-12 rounded-full border-2 border-indigo-300" style="top: 90%; left: 50%; transform: translate(-50%, -50%);"></div>
-                    <div class="absolute w-12 h-12 rounded-full border-2 border-indigo-300" style="top: 30%; left: 20%; transform: translate(-50%, -50%);"></div>
-                    <div class="absolute w-12 h-12 rounded-full border-2 border-indigo-300" style="top: 70%; left: 20%; transform: translate(-50%, -50%);"></div>
-                    <div class="absolute w-12 h-12 rounded-full border-2 border-indigo-300" style="top: 30%; left: 80%; transform: translate(-50%, -50%);"></div>
-                    <div class="absolute w-12 h-12 rounded-full border-2 border-indigo-300" style="top: 70%; left: 80%; transform: translate(-50%, -50%);"></div>
-                    
-                    <!-- Líneas que conectan los círculos -->
+                    <!-- Metatron's Cube: 13 círculos distribuidos en círculo -->
+                    <div class="circle" style="left: 50%; top: 50%;"></div>
+                    <div class="circle" style="left: 90%; top: 50%;"></div>
+                    <div class="circle" style="left: 84.64%; top: 70%;"></div>
+                    <div class="circle" style="left: 70%; top: 84.64%;"></div>
+                    <div class="circle" style="left: 50%; top: 90%;"></div>
+                    <div class="circle" style="left: 30%; top: 84.64%;"></div>
+                    <div class="circle" style="left: 15.36%; top: 70%;"></div>
+                    <div class="circle" style="left: 10%; top: 50%;"></div>
+                    <div class="circle" style="left: 15.36%; top: 30%;"></div>
+                    <div class="circle" style="left: 30%; top: 15.36%;"></div>
+                    <div class="circle" style="left: 50%; top: 10%;"></div>
+                    <div class="circle" style="left: 70%; top: 15.36%;"></div>
+                    <div class="circle" style="left: 84.64%; top: 30%;"></div>
+                    <!-- Líneas conectando los círculos -->
                     <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                      <!-- Líneas verticales -->
-                      <line x1="50" y1="10" x2="50" y2="90" stroke="#a5b4fc" stroke-width="0.5" />
-                      <line x1="20" y1="30" x2="20" y2="70" stroke="#a5b4fc" stroke-width="0.5" />
-                      <line x1="80" y1="30" x2="80" y2="70" stroke="#a5b4fc" stroke-width="0.5" />
-                      
-                      <!-- Líneas conectoras -->
-                      <line x1="50" y1="10" x2="20" y2="30" stroke="#a5b4fc" stroke-width="0.5" />
-                      <line x1="50" y1="10" x2="80" y2="30" stroke="#a5b4fc" stroke-width="0.5" />
-                      <line x1="20" y1="30" x2="80" y2="30" stroke="#a5b4fc" stroke-width="0.5" />
-                      <line x1="20" y1="70" x2="80" y2="70" stroke="#a5b4fc" stroke-width="0.5" />
-                      <line x1="50" y1="90" x2="20" y2="70" stroke="#a5b4fc" stroke-width="0.5" />
-                      <line x1="50" y1="90" x2="80" y2="70" stroke="#a5b4fc" stroke-width="0.5" />
-                      
-                      <!-- Líneas diagonales -->
-                      <line x1="20" y1="30" x2="50" y2="50" stroke="#a5b4fc" stroke-width="0.5" />
-                      <line x1="80" y1="30" x2="50" y2="50" stroke="#a5b4fc" stroke-width="0.5" />
-                      <line x1="20" y1="70" x2="50" y2="50" stroke="#a5b4fc" stroke-width="0.5" />
-                      <line x1="80" y1="70" x2="50" y2="50" stroke="#a5b4fc" stroke-width="0.5" />
+                      <line x1="50" y1="50" x2="90" y2="50" stroke="rgba(165,180,252,0.5)" stroke-width="0.5" />
+                      <line x1="50" y1="50" x2="84.64" y2="70" stroke="rgba(165,180,252,0.5)" stroke-width="0.5" />
+                      <line x1="50" y1="50" x2="70" y2="84.64" stroke="rgba(165,180,252,0.5)" stroke-width="0.5" />
+                      <line x1="50" y1="50" x2="50" y2="90" stroke="rgba(165,180,252,0.5)" stroke-width="0.5" />
+                      <line x1="50" y1="50" x2="30" y2="84.64" stroke="rgba(165,180,252,0.5)" stroke-width="0.5" />
+                      <line x1="50" y1="50" x2="15.36" y2="70" stroke="rgba(165,180,252,0.5)" stroke-width="0.5" />
+                      <line x1="50" y1="50" x2="10" y2="50" stroke="rgba(165,180,252,0.5)" stroke-width="0.5" />
+                      <line x1="50" y1="50" x2="15.36" y2="30" stroke="rgba(165,180,252,0.5)" stroke-width="0.5" />
+                      <line x1="50" y1="50" x2="30" y2="15.36" stroke="rgba(165,180,252,0.5)" stroke-width="0.5" />
+                      <line x1="50" y1="50" x2="50" y2="10" stroke="rgba(165,180,252,0.5)" stroke-width="0.5" />
+                      <line x1="50" y1="50" x2="70" y2="15.36" stroke="rgba(165,180,252,0.5)" stroke-width="0.5" />
+                      <line x1="50" y1="50" x2="84.64" y2="30" stroke="rgba(165,180,252,0.5)" stroke-width="0.5" />
                     </svg>
                   </div>
                 </div>
@@ -99,11 +140,8 @@
               <ul class="space-y-3" id="specialization-list">
                 <!-- Elementos se insertan dinámicamente -->
               </ul>
-              <img 
-                src="https://via.placeholder.com/400x300" 
-                alt="Technology Skills" 
-                class="rounded-lg shadow-lg mx-auto hover:shadow-indigo-500/50 transition-all"
-              />
+              <!-- Se mantiene la estructura original y se reemplaza la imagen por la animación tecnológica -->
+              <div id="tech-animation" class="relative w-full h-64 mb-8"></div>
             </div>
           </div>
         </section>
@@ -115,7 +153,6 @@
             <div class="grid grid-cols-2 md:grid-cols-3 gap-6" id="technologies-list">
               <!-- Elementos con iconos se insertan dinámicamente -->
             </div>
-            <!-- Sección extra con imágenes de herramientas -->
             <div class="grid grid-cols-3 md:grid-cols-4 gap-4 text-center mt-8" id="tools-extra">
               <div class="bg-indigo-800 bg-opacity-30 p-2 rounded-md hover:bg-opacity-50 transition-all flex flex-col items-center">
                 <img src="images/bitbucket.jpg" alt="Bitbucket" class="h-10 w-10 object-contain mb-2">
@@ -153,21 +190,21 @@
           </div>
         </section>
 
-        <!-- Sección: Testimonios -->
-        <section id="testimonials" class="section mb-12 transition-opacity duration-500">
-          <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg text-white border-none shadow-xl p-8">
-            <h2 class="text-3xl font-bold mb-6 text-indigo-300" id="testimonials-title"></h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="testimonial-list">
-              <!-- Elementos se insertan dinámicamente -->
-            </div>
-          </div>
-        </section>
-
         <!-- Sección: Proyectos -->
         <section id="projects" class="section mb-12 transition-opacity duration-500">
           <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg text-white border-none shadow-xl p-8">
             <h2 class="text-3xl font-bold mb-6 text-indigo-300" id="projects-title"></h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="projects-list">
+              <!-- Los proyectos se insertan dinámicamente -->
+            </div>
+          </div>
+        </section>
+
+        <!-- Sección: Testimonios -->
+        <section id="testimonials" class="section mb-12 transition-opacity duration-500">
+          <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg text-white border-none shadow-xl p-8">
+            <h2 class="text-3xl font-bold mb-6 text-indigo-300" id="testimonials-title"></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="testimonial-list">
               <!-- Elementos se insertan dinámicamente -->
             </div>
           </div>
@@ -209,16 +246,6 @@
                 </div>
                 <p class="mt-4 text-gray-200" id="contact-text"></p>
               </div>
-              <div class="relative">
-                <img 
-                  src="https://via.placeholder.com/400x250" 
-                  alt="Contact" 
-                  class="rounded-lg shadow-lg mx-auto hover:shadow-indigo-500/50 transition-all"
-                />
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <button id="contact-button" class="bg-indigo-700 hover:bg-indigo-600 text-lg py-6 px-4 rounded"></button>
-                </div>
-              </div>
             </div>
           </div>
         </section>
@@ -233,12 +260,13 @@
 
   <!-- Script para funcionalidad -->
   <script>
-    // Datos para textos y contenidos en ambos idiomas
+    // Datos actualizados para textos y contenidos en ambos idiomas
     const data = {
       es: {
         title: "Arquitecto Tecnológico & Consultor en Transformación Digital",
         about: "🧑‍💻 Sobre Mí",
         aboutText1: "Soy un profesional chileno con sólida experiencia en arquitectura tecnológica. Me especializo en el diseño e implementación de soluciones escalables basadas en la nube, migraciones, automatización de infraestructura, etc.",
+        aboutText2: "",
         mission: "Mi misión es transformar ideas complejas en soluciones tecnológicas elegantes y eficientes que impulsen el futuro digital de mis clientes.",
         specialization: "🧠 Áreas de especialización",
         specializationItems: [
@@ -262,18 +290,18 @@
         projectsList: [
           {
             title: "Migración a Microservicios",
-            description: "Transformación de arquitectura monolítica a microservicios para Transbank, resultando en 65% más velocidad de implementación.",
-            tech: "AWS, Kubernetes, Terraform"
+            description: "Transformación de una estructura monolítica sólida en múltiples microservicios interconectados, mejorando la escalabilidad y la velocidad de implementación.",
+            tech: "AWS, Kubernetes, Terraform, Java Spring Boot"
           },
           {
-            title: "Automatización de Infraestructura",
-            description: "Implementación de IaC para BCI, reduciendo el tiempo de despliegue de 3 días a 45 minutos.",
-            tech: "Terraform, Jenkins, AWS CloudFormation"
+            title: "Desarrollo de Juego de Plataformas en Unity 3D",
+            description: "Creación de un juego de plataformas utilizando Unity 3D y Blender, con mecánicas implementadas en C# que simulan una jugabilidad real.",
+            tech: "Unity 3D, Blender, C#"
           },
           {
-            title: "Plataforma de Análisis de Datos",
-            description: "Sistema de procesamiento en tiempo real para Caja Los Andes con Apache Kafka y AWS MSK.",
-            tech: "Kafka, AWS MSK, Python, React"
+            title: "Migración de Procedimientos Almacenados",
+            description: "Reestructuración de procedimientos almacenados de bases de datos a Spring Boot, logrando una arquitectura más robusta y desacoplada.",
+            tech: "Spring Boot, SQL"
           }
         ],
         contact: "📞 Contacto",
@@ -301,6 +329,7 @@
         title: "Tech Architect & Digital Transformation Consultant",
         about: "🧑‍💻 About Me",
         aboutText1: "I'm a Chilean professional with solid experience in technology architecture. I specialize in designing and implementing scalable cloud-based solutions, migrations, infrastructure automation, and more.",
+        aboutText2: "",
         mission: "My mission is to transform complex ideas into elegant and efficient technological solutions that drive the digital future of my clients.",
         specialization: "🧠 Areas of Expertise",
         specializationItems: [
@@ -324,18 +353,18 @@
         projectsList: [
           {
             title: "Microservices Migration",
-            description: "Transformation from monolithic architecture to microservices for Transbank, resulting in 65% faster implementation.",
-            tech: "AWS, Kubernetes, Terraform"
+            description: "Transformation of a solid monolithic structure into multiple interconnected microservices, enhancing scalability and deployment speed.",
+            tech: "AWS, Kubernetes, Terraform, Java Spring Boot"
           },
           {
-            title: "Infrastructure Automation",
-            description: "IaC implementation for BCI, reducing deployment time from 3 days to 45 minutes.",
-            tech: "Terraform, Jenkins, AWS CloudFormation"
+            title: "Platformer Game Development in Unity 3D",
+            description: "Creation of a platformer game using Unity 3D and Blender, with gameplay mechanics implemented in C# to simulate real-world play.",
+            tech: "Unity 3D, Blender, C#"
           },
           {
-            title: "Data Analysis Platform",
-            description: "Real-time processing system for Caja Los Andes with Apache Kafka and AWS MSK.",
-            tech: "Kafka, AWS MSK, Python, React"
+            title: "Stored Procedures Migration",
+            description: "Migration of database stored procedures to Spring Boot, achieving a more robust and decoupled architecture.",
+            tech: "Spring Boot, SQL"
           }
         ],
         contact: "📞 Contact",
@@ -364,10 +393,8 @@
     let currentLanguage = "es";
     let activeSection = "about";
 
-    // Actualiza los textos según el idioma seleccionado
     function updateContent() {
       const t = data[currentLanguage];
-      document.getElementById('header-title').textContent = t.title;
       document.getElementById('about-title').textContent = t.about;
       document.getElementById('about-text1').textContent = t.aboutText1;
       document.getElementById('about-text2').textContent = t.aboutText2;
@@ -379,9 +406,7 @@
       document.getElementById('contact-title').textContent = t.contact;
       document.getElementById('contact-text').textContent = t.contactText;
       document.getElementById('footer-text').textContent = t.footer;
-      document.getElementById('contact-button').textContent = t.contactButton;
 
-      // Actualiza la lista de especialización
       const specList = document.getElementById('specialization-list');
       specList.innerHTML = "";
       t.specializationItems.forEach(item => {
@@ -391,7 +416,6 @@
         specList.appendChild(li);
       });
 
-      // Actualiza la lista de testimonios
       const testimonialContainer = document.getElementById('testimonial-list');
       testimonialContainer.innerHTML = "";
       t.testimonialList.forEach(quote => {
@@ -401,17 +425,92 @@
         testimonialContainer.appendChild(div);
       });
 
-      // Actualiza la lista de proyectos
       const projectsContainer = document.getElementById('projects-list');
       projectsContainer.innerHTML = "";
+
+      // Definir las animaciones SVG para cada proyecto
+      const animation1 = `
+        <svg viewBox="0 0 200 200" class="w-full h-full">
+          <rect id="monolith" x="50" y="50" width="100" height="100" fill="#4f46e5">
+            <animate attributeName="opacity" from="1" to="0" begin="1s" dur="0.5s" fill="freeze" />
+          </rect>
+          <rect id="part1" x="50" y="50" width="50" height="50" fill="#818cf8" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
+            <animate attributeName="x" from="50" to="20" begin="1.5s" dur="0.5s" fill="freeze"/>
+            <animate attributeName="y" from="50" to="20" begin="1.5s" dur="0.5s" fill="freeze"/>
+          </rect>
+          <rect id="part2" x="100" y="50" width="50" height="50" fill="#818cf8" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
+            <animate attributeName="x" from="100" to="130" begin="1.5s" dur="0.5s" fill="freeze"/>
+            <animate attributeName="y" from="50" to="20" begin="1.5s" dur="0.5s" fill="freeze"/>
+          </rect>
+          <rect id="part3" x="50" y="100" width="50" height="50" fill="#818cf8" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
+            <animate attributeName="x" from="50" to="20" begin="1.5s" dur="0.5s" fill="freeze"/>
+            <animate attributeName="y" from="100" to="130" begin="1.5s" dur="0.5s" fill="freeze"/>
+          </rect>
+          <rect id="part4" x="100" y="100" width="50" height="50" fill="#818cf8" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
+            <animate attributeName="x" from="100" to="130" begin="1.5s" dur="0.5s" fill="freeze"/>
+            <animate attributeName="y" from="100" to="130" begin="1.5s" dur="0.5s" fill="freeze"/>
+          </rect>
+        </svg>
+      `;
+
+      const animation2 = `
+        <svg viewBox="0 0 300 150" class="w-full h-full">
+          <rect x="0" y="100" width="300" height="10" fill="#374151" />
+          <rect x="200" y="70" width="60" height="10" fill="#4f46e5" />
+          <rect id="character" x="20" y="85" width="15" height="15" fill="#818cf8">
+            <animate attributeName="x" from="20" to="280" begin="0s" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="y" values="85;70;85" keyTimes="0;0.5;1" begin="0s" dur="3s" repeatCount="indefinite" />
+          </rect>
+        </svg>
+      `;
+
+      const animation3 = `
+        <svg viewBox="0 0 200 200" class="w-full h-full">
+          <rect x="40" y="40" width="50" height="50" fill="#4f46e5">
+            <animate attributeName="x" from="40" to="20" begin="1s" dur="0.5s" fill="freeze"/>
+          </rect>
+          <rect x="90" y="40" width="50" height="50" fill="#4f46e5">
+            <animate attributeName="x" from="90" to="110" begin="1s" dur="0.5s" fill="freeze"/>
+          </rect>
+          <rect x="40" y="90" width="50" height="50" fill="#4f46e5">
+            <animate attributeName="y" from="90" to="110" begin="1s" dur="0.5s" fill="freeze"/>
+          </rect>
+          <rect x="90" y="90" width="50" height="50" fill="#4f46e5">
+            <animate attributeName="y" from="90" to="70" begin="1s" dur="0.5s" fill="freeze"/>
+          </rect>
+        </svg>
+      `;
+
       t.projectsList.forEach(project => {
         const div = document.createElement('div');
         div.className = "p-6 rounded-lg bg-gradient-to-br from-indigo-800 to-purple-800 hover:from-indigo-700 hover:to-purple-700 transition-all";
-        div.innerHTML = '<div class="flex justify-center mb-4"><img src="https://via.placeholder.com/240x150" alt="' + project.title + '" class="rounded w-full h-32 object-cover"></div><h3 class="text-xl font-bold mb-2">' + project.title + '</h3><p class="mb-4 text-gray-200">' + project.description + '</p><div class="text-sm font-medium text-indigo-300">' + project.tech + '</div>';
+        
+        // Seleccionar la animación según el título (para es y en)
+        let animationHTML = '';
+        const titleLower = project.title.toLowerCase();
+        if (titleLower.includes("migración a microservicios") || titleLower.includes("microservices migration")) {
+          animationHTML = animation1;
+        } else if (titleLower.includes("juego") || titleLower.includes("platformer")) {
+          animationHTML = animation2;
+        } else if (titleLower.includes("procedimientos") || titleLower.includes("stored procedures")) {
+          animationHTML = animation3;
+        }
+
+        div.innerHTML = `
+          <div class="flex justify-center mb-4 h-32">
+            ${animationHTML}
+          </div>
+          <h3 class="text-xl font-bold mb-2">${project.title}</h3>
+          <p class="mb-4 text-gray-200">${project.description}</p>
+          <div class="text-sm font-medium text-indigo-300">${project.tech}</div>
+        `;
         projectsContainer.appendChild(div);
       });
 
-      // Actualiza la lista de tecnologías con iconos
       const techContainer = document.getElementById('technologies-list');
       techContainer.innerHTML = "";
       t.technologies.forEach(tech => {
@@ -422,55 +521,83 @@
       });
     }
 
-    // Crea los botones de navegación
     function createNavButtons() {
       const navContainer = document.getElementById('nav-buttons');
       navContainer.innerHTML = "";
+      const mobileContainer = document.getElementById('mobile-menu');
+      mobileContainer.innerHTML = "";
       const t = data[currentLanguage].nav;
       for (const key in t) {
-        const btn = document.createElement('button');
-        btn.textContent = t[key];
-        btn.className = "px-2 md:px-3 py-1 rounded-md text-sm md:text-base transition-all";
+        const btnDesktop = document.createElement('button');
+        btnDesktop.textContent = t[key];
+        btnDesktop.className = "px-2 md:px-3 py-1 rounded-md text-sm md:text-base transition-all";
         if (activeSection === key) {
-          btn.classList.add("bg-indigo-700", "text-white");
+          btnDesktop.classList.add("bg-indigo-700", "text-white");
         } else {
-          btn.classList.add("hover:bg-indigo-800", "text-gray-300");
+          btnDesktop.classList.add("hover:bg-indigo-800", "text-gray-300");
         }
-        btn.addEventListener("click", () => {
+        btnDesktop.addEventListener("click", () => {
           activeSection = key;
           updateSections();
           createNavButtons();
         });
-        navContainer.appendChild(btn);
+        navContainer.appendChild(btnDesktop);
+
+        const btnMobile = document.createElement('button');
+        btnMobile.textContent = t[key];
+        btnMobile.className = "block w-full text-left px-3 py-2 rounded-md text-base transition-all";
+        if (activeSection === key) {
+          btnMobile.classList.add("bg-indigo-700", "text-white");
+        } else {
+          btnMobile.classList.add("hover:bg-indigo-800", "text-gray-300");
+        }
+        btnMobile.addEventListener("click", () => {
+          activeSection = key;
+          updateSections();
+          createNavButtons();
+          document.getElementById("mobile-menu").classList.add("hidden");
+        });
+        mobileContainer.appendChild(btnMobile);
       }
-      // Botón para cambiar idioma
-      const langBtn = document.createElement('button');
-      langBtn.textContent = currentLanguage === "es" ? "EN" : "ES";
-      langBtn.className = "ml-2 bg-indigo-700 hover:bg-indigo-600 px-3 py-1 rounded";
-      langBtn.addEventListener("click", () => {
+
+      const langBtnDesktop = document.createElement('button');
+      langBtnDesktop.textContent = currentLanguage === "es" ? "EN" : "ES";
+      langBtnDesktop.className = "ml-2 bg-indigo-700 hover:bg-indigo-600 px-3 py-1 rounded";
+      langBtnDesktop.addEventListener("click", () => {
         currentLanguage = currentLanguage === "es" ? "en" : "es";
         updateContent();
         createNavButtons();
       });
-      navContainer.appendChild(langBtn);
+      navContainer.appendChild(langBtnDesktop);
+
+      const langBtnMobile = document.createElement('button');
+      langBtnMobile.textContent = currentLanguage === "es" ? "EN" : "ES";
+      langBtnMobile.className = "block w-full text-left px-3 py-2 rounded-md text-base bg-indigo-700 hover:bg-indigo-600";
+      langBtnMobile.addEventListener("click", () => {
+        currentLanguage = currentLanguage === "es" ? "en" : "es";
+        updateContent();
+        createNavButtons();
+        document.getElementById("mobile-menu").classList.add("hidden");
+      });
+      mobileContainer.appendChild(langBtnMobile);
     }
 
-    // Actualiza la visibilidad de cada sección
     function updateSections() {
       document.querySelectorAll('.section').forEach(section => {
         if (section.id === activeSection) {
           section.style.opacity = "1";
           section.style.height = "auto";
           section.style.overflow = "visible";
+          section.style.marginBottom = "3rem";
         } else {
           section.style.opacity = "0";
           section.style.height = "0";
           section.style.overflow = "hidden";
+          section.style.marginBottom = "0";
         }
       });
     }
 
-    // Crea las partículas decorativas
     function createParticles() {
       const container = document.getElementById('particles-container');
       for (let i = 0; i < 15; i++) {
@@ -487,13 +614,93 @@
       }
     }
 
+    /* Animación para Technology Skills ya implementada previamente */
+    function initTechAnimation() {
+      const container = document.getElementById('tech-animation');
+      const svgNS = "http://www.w3.org/2000/svg";
+      const svg = document.createElementNS(svgNS, 'svg');
+      svg.setAttribute("viewBox", "0 0 400 300");
+      container.appendChild(svg);
+      function clearSVG() {
+        while (svg.firstChild) {
+          svg.removeChild(svg.firstChild);
+        }
+      }
+      function createDot(cx, cy, r = 5) {
+        const circle = document.createElementNS(svgNS, 'circle');
+        circle.setAttribute("cx", cx);
+        circle.setAttribute("cy", cy);
+        circle.setAttribute("r", r);
+        circle.setAttribute("fill", "#a5b4fc");
+        circle.style.opacity = 0;
+        circle.style.transition = "opacity 1s ease-in-out";
+        setTimeout(() => { circle.style.opacity = 1; }, 10);
+        svg.appendChild(circle);
+        return circle;
+      }
+      function createLine(x1, y1, x2, y2) {
+        const line = document.createElementNS(svgNS, 'line');
+        line.setAttribute("x1", x1);
+        line.setAttribute("y1", y1);
+        line.setAttribute("x2", x2);
+        line.setAttribute("y2", y2);
+        line.setAttribute("stroke", "#a5b4fc");
+        line.setAttribute("stroke-width", "1");
+        line.style.opacity = 0;
+        line.style.transition = "opacity 1s ease-in-out";
+        svg.appendChild(line);
+        setTimeout(() => { line.style.opacity = 1; }, 10);
+        return line;
+      }
+      let dots = [];
+      function animateNetwork() {
+        clearSVG();
+        dots = [];
+        const initial = [
+          { cx: 100, cy: 150 },
+          { cx: 200, cy: 50 },
+          { cx: 300, cy: 150 }
+        ];
+        initial.forEach(pos => {
+          const dot = createDot(pos.cx, pos.cy);
+          dots.push({ pos, element: dot });
+        });
+        createLine(initial[0].cx, initial[0].cy, initial[1].cx, initial[1].cy);
+        createLine(initial[1].cx, initial[1].cy, initial[2].cx, initial[2].cy);
+        createLine(initial[2].cx, initial[2].cy, initial[0].cx, initial[0].cy);
+        const additional = 4;
+        const delay = 2000;
+        for (let i = 0; i < additional; i++) {
+          setTimeout(() => {
+            const cx = 50 + Math.random() * 300;
+            const cy = 50 + Math.random() * 200;
+            const newDot = createDot(cx, cy);
+            dots.push({ pos: { cx, cy }, element: newDot });
+            for (let j = 0; j < dots.length - 1; j++) {
+              createLine(dots[j].pos.cx, dots[j].pos.cy, cx, cy);
+            }
+          }, delay * (i + 1));
+        }
+        setTimeout(() => {
+          svg.querySelectorAll("line").forEach(line => { line.style.opacity = 0; });
+          svg.querySelectorAll("circle").forEach(circle => { circle.style.opacity = 0; });
+        }, delay * (additional + 1));
+        setTimeout(() => { animateNetwork(); }, delay * (additional + 3));
+      }
+      animateNetwork();
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
-      // Añade la clase de fondo animado
       document.getElementById('background-wrapper').classList.add("bg-gradient-to-br", "from-indigo-900", "to-purple-900");
       createParticles();
       updateContent();
       createNavButtons();
       updateSections();
+      initTechAnimation();
+      document.getElementById("menu-toggle").addEventListener("click", () => {
+        const mobileMenu = document.getElementById("mobile-menu");
+        mobileMenu.classList.toggle("hidden");
+      });
     });
   </script>
 </body>
