@@ -258,6 +258,13 @@
       <p id="footer-text"></p>
     </footer>
   </div>
+    <!-- Modal para proyectos -->
+    <div id="project-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+      <div class="relative w-11/12 md:w-3/4 h-5/6 bg-gray-900 rounded-lg">
+        <button id="close-modal" class="absolute top-2 right-2 text-white bg-red-600 rounded px-2">X</button>
+        <iframe id="project-iframe" src="" class="w-full h-full rounded-b-lg"></iframe>
+      </div>
+    </div>
 
   <!-- Script para funcionalidad -->
   <script>
@@ -303,6 +310,12 @@
             title: "Migración de Procedimientos Almacenados",
             description: "Reestructuración de procedimientos almacenados de bases de datos a Spring Boot, logrando una arquitectura más robusta y desacoplada.",
             tech: "Spring Boot, SQL"
+          }
+          , {
+            title: "Sitio de Infografías",
+            description: "Desarrollo de un portal de infografías interactivas para visualización rápida de datos.",
+            tech: "HTML5, CSS3, JavaScript",
+            link: "infografias/index.html"
           }
         ],
         contact: "📞 Contacto",
@@ -366,6 +379,12 @@
             title: "Stored Procedures Migration",
             description: "Migration of database stored procedures to Spring Boot, achieving a more robust and decoupled architecture.",
             tech: "Spring Boot, SQL"
+          }
+          , {
+            title: "Infographics Website",
+            description: "Development of an interactive infographics portal for quick data visualization.",
+            tech: "HTML5, CSS3, JavaScript",
+            link: "infografias/index.html"
           }
         ],
         contact: "📞 Contact",
@@ -512,6 +531,10 @@
           <div class="text-sm font-medium text-indigo-300">${project.tech}</div>
         `;
         projectsContainer.appendChild(div);
+        if (project.link) {
+          div.classList.add('cursor-pointer');
+          div.addEventListener('click', () => openProject(project.link));
+        }
       });
 
       const techContainer = document.getElementById('technologies-list');
@@ -617,6 +640,21 @@
       }
     }
 
+
+    function openProject(link) {
+      const modal = document.getElementById('project-modal');
+      const iframe = document.getElementById('project-iframe');
+      iframe.src = link;
+      modal.classList.remove('hidden');
+    }
+
+    function closeProject() {
+      const modal = document.getElementById('project-modal');
+      const iframe = document.getElementById('project-iframe');
+      iframe.src = '';
+      modal.classList.add('hidden');
+    }
+
     /* Animación para Technology Skills ya implementada previamente */
     function initTechAnimation() {
       const container = document.getElementById('tech-animation');
@@ -704,6 +742,7 @@
         const mobileMenu = document.getElementById("mobile-menu");
         mobileMenu.classList.toggle("hidden");
       });
+      document.getElementById("close-modal").addEventListener("click", closeProject);
     });
   </script>
 </body>
