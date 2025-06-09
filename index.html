@@ -85,7 +85,8 @@
         <!-- Sección: Sobre Mí -->
         <section id="about" class="section mb-12 transition-opacity duration-500">
           <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg text-white border-none shadow-xl p-8">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">Stojan Gasic Brieva</h1>
+            <h1 class="text-4xl md:text-6xl font-bold mb-2 tracking-tight">Stojan Gasic Brieva</h1>
+            <p class="text-xl md:text-2xl text-indigo-200 mb-4" id="intro-title"></p>
             <h2 class="text-3xl font-bold mb-6 text-indigo-300" id="about-title"></h2>
             <div class="grid md:grid-cols-2 gap-8">
               <div>
@@ -395,6 +396,8 @@
 
     function updateContent() {
       const t = data[currentLanguage];
+      document.title = t.title;
+      document.getElementById('intro-title').textContent = t.title;
       document.getElementById('about-title').textContent = t.about;
       document.getElementById('about-text1').textContent = t.aboutText1;
       document.getElementById('about-text2').textContent = t.aboutText2;
