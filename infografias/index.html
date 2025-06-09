@@ -3,13 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sitio de Infografías</title>
+  <title>Edificios más Altos del Mundo</title>
   <script src="../extras/tailwind.js"></script>
+  <style>
+    .bar {
+      width: 40px;
+      border-radius: 0.25rem 0.25rem 0 0;
+      background-image: linear-gradient(to top, #6366f1, #818cf8);
+      transition: height 1s ease-out;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-  <div class="text-center p-8 bg-white rounded shadow">
-    <h1 class="text-3xl font-bold mb-4">Sitio de Infografías</h1>
-    <p class="text-lg">Aquí irán mis infografías más destacadas.</p>
-  </div>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+  <header class="bg-indigo-700 text-white py-4">
+    <h1 class="text-3xl font-bold text-center">Edificios más Altos del Mundo</h1>
+  </header>
+  <main class="flex-grow flex items-center justify-center p-8">
+    <div>
+      <div class="flex items-end space-x-4 h-80">
+        <div class="flex flex-col items-center">
+          <div class="bar" data-height="300"></div>
+          <span class="mt-2 text-center text-sm">Burj Khalifa<br>828 m</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="bar" data-height="229"></div>
+          <span class="mt-2 text-center text-sm">Shanghai Tower<br>632 m</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="bar" data-height="218"></div>
+          <span class="mt-2 text-center text-sm">Makkah Clock Tower<br>601 m</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="bar" data-height="217"></div>
+          <span class="mt-2 text-center text-sm">Ping An Finance Center<br>599 m</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="bar" data-height="201"></div>
+          <span class="mt-2 text-center text-sm">Lotte World Tower<br>555 m</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="bar" data-height="196"></div>
+          <span class="mt-2 text-center text-sm">One World Trade Center<br>541 m</span>
+        </div>
+      </div>
+      <p class="text-center text-gray-600 mt-4 text-sm">Altura en metros</p>
+    </div>
+  </main>
+  <footer class="text-center py-4 text-gray-500 text-xs">Fuente: CTBUH 2024</footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.bar').forEach(bar => {
+        const h = bar.getAttribute('data-height');
+        bar.style.height = '0px';
+        setTimeout(() => { bar.style.height = h + 'px'; }, 100);
+      });
+    });
+  </script>
 </body>
 </html>
