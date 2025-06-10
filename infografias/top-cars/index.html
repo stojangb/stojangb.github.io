@@ -17,6 +17,14 @@
         display: inline-block;
         transform: scaleX(-1);
       }
+      .matrix-text {
+        color: #00ff00;
+        font-family: "Courier New", monospace;
+      }
+      #car-list li {
+        flex-wrap: wrap;
+        max-width: 100%;
+      }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
@@ -36,7 +44,6 @@
     </div>
     <div id="animation-area" class="h-48 relative flex flex-col items-center justify-center"></div>
     <ul id="car-list" class="space-y-4"></ul>
-    <div id="descriptions" class="mt-8 space-y-2"></div>
   </main>
   <footer class="text-center py-4 text-gray-500 text-xs">Fuente: Ventas globales 2024</footer>
   <script>
@@ -78,7 +85,6 @@
     function startAnimation(){
       document.getElementById('car-list').innerHTML = '';
       document.getElementById('animation-area').innerHTML = '';
-      document.getElementById('descriptions').innerHTML = '';
       index = 0;
       document.getElementById('start-btn').disabled = true;
       showNext();
@@ -117,8 +123,8 @@
     function moveToList(car, rank, carDiv, yearDiv){
       const list = document.getElementById('car-list');
       const li = document.createElement('li');
-      li.className = 'flex items-center space-x-2';
-      li.innerHTML = `<span class="w-6 text-right font-bold">${rank}.</span><span class="car-emoji">🚗</span><span>${car.brand} ${car.model}</span><span class="ml-auto year">${car.year}</span>`;
+      li.className = 'flex flex-col sm:flex-row items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2';
+      li.innerHTML = `<div class="flex items-center w-full"><span class="w-6 text-right font-bold">${rank}.</span><span class="car-emoji">🚗</span><span>${car.brand} ${car.model}</span><span class="ml-auto year">${car.year}</span></div>`;
       li.style.opacity = '0';
       list.appendChild(li);
 
@@ -159,12 +165,12 @@
     }
 
     function showDescriptions(){
-      const container = document.getElementById('descriptions');
-      container.innerHTML = '';
-      sortedCars.forEach((c, idx)=>{
+      const items = document.querySelectorAll('#car-list li');
+      items.forEach((li, idx)=>{
         const p = document.createElement('p');
-        container.appendChild(p);
-        const text = `${idx+1}. ${c.year} - ${c.brand} ${c.model}: ${c.desc}`;
+        p.className = 'matrix-text text-sm';
+        li.appendChild(p);
+        const text = sortedCars[idx].desc;
         typeText(p, text);
       });
     }
