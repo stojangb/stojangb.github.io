@@ -38,7 +38,7 @@
         <h2 class="text-center mt-2 font-semibold" id="continents-title">Edificios altos por continente</h2>
       </div>
     </section>
-    <div id="map" class="h-96 w-full"></div>
+    <div id="map" class="h-[28rem] w-full"></div>
     <div id="map-info" class="hidden bg-white shadow rounded p-4 my-4"></div>
     <section id="cards" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></section>
   </main>
@@ -298,6 +298,7 @@ function createCards() {
   container.innerHTML = '';
   buildings.forEach((b, idx) => {
     const card = document.createElement('div');
+    card.id = 'card-'+idx;
     card.className = 'bg-white shadow rounded overflow-hidden flex flex-col';
     card.innerHTML = `
       <img id="build-${idx}" alt="${b.name}" class="w-full h-40 object-cover">
@@ -311,8 +312,8 @@ function createCards() {
           <p class="font-semibold text-sm">${translations[currentLang].architect}: ${b.architect}</p>
         </div>
         <div class="mt-auto space-x-2">
-          <button data-idx="${idx}" data-type="building" class="view-more-building text-indigo-600 underline text-sm">${translations[currentLang].viewMore}</button>
-          <button data-idx="${idx}" data-type="architect" class="view-more-arch text-indigo-600 underline text-sm">${translations[currentLang].viewMore}</button>
+          <button data-idx="${idx}" data-type="building" class="view-more-building bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded text-sm">${translations[currentLang].viewMore}</button>
+          <button data-idx="${idx}" data-type="architect" class="view-more-arch bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded text-sm">${translations[currentLang].viewMore}</button>
         </div>
         <div id="building-detail-${idx}" class="hidden mt-2 text-sm"></div>
         <div id="architect-detail-${idx}" class="hidden mt-2 text-sm"></div>
@@ -363,12 +364,13 @@ function createMap() {
       .bindTooltip(b.name)
       .on('click', () => showBuildingOnMap(idx));
   });
+  setTimeout(()=>{ mapInstance.invalidateSize(); },100);
 }
 
 function showBuildingOnMap(idx) {
   const b = buildings[idx];
   const info = document.getElementById('map-info');
-  const cards = document.getElementById('cards');
+  const card = document.getElementById('card-'+idx);
   info.innerHTML = `
     <div class="flex justify-between items-center mb-2">
       <h3 class="text-xl font-semibold">${b.name}</h3>
@@ -378,10 +380,10 @@ function showBuildingOnMap(idx) {
     <p class="text-sm"><strong>${translations[currentLang].city}:</strong> ${b.city}</p>
     <p class="mt-2 text-sm">${currentLang==='es'?b.info_es:b.info_en}</p>`;
   info.classList.remove('hidden');
-  cards.classList.add('hidden');
+  if(card) card.classList.add('hidden');
   document.getElementById('close-map-info').addEventListener('click', () => {
     info.classList.add('hidden');
-    cards.classList.remove('hidden');
+    if(card) card.classList.remove('hidden');
   }, { once: true });
 }
 
