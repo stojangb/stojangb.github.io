@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infografías - Empresas</title>
+  <script src="../extras/tailwind.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    @keyframes fadeIn { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.3s forwards; }
+  </style>
+</head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+  <nav class="bg-indigo-700 text-white py-2">
+    <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+      <a href="../index.html" class="underline">Inicio</a>
+      <select id="lang-select" class="bg-indigo-600 text-white p-1 rounded">
+        <option value="es">ES</option>
+        <option value="en">EN</option>
+      </select>
+    </div>
+  </nav>
+  <main class="flex-grow max-w-6xl mx-auto p-4 space-y-6">
+    <h1 id="page-title" class="text-4xl text-center font-bold mb-2" style="font-family:'Playfair Display',serif;"></h1>
+    <section class="grid md:grid-cols-2 gap-4 items-start">
+      <div>
+        <canvas id="heightChart" height="200"></canvas>
+        <p class="text-center text-gray-600 mt-2 text-sm" id="height-label">Altura (m)</p>
+      </div>
+      <div>
+        <canvas id="continentChart" height="180"></canvas>
+        <h2 class="text-center mt-2 font-semibold" id="continents-title">Edificios altos por continente</h2>
+      </div>
+    </section>
+    <div id="map" class="h-[28rem] w-full"></div>
+    <div id="map-info" class="hidden bg-white shadow rounded p-4 my-4"></div>
+    <section id="cards" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></section>
+  </main>
+  <footer class="text-center py-4 text-gray-500 text-xs">Fuente: CTBUH 2024</footer>
+  <script>
+const translations = {
+  es: {
+    pageTitle: "Las 10 empresas más importantes del mundo",
+    heightLabel: "Valor de mercado (B USD)",
+    occupancy: "Fundación",
+    country: "País",
+    city: "Ciudad",
+    architect: "CEO",
+    viewMore: "Ver más",
+    continentsTitle: "Empresas por sector",
+    sector: "Sector"
+  },
+  en: {
+    pageTitle: "Top 10 most important companies in the world",
+    heightLabel: "Market cap (B USD)",
+    occupancy: "Founded",
+    city: "City",
+    country: "Country",
+    architect: "CEO",
+    viewMore: "View more",
+    continentsTitle: "Companies by sector",
+    sector: "Sector"
+  }
+};
+
+const companies = [
+  {
+    name: "Apple",
+    value: 3000,
+    founded: 1976,
+    sector: "Tecnología",
+    sector_en: "Technology",
+    country_es: "Estados Unidos",
+    country_en: "United States",
+    city: "Cupertino",
+    ceo: "Tim Cook",
+    info_es: "Apple es una empresa líder conocida por productos como el iPhone y el Mac.",
+    info_en: "Apple is a leading company known for products like the iPhone and Mac.",
+    bio_es: "Tim Cook es el CEO de Apple desde 2011.",
+    bio_en: "Tim Cook has been Apple's CEO since 2011.",
+    companyImage: "../image_data/company1.txt",
+    ceoImage: "../image_data/company1.txt",
+    lat: 37.3349,
+    lng: -122.009
+  },
+  {
+    name: "Microsoft",
+    value: 2800,
+    founded: 1975,
+    sector: "Tecnología",
+    sector_en: "Technology",
+    country_es: "Estados Unidos",
+    country_en: "United States",
+    city: "Redmond",
+    ceo: "Satya Nadella",
+    info_es: "Microsoft es conocida por Windows y servicios en la nube.",
+    info_en: "Microsoft is known for Windows and cloud services.",
+    bio_es: "Satya Nadella es el CEO desde 2014.",
+    bio_en: "Satya Nadella has been CEO since 2014.",
+    companyImage: "../image_data/company2.txt",
+    ceoImage: "../image_data/company2.txt",
+    lat: 47.642,
+    lng: -122.136
+  },
+  {
+    name: "Saudi Aramco",
+    value: 2200,
+    founded: 1933,
+    sector: "Energía",
+    sector_en: "Energy",
+    country_es: "Arabia Saudita",
+    country_en: "Saudi Arabia",
+    city: "Dhahran",
+    ceo: "Amin H. Nasser",
+    info_es: "La petrolera más grande del mundo.",
+    info_en: "The world's largest oil company.",
+    bio_es: "Amin H. Nasser es su CEO desde 2015.",
+    bio_en: "Amin H. Nasser has been CEO since 2015.",
+    companyImage: "../image_data/company3.txt",
+    ceoImage: "../image_data/company3.txt",
+    lat: 26.304,
+    lng: 50.141
+  },
+  {
+    name: "Alphabet",
+    value: 1900,
+    founded: 2015,
+    sector: "Tecnología",
+    sector_en: "Technology",
+    country_es: "Estados Unidos",
+    country_en: "United States",
+    city: "Mountain View",
+    ceo: "Sundar Pichai",
+    info_es: "Empresa matriz de Google y otras iniciativas.",
+    info_en: "Parent company of Google and other ventures.",
+    bio_es: "Sundar Pichai es CEO de Alphabet y Google.",
+    bio_en: "Sundar Pichai is the CEO of Alphabet and Google.",
+    companyImage: "../image_data/company4.txt",
+    ceoImage: "../image_data/company4.txt",
+    lat: 37.422,
+    lng: -122.084
+  },
+  {
+    name: "Amazon",
+    value: 1800,
+    founded: 1994,
+    sector: "Consumo",
+    sector_en: "Consumer",
+    country_es: "Estados Unidos",
+    country_en: "United States",
+    city: "Seattle",
+    ceo: "Andy Jassy",
+    info_es: "Gigante del comercio electrónico y servicios en la nube.",
+    info_en: "E-commerce and cloud services giant.",
+    bio_es: "Andy Jassy es CEO desde 2021.",
+    bio_en: "Andy Jassy has been CEO since 2021.",
+    companyImage: "../image_data/company5.txt",
+    ceoImage: "../image_data/company5.txt",
+    lat: 47.622,
+    lng: -122.337
+  },
+  {
+    name: "Nvidia",
+    value: 1700,
+    founded: 1993,
+    sector: "Tecnología",
+    sector_en: "Technology",
+    country_es: "Estados Unidos",
+    country_en: "United States",
+    city: "Santa Clara",
+    ceo: "Jensen Huang",
+    info_es: "Líder en procesadores gráficos y IA.",
+    info_en: "Leader in graphics processors and AI.",
+    bio_es: "Jensen Huang cofundó la empresa y es su CEO.",
+    bio_en: "Jensen Huang co-founded the company and serves as CEO.",
+    companyImage: "../image_data/company6.txt",
+    ceoImage: "../image_data/company6.txt",
+    lat: 37.370,
+    lng: -121.964
+  },
+  {
+    name: "Meta",
+    value: 1500,
+    founded: 2004,
+    sector: "Tecnología",
+    sector_en: "Technology",
+    country_es: "Estados Unidos",
+    country_en: "United States",
+    city: "Menlo Park",
+    ceo: "Mark Zuckerberg",
+    info_es: "Anteriormente Facebook, dueña de WhatsApp e Instagram.",
+    info_en: "Formerly Facebook, owner of WhatsApp and Instagram.",
+    bio_es: "Mark Zuckerberg fundó la compañía y es su CEO.",
+    bio_en: "Mark Zuckerberg founded the company and is its CEO.",
+    companyImage: "../image_data/company7.txt",
+    ceoImage: "../image_data/company7.txt",
+    lat: 37.484,
+    lng: -122.148
+  },
+  {
+    name: "Tesla",
+    value: 900,
+    founded: 2003,
+    sector: "Automotriz",
+    sector_en: "Automotive",
+    country_es: "Estados Unidos",
+    country_en: "United States",
+    city: "Austin",
+    ceo: "Elon Musk",
+    info_es: "Fabricante de vehículos eléctricos y soluciones de energía.",
+    info_en: "Electric vehicle and energy company.",
+    bio_es: "Elon Musk es CEO y figura clave de Tesla.",
+    bio_en: "Elon Musk is Tesla's CEO and key figure.",
+    companyImage: "../image_data/company8.txt",
+    ceoImage: "../image_data/company8.txt",
+    lat: 30.228,
+    lng: -97.769
+  },
+  {
+    name: "Berkshire Hathaway",
+    value: 800,
+    founded: 1839,
+    sector: "Conglomerado",
+    sector_en: "Conglomerate",
+    country_es: "Estados Unidos",
+    country_en: "United States",
+    city: "Omaha",
+    ceo: "Warren Buffett",
+    info_es: "Holding diversificado dirigido por Warren Buffett.",
+    info_en: "Diversified holding company led by Warren Buffett.",
+    bio_es: "Warren Buffett es su legendario CEO.",
+    bio_en: "Warren Buffett is the legendary CEO.",
+    companyImage: "../image_data/company9.txt",
+    ceoImage: "../image_data/company9.txt",
+    lat: 41.256,
+    lng: -95.940
+  },
+  {
+    name: "Exxon Mobil",
+    value: 750,
+    founded: 1999,
+    sector: "Energía",
+    sector_en: "Energy",
+    country_es: "Estados Unidos",
+    country_en: "United States",
+    city: "Irving",
+    ceo: "Darren Woods",
+    info_es: "Gigante petrolero y gasífero.",
+    info_en: "Oil and gas giant.",
+    bio_es: "Darren Woods es CEO desde 2017.",
+    bio_en: "Darren Woods has been CEO since 2017.",
+    companyImage: "../image_data/company10.txt",
+    ceoImage: "../image_data/company10.txt",
+    lat: 32.897,
+    lng: -96.936
+  }
+];
+
+let currentLang = 'es';
+let barChart = null;
+let continentChart = null;
+
+function drawCharts() {
+  const barCtx = document.getElementById('heightChart').getContext('2d');
+  const labels = companies.map(b => b.name);
+  const heights = companies.map(b => b.value);
+  if (barChart) barChart.destroy();
+  barChart = new Chart(barCtx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: translations[currentLang].heightLabel,
+        data: heights,
+        backgroundColor: 'rgba(99,102,241,0.7)'
+      }]
+    },
+    options: {
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+
+  const counts = {};
+  companies.forEach(b => { counts[b.sector] = (counts[b.sector] || 0) + 1; });
+  const cLabels = Object.keys(counts);
+  const cData = Object.values(counts);
+  const contCtx = document.getElementById('continentChart').getContext('2d');
+  if (continentChart) continentChart.destroy();
+  continentChart = new Chart(contCtx, {
+    type: 'doughnut',
+    data: {
+      labels: cLabels,
+      datasets: [{
+        data: cData,
+        backgroundColor: ['#6366f1','#f59e0b','#10b981','#ef4444','#3b82f6']
+      }]
+    },
+    options: { plugins: { legend: { position: 'bottom' } } }
+  });
+}
+
+function createCards() {
+  const container = document.getElementById('cards');
+  container.innerHTML = '';
+  companies.forEach((b, idx) => {
+    const card = document.createElement('div');
+    card.id = 'card-'+idx;
+    card.className = 'bg-white shadow rounded overflow-hidden flex flex-col';
+    card.innerHTML = `
+      <img id="build-${idx}" alt="${b.name}" class="w-full h-40 object-cover">
+      <div class="p-4 flex-1 flex flex-col">
+        <h3 class="text-xl font-semibold mb-2">${b.name}</h3>
+        <p class="text-sm mb-1"><strong>${translations[currentLang].country}:</strong> ${currentLang==='es'?b.country_es:b.country_en}</p>
+        <p class="text-sm mb-1"><strong>${translations[currentLang].city}:</strong> ${b.city}</p>
+        <p class="text-sm mb-1"><strong>${translations[currentLang].occupancy}:</strong> ${b.founded}</p>
+        <p class="text-sm mb-1"><strong>${translations[currentLang].sector}:</strong> ${currentLang==='es'?b.sector:b.sector_en}</p>
+        <div class="flex items-center mt-2">
+          <img id="arch-${idx}" alt="${b.ceo}" class="w-12 h-12 rounded-full object-cover mr-2">
+          <p class="font-semibold text-sm">${translations[currentLang].architect}: ${b.ceo}</p>
+        </div>
+        <div class="mt-auto space-x-2">
+          <button data-idx="${idx}" data-type="building" class="view-more-building bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded text-sm">${translations[currentLang].viewMore}</button>
+          <button data-idx="${idx}" data-type="architect" class="view-more-arch bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded text-sm">${translations[currentLang].viewMore}</button>
+        </div>
+        <div id="building-detail-${idx}" class="hidden mt-2 text-sm"></div>
+        <div id="architect-detail-${idx}" class="hidden mt-2 text-sm"></div>
+      </div>`;
+    container.appendChild(card);
+    document.getElementById(`building-detail-${idx}`).textContent = currentLang==='es'?b.info_es:b.info_en;
+    document.getElementById(`architect-detail-${idx}`).textContent = currentLang==='es'?b.bio_es:b.bio_en;
+    card.querySelector('.view-more-building').addEventListener('click', () => {
+      const d = document.getElementById('building-detail-'+idx);
+      d.classList.toggle('hidden');
+      if(!d.classList.contains('hidden')) d.classList.add('fade-in');
+    });
+    card.querySelector('.view-more-arch').addEventListener('click', () => {
+      const d = document.getElementById('architect-detail-'+idx);
+      d.classList.toggle('hidden');
+      if(!d.classList.contains('hidden')) d.classList.add('fade-in');
+    });
+    fetch(b.companyImage)
+      .then(r => r.text())
+      .then(data => {
+        document.getElementById(`build-${idx}`).src =
+          'data:image/jpeg;base64,' + data.trim();
+      });
+    fetch(b.ceoImage)
+      .then(r => r.text())
+      .then(data => {
+        document.getElementById(`arch-${idx}`).src =
+          'data:image/jpeg;base64,' + data.trim();
+      });
+  });
+}
+
+let mapInstance = null;
+function createMap() {
+  if (mapInstance) { mapInstance.remove(); }
+  mapInstance = L.map('map', {
+    maxBounds: [[-60,-180],[80,180]],
+    maxBoundsViscosity: 1.0,
+    minZoom: 2,
+    maxZoom: 7,
+    worldCopyJump: true
+  }).setView([20,0], 2);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(mapInstance);
+  companies.forEach((b,idx) => {
+    L.marker([b.lat, b.lng]).addTo(mapInstance)
+      .bindTooltip(b.name)
+      .on('click', () => showBuildingOnMap(idx));
+  });
+  setTimeout(()=>{ mapInstance.invalidateSize(); },100);
+}
+
+function showBuildingOnMap(idx) {
+  const b = companies[idx];
+  const info = document.getElementById('map-info');
+  const card = document.getElementById('card-'+idx);
+  info.innerHTML = `
+    <div class="flex justify-between items-center mb-2">
+      <h3 class="text-xl font-semibold">${b.name}</h3>
+      <button id="close-map-info" class="text-red-600 font-bold">X</button>
+    </div>
+    <p class="text-sm"><strong>${translations[currentLang].country}:</strong> ${currentLang==='es'?b.country_es:b.country_en}</p>
+    <p class="text-sm"><strong>${translations[currentLang].city}:</strong> ${b.city}</p>
+    <p class="mt-2 text-sm">${currentLang==='es'?b.info_es:b.info_en}</p>`;
+  info.classList.remove('hidden');
+  if(card) card.classList.add('hidden');
+  document.getElementById('close-map-info').addEventListener('click', () => {
+    info.classList.add('hidden');
+    if(card) card.classList.remove('hidden');
+  }, { once: true });
+}
+
+function updateLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  const t = translations[lang];
+  document.getElementById('page-title').textContent = t.pageTitle;
+  document.getElementById('height-label').textContent = t.heightLabel;
+  document.getElementById('continents-title').textContent = t.continentsTitle;
+  document.getElementById('map-info').classList.add('hidden');
+  document.getElementById('cards').classList.remove('hidden');
+  drawCharts();
+  createCards();
+  createMap();
+}
+
+document.getElementById('lang-select').addEventListener('change', e => {
+  updateLang(e.target.value);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateLang('es');
+});
+  </script>
+</body>
+</html>
