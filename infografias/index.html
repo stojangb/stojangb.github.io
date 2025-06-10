@@ -3,326 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Infografías - Edificios</title>
-  <script src="../extras/tailwind.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .clip-left { clip-path: polygon(0 0, 0 100%, 100% 0); }
-    .clip-right { clip-path: polygon(0 100%, 100% 0, 100% 100%); }
-  </style>
+  <title>Infografías</title>
+  <script src="extras/tailwind.js"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
   <header class="bg-indigo-700 text-white py-4">
-    <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
-      <h1 id="page-title" class="text-2xl font-bold">Los 10 edificios más altos del mundo</h1>
-      <select id="lang-select" class="bg-indigo-600 text-white p-1 rounded">
-        <option value="es">ES</option>
-        <option value="en">EN</option>
-      </select>
+    <div class="max-w-6xl mx-auto px-4">
+      <h1 class="text-2xl font-bold">Dashboard de Infografías</h1>
     </div>
   </header>
-  <main class="flex-grow max-w-6xl mx-auto p-4 space-y-10">
-    <section>
-      <canvas id="heightChart" height="300"></canvas>
-      <p class="text-center text-gray-600 mt-2 text-sm" id="height-label">Altura (m)</p>
-    </section>
-    <section>
-      <canvas id="continentChart" height="250"></canvas>
-      <h2 class="text-center mt-2 font-semibold" id="continents-title">Edificios altos por continente</h2>
-    </section>
-    <section id="cards" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></section>
-  </main>
-  <footer class="text-center py-4 text-gray-500 text-xs">Fuente: CTBUH 2024</footer>
+  <main class="flex-grow max-w-6xl mx-auto p-4" id="posts"></main>
   <script>
-const translations = {
-  es: {
-    pageTitle: "Los 10 edificios más altos del mundo",
-    heightLabel: "Altura (m)",
-    occupancy: "Porcentaje de ocupación",
-    country: "País",
-    city: "Ciudad",
-    architect: "Arquitecto",
-    viewMore: "Ver más",
-    continentsTitle: "Edificios altos por continente"
-  },
-  en: {
-    pageTitle: "Top 10 tallest buildings in the world",
-    heightLabel: "Height (m)",
-    occupancy: "Occupancy",
-    city: "City",
-    country: "Country",
-    architect: "Architect",
-    viewMore: "View more",
-    continentsTitle: "High-rises by continent"
-  }
-};
-
-const buildings = [
+const posts = [
   {
-    name: "Burj Khalifa",
-    height: 828,
-    occupancy: 80,
-    continent: "Asia",
-    country_es: "Emiratos Árabes Unidos",
-    country_en: "United Arab Emirates",
-    city: "Dubai",
-    cityImage: "image_data/city1.txt",
-    architect: "Adrian Smith",
-    bio_es: "Adrian Smith es un arquitecto estadounidense conocido por diseñar el Burj Khalifa y otros rascacielos icónicos.",
-    bio_en: "Adrian Smith is an American architect known for designing the Burj Khalifa and other iconic skyscrapers.",
-    buildingImage: "image_data/building1.txt",
-    architectImage: "image_data/architect1.txt"
-  },
-  {
-    name: "Merdeka 118",
-    height: 679,
-    occupancy: 60,
-    continent: "Asia",
-    country_es: "Malasia",
-    country_en: "Malaysia",
-    architect: "Fender Katsalidis",
-    city: "Kuala Lumpur",
-    cityImage: "image_data/city2.txt",
-    bio_es: "Fender Katsalidis es un estudio australiano responsable de este proyecto monumental en Kuala Lumpur.",
-    bio_en: "Fender Katsalidis is an Australian practice responsible for this monumental project in Kuala Lumpur.",
-    buildingImage: "image_data/building2.txt",
-    architectImage: "image_data/architect2.txt"
-  },
-  {
-    name: "Shanghai Tower",
-    height: 632,
-    occupancy: 70,
-    continent: "Asia",
-    country_es: "China",
-    country_en: "China",
-    architect: "Gensler",
-    bio_es: "Gensler es una firma global de diseño con múltiples proyectos en todo el mundo.",
-    city: "Shanghai",
-    cityImage: "image_data/city3.txt",
-    bio_en: "Gensler is a global design firm with projects around the world.",
-    buildingImage: "image_data/building3.txt",
-    architectImage: "image_data/architect3.txt"
-  },
-  {
-    name: "Abraj Al-Bait Clock Tower",
-    height: 601,
-    occupancy: 95,
-    continent: "Asia",
-    country_es: "Arabia Saudita",
-    country_en: "Saudi Arabia",
-    architect: "Dar Al-Handasah",
-    bio_es: "Dar Al-Handasah es un grupo internacional de diseño con sede en Beirut.",
-    city: "Mecca",
-    cityImage: "image_data/city4.txt",
-    bio_en: "Dar Al-Handasah is an international design group headquartered in Beirut.",
-    buildingImage: "image_data/building4.txt",
-    architectImage: "image_data/architect4.txt"
-  },
-  {
-    name: "Ping An Finance Center",
-    height: 599,
-    occupancy: 80,
-    continent: "Asia",
-    country_es: "China",
-    country_en: "China",
-    architect: "Kohn Pedersen Fox",
-    bio_es: "Kohn Pedersen Fox es una firma de arquitectura estadounidense especializada en rascacielos.",
-    city: "Shenzhen",
-    cityImage: "image_data/city5.txt",
-    bio_en: "Kohn Pedersen Fox is a US architecture firm specializing in skyscrapers.",
-    buildingImage: "image_data/building5.txt",
-    architectImage: "image_data/architect5.txt"
-  },
-  {
-    name: "Lotte World Tower",
-    height: 555,
-    occupancy: 75,
-    continent: "Asia",
-    country_es: "Corea del Sur",
-    country_en: "South Korea",
-    architect: "Kohn Pedersen Fox",
-    city: "Seoul",
-    cityImage: "image_data/city6.txt",
-    bio_es: "Kohn Pedersen Fox es una firma de arquitectura estadounidense especializada en rascacielos.",
-    bio_en: "Kohn Pedersen Fox is a US architecture firm specializing in skyscrapers.",
-    buildingImage: "image_data/building6.txt",
-    architectImage: "image_data/architect6.txt"
-  },
-  {
-    name: "One World Trade Center",
-    height: 541,
-    occupancy: 85,
-    continent: "North America",
-    country_es: "Estados Unidos",
-    country_en: "United States",
-    architect: "Skidmore, Owings & Merrill",
-    bio_es: "SOM es una prestigiosa firma estadounidense responsable de numerosos rascacielos emblemáticos.",
-    city: "New York",
-    cityImage: "image_data/city7.txt",
-    bio_en: "SOM is a renowned American firm responsible for numerous landmark skyscrapers.",
-    buildingImage: "image_data/building7.txt",
-    architectImage: "image_data/architect7.txt"
-  },
-  {
-    name: "Guangzhou CTF Finance Centre",
-    height: 530,
-    occupancy: 90,
-    continent: "Asia",
-    country_es: "China",
-    country_en: "China",
-    architect: "Kohn Pedersen Fox",
-    bio_es: "Kohn Pedersen Fox es una firma de arquitectura estadounidense especializada en rascacielos.",
-    city: "Guangzhou",
-    cityImage: "image_data/city8.txt",
-    bio_en: "Kohn Pedersen Fox is a US architecture firm specializing in skyscrapers.",
-    buildingImage: "image_data/building8.txt",
-    architectImage: "image_data/architect8.txt"
-  },
-  {
-    name: "Tianjin CTF Finance Centre",
-    height: 530,
-    occupancy: 85,
-    continent: "Asia",
-    country_es: "China",
-    country_en: "China",
-    architect: "Skidmore, Owings & Merrill",
-    bio_es: "SOM es una prestigiosa firma estadounidense responsable de numerosos rascacielos emblemáticos.",
-    city: "Tianjin",
-    cityImage: "image_data/city9.txt",
-    bio_en: "SOM is a renowned American firm responsible for numerous landmark skyscrapers.",
-    buildingImage: "image_data/building9.txt",
-    architectImage: "image_data/architect9.txt"
-  },
-  {
-    name: "CITIC Tower",
-    height: 528,
-    occupancy: 80,
-    continent: "Asia",
-    country_es: "China",
-    country_en: "China",
-    architect: "TFP Farrells",
-    bio_es: "TFP Farrells es un estudio de arquitectura británico especializado en proyectos de gran escala.",
-    city: "Beijing",
-    cityImage: "image_data/city10.txt",
-    bio_en: "TFP Farrells is a British architecture studio specializing in large-scale projects.",
-    buildingImage: "image_data/building10.txt",
-    architectImage: "image_data/architect10.txt"
+    title: 'Los 10 edificios más altos del mundo',
+    link: 'tallest-buildings/',
+    date: '2024-05-01',
+    image: 'image_data/building1.txt'
   }
 ];
-
-let currentLang = 'es';
-let barChart = null;
-let continentChart = null;
-
-function drawCharts() {
-  const barCtx = document.getElementById('heightChart').getContext('2d');
-  const labels = buildings.map(b => b.name);
-  const heights = buildings.map(b => b.height);
-  if (barChart) barChart.destroy();
-  barChart = new Chart(barCtx, {
-    type: 'bar',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: translations[currentLang].heightLabel,
-        data: heights,
-        backgroundColor: 'rgba(99,102,241,0.7)'
-      }]
-    },
-    options: {
-      scales: { y: { beginAtZero: true } }
-    }
-  });
-
-  const counts = {};
-  buildings.forEach(b => { counts[b.continent] = (counts[b.continent] || 0) + 1; });
-  const cLabels = Object.keys(counts);
-  const cData = Object.values(counts);
-  const contCtx = document.getElementById('continentChart').getContext('2d');
-  if (continentChart) continentChart.destroy();
-  continentChart = new Chart(contCtx, {
-    type: 'doughnut',
-    data: {
-      labels: cLabels,
-      datasets: [{
-        data: cData,
-        backgroundColor: ['#6366f1','#818cf8','#a5b4fc','#c4b5fd','#7dd3fc']
-      }]
-    },
-    options: { plugins: { legend: { position: 'bottom' } } }
-  });
-}
-
-function createCards() {
-  const container = document.getElementById('cards');
-  container.innerHTML = '';
-  buildings.forEach((b, idx) => {
-    const card = document.createElement('div');
-    card.className = 'bg-white shadow rounded overflow-hidden flex flex-col';
-    card.innerHTML = `
-      <div class="relative w-full h-40 overflow-hidden">
-        <img id="city-${idx}" alt="${b.city}" class="absolute inset-0 w-full h-full object-cover clip-left">
-        <img id="build-${idx}" alt="${b.name}" class="absolute inset-0 w-full h-full object-cover clip-right">
-      </div>
-      <div class="p-4 flex-1 flex flex-col">
-        <h3 class="text-xl font-semibold mb-2">${b.name}</h3>
-        <p class="text-sm mb-1"><strong>${translations[currentLang].country}:</strong> ${currentLang==='es'?b.country_es:b.country_en}</p>
-        <p class="text-sm mb-1"><strong>${translations[currentLang].city}:</strong> ${b.city}</p>
-        <p class="text-sm mb-1"><strong>${translations[currentLang].occupancy}:</strong> ${b.occupancy}%</p>
-        <div class="flex items-center mt-auto">
-          <img id="arch-${idx}" alt="${b.architect}" class="w-12 h-12 rounded-full object-cover mr-2">
-          <div>
-            <p class="font-semibold text-sm">${translations[currentLang].architect}: ${b.architect}</p>
-            <button data-idx="${idx}" class="view-more text-indigo-600 underline text-sm">${translations[currentLang].viewMore}</button>
-          </div>
-        </div>
-        <div id="detail-${idx}" class="hidden mt-2 text-sm">${currentLang==='es'?b.bio_es:b.bio_en}</div>
-      </div>`;
-    container.appendChild(card);
-    fetch(b.buildingImage)
-      .then(r => r.text())
-      .then(data => {
-        document.getElementById(`build-${idx}`).src =
-          'data:image/jpeg;base64,' + data.trim();
-      });
-    fetch(b.cityImage)
-      .then(r => r.text())
-      .then(data => {
-        document.getElementById(`city-${idx}`).src =
-          'data:image/jpeg;base64,' + data.trim();
-      });
-    fetch(b.architectImage)
-      .then(r => r.text())
-      .then(data => {
-        document.getElementById(`arch-${idx}`).src =
-          'data:image/jpeg;base64,' + data.trim();
-      });
-  });
-  container.querySelectorAll('.view-more').forEach(btn => {
-    btn.addEventListener('click', e => {
-      const i = e.target.getAttribute('data-idx');
-      document.getElementById('detail-'+i).classList.toggle('hidden');
-    });
-  });
-}
-
-function updateLang(lang) {
-  currentLang = lang;
-  document.documentElement.lang = lang;
-  const t = translations[lang];
-  document.getElementById('page-title').textContent = t.pageTitle;
-  document.getElementById('height-label').textContent = t.heightLabel;
-  document.getElementById('continents-title').textContent = t.continentsTitle;
-  drawCharts();
-  createCards();
-}
-
-document.getElementById('lang-select').addEventListener('change', e => {
-  updateLang(e.target.value);
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  updateLang('es');
+posts.sort((a,b)=> new Date(b.date)-new Date(a.date));
+const container = document.getElementById('posts');
+posts.forEach((p, idx)=>{
+  const card = document.createElement('a');
+  card.href = p.link;
+  card.className = 'block bg-white rounded shadow mb-4 overflow-hidden hover:shadow-lg transition';
+  card.innerHTML = `<div class="h-48 w-full overflow-hidden"><img id="img-${idx}" class="w-full h-full object-cover" /></div><div class="p-4"><h2 class="text-xl font-semibold mb-1">${p.title}</h2><p class="text-sm text-gray-600">${p.date}</p></div>`;
+  container.appendChild(card);
+  fetch(p.image).then(r=>r.text()).then(d=>{document.getElementById(`img-${idx}`).src='data:image/jpeg;base64,'+d.trim();});
 });
   </script>
 </body>
