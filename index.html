@@ -551,8 +551,19 @@
         `;
         projectsContainer.appendChild(div);
         if (project.link) {
-          div.classList.add('cursor-pointer');
-          div.addEventListener('click', () => openProject(project.link));
+          if (project.link.includes('infografias')) {
+            const btn = document.createElement('button');
+            btn.textContent = currentLanguage === 'es' ? 'Abrir' : 'Open';
+            btn.className = 'mt-3 px-2 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-sm';
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              openProject(project.link);
+            });
+            div.appendChild(btn);
+          } else {
+            div.classList.add('cursor-pointer');
+            div.addEventListener('click', () => openProject(project.link));
+          }
         }
       });
 
