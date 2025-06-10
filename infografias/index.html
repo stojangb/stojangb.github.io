@@ -6,6 +6,10 @@
   <title>Infografías - Edificios</title>
   <script src="../extras/tailwind.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .clip-left { clip-path: polygon(0 0, 0 100%, 100% 0); }
+    .clip-right { clip-path: polygon(0 100%, 100% 0, 100% 100%); }
+  </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
   <header class="bg-indigo-700 text-white py-4">
@@ -36,6 +40,7 @@ const translations = {
     heightLabel: "Altura (m)",
     occupancy: "Porcentaje de ocupación",
     country: "País",
+    city: "Ciudad",
     architect: "Arquitecto",
     viewMore: "Ver más",
     continentsTitle: "Edificios altos por continente"
@@ -44,6 +49,7 @@ const translations = {
     pageTitle: "Top 10 tallest buildings in the world",
     heightLabel: "Height (m)",
     occupancy: "Occupancy",
+    city: "City",
     country: "Country",
     architect: "Architect",
     viewMore: "View more",
@@ -59,6 +65,8 @@ const buildings = [
     continent: "Asia",
     country_es: "Emiratos Árabes Unidos",
     country_en: "United Arab Emirates",
+    city: "Dubai",
+    cityImage: "image_data/city1.txt",
     architect: "Adrian Smith",
     bio_es: "Adrian Smith es un arquitecto estadounidense conocido por diseñar el Burj Khalifa y otros rascacielos icónicos.",
     bio_en: "Adrian Smith is an American architect known for designing the Burj Khalifa and other iconic skyscrapers.",
@@ -73,6 +81,8 @@ const buildings = [
     country_es: "Malasia",
     country_en: "Malaysia",
     architect: "Fender Katsalidis",
+    city: "Kuala Lumpur",
+    cityImage: "image_data/city2.txt",
     bio_es: "Fender Katsalidis es un estudio australiano responsable de este proyecto monumental en Kuala Lumpur.",
     bio_en: "Fender Katsalidis is an Australian practice responsible for this monumental project in Kuala Lumpur.",
     buildingImage: "image_data/building2.txt",
@@ -87,6 +97,8 @@ const buildings = [
     country_en: "China",
     architect: "Gensler",
     bio_es: "Gensler es una firma global de diseño con múltiples proyectos en todo el mundo.",
+    city: "Shanghai",
+    cityImage: "image_data/city3.txt",
     bio_en: "Gensler is a global design firm with projects around the world.",
     buildingImage: "image_data/building3.txt",
     architectImage: "image_data/architect3.txt"
@@ -100,6 +112,8 @@ const buildings = [
     country_en: "Saudi Arabia",
     architect: "Dar Al-Handasah",
     bio_es: "Dar Al-Handasah es un grupo internacional de diseño con sede en Beirut.",
+    city: "Mecca",
+    cityImage: "image_data/city4.txt",
     bio_en: "Dar Al-Handasah is an international design group headquartered in Beirut.",
     buildingImage: "image_data/building4.txt",
     architectImage: "image_data/architect4.txt"
@@ -113,6 +127,8 @@ const buildings = [
     country_en: "China",
     architect: "Kohn Pedersen Fox",
     bio_es: "Kohn Pedersen Fox es una firma de arquitectura estadounidense especializada en rascacielos.",
+    city: "Shenzhen",
+    cityImage: "image_data/city5.txt",
     bio_en: "Kohn Pedersen Fox is a US architecture firm specializing in skyscrapers.",
     buildingImage: "image_data/building5.txt",
     architectImage: "image_data/architect5.txt"
@@ -125,6 +141,8 @@ const buildings = [
     country_es: "Corea del Sur",
     country_en: "South Korea",
     architect: "Kohn Pedersen Fox",
+    city: "Seoul",
+    cityImage: "image_data/city6.txt",
     bio_es: "Kohn Pedersen Fox es una firma de arquitectura estadounidense especializada en rascacielos.",
     bio_en: "Kohn Pedersen Fox is a US architecture firm specializing in skyscrapers.",
     buildingImage: "image_data/building6.txt",
@@ -139,6 +157,8 @@ const buildings = [
     country_en: "United States",
     architect: "Skidmore, Owings & Merrill",
     bio_es: "SOM es una prestigiosa firma estadounidense responsable de numerosos rascacielos emblemáticos.",
+    city: "New York",
+    cityImage: "image_data/city7.txt",
     bio_en: "SOM is a renowned American firm responsible for numerous landmark skyscrapers.",
     buildingImage: "image_data/building7.txt",
     architectImage: "image_data/architect7.txt"
@@ -152,6 +172,8 @@ const buildings = [
     country_en: "China",
     architect: "Kohn Pedersen Fox",
     bio_es: "Kohn Pedersen Fox es una firma de arquitectura estadounidense especializada en rascacielos.",
+    city: "Guangzhou",
+    cityImage: "image_data/city8.txt",
     bio_en: "Kohn Pedersen Fox is a US architecture firm specializing in skyscrapers.",
     buildingImage: "image_data/building8.txt",
     architectImage: "image_data/architect8.txt"
@@ -165,6 +187,8 @@ const buildings = [
     country_en: "China",
     architect: "Skidmore, Owings & Merrill",
     bio_es: "SOM es una prestigiosa firma estadounidense responsable de numerosos rascacielos emblemáticos.",
+    city: "Tianjin",
+    cityImage: "image_data/city9.txt",
     bio_en: "SOM is a renowned American firm responsible for numerous landmark skyscrapers.",
     buildingImage: "image_data/building9.txt",
     architectImage: "image_data/architect9.txt"
@@ -178,6 +202,8 @@ const buildings = [
     country_en: "China",
     architect: "TFP Farrells",
     bio_es: "TFP Farrells es un estudio de arquitectura británico especializado en proyectos de gran escala.",
+    city: "Beijing",
+    cityImage: "image_data/city10.txt",
     bio_en: "TFP Farrells is a British architecture studio specializing in large-scale projects.",
     buildingImage: "image_data/building10.txt",
     architectImage: "image_data/architect10.txt"
@@ -234,10 +260,14 @@ function createCards() {
     const card = document.createElement('div');
     card.className = 'bg-white shadow rounded overflow-hidden flex flex-col';
     card.innerHTML = `
-      <img id="build-${idx}" alt="${b.name}" class="w-full h-40 object-cover">
+      <div class="relative w-full h-40 overflow-hidden">
+        <img id="city-${idx}" alt="${b.city}" class="absolute inset-0 w-full h-full object-cover clip-left">
+        <img id="build-${idx}" alt="${b.name}" class="absolute inset-0 w-full h-full object-cover clip-right">
+      </div>
       <div class="p-4 flex-1 flex flex-col">
         <h3 class="text-xl font-semibold mb-2">${b.name}</h3>
         <p class="text-sm mb-1"><strong>${translations[currentLang].country}:</strong> ${currentLang==='es'?b.country_es:b.country_en}</p>
+        <p class="text-sm mb-1"><strong>${translations[currentLang].city}:</strong> ${b.city}</p>
         <p class="text-sm mb-1"><strong>${translations[currentLang].occupancy}:</strong> ${b.occupancy}%</p>
         <div class="flex items-center mt-auto">
           <img id="arch-${idx}" alt="${b.architect}" class="w-12 h-12 rounded-full object-cover mr-2">
@@ -253,6 +283,12 @@ function createCards() {
       .then(r => r.text())
       .then(data => {
         document.getElementById(`build-${idx}`).src =
+          'data:image/jpeg;base64,' + data.trim();
+      });
+    fetch(b.cityImage)
+      .then(r => r.text())
+      .then(data => {
+        document.getElementById(`city-${idx}`).src =
           'data:image/jpeg;base64,' + data.trim();
       });
     fetch(b.architectImage)
