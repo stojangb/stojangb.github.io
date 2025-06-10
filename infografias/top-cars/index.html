@@ -5,9 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Infografías - Autos</title>
   <script src="../extras/tailwind.js"></script>
-  <style>
-    .car-item { transition: transform 0.3s; }
-  </style>
+    <style>
+      .car-item { transition: transform 0.3s; }
+      .car-emoji {
+        font-size: 2rem;
+        margin-left: 0.25rem;
+        display: inline-block;
+        transform: scaleX(-1);
+      }
+    </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
   <nav class="bg-indigo-700 text-white py-2">
@@ -59,14 +65,14 @@
       document.getElementById('page-title').textContent = translations[currentLang].pageTitle;
       const list = document.getElementById('car-list');
       list.innerHTML = '';
-      cars.forEach((car,i)=>{
-        const li = document.createElement('li');
-        li.className = 'relative h-8 cursor-pointer';
-        li.innerHTML = `<div id="info-${i}" class="absolute inset-y-0 flex items-center text-sm text-gray-700"></div>
-                        <div id="car-${i}" class="car-item relative">🚗 ${car.name}</div>`;
-        li.addEventListener('click', ()=>advance(i));
-        list.appendChild(li);
-      });
+        cars.forEach((car,i)=>{
+          const li = document.createElement('li');
+          li.className = 'relative h-8 cursor-pointer';
+          li.innerHTML = `<div id="info-${i}" class="absolute inset-y-0 flex items-center text-sm text-gray-700"></div>
+                          <div id="car-${i}" class="car-item relative">${car.name}<span class="car-emoji">🚗</span></div>`;
+          li.addEventListener('click', ()=>advance(i));
+          list.appendChild(li);
+        });
     }
 
     function advance(i){
@@ -77,10 +83,10 @@
         car.style.transform='translateX(0)';
         info.textContent='';
       }else if(states[i]===1){
-        car.style.transform='translateX(4rem)';
+        car.style.transform='translateX(6rem)';
         info.textContent = translations[currentLang].year+': '+cars[i].year;
       }else{
-        car.style.transform='translateX(8rem)';
+        car.style.transform='translateX(12rem)';
         info.textContent = translations[currentLang].year+': '+cars[i].year+' | '+translations[currentLang].company+': '+cars[i].company;
       }
     }
