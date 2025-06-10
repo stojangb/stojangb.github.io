@@ -52,7 +52,8 @@ const translations = {
     country: "País",
     city: "Ciudad",
     architect: "Arquitecto",
-    viewMore: "Ver más",
+    viewBuilding: "Ver Edificio",
+    viewArchitect: "Ver Arquitecto",
     continentsTitle: "Edificios altos por continente"
   },
   en: {
@@ -62,7 +63,8 @@ const translations = {
     city: "City",
     country: "Country",
     architect: "Architect",
-    viewMore: "View more",
+    viewBuilding: "Building Info",
+    viewArchitect: "Architect Info",
     continentsTitle: "High-rises by continent"
   }
 };
@@ -312,8 +314,8 @@ function createCards() {
           <p class="font-semibold text-sm">${translations[currentLang].architect}: ${b.architect}</p>
         </div>
         <div class="mt-auto space-x-2">
-          <button data-idx="${idx}" data-type="building" class="view-more-building bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded text-sm">${translations[currentLang].viewMore}</button>
-          <button data-idx="${idx}" data-type="architect" class="view-more-arch bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded text-sm">${translations[currentLang].viewMore}</button>
+          <button data-idx="${idx}" data-type="building" class="view-more-building bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded text-sm">${translations[currentLang].viewBuilding}</button>
+          <button data-idx="${idx}" data-type="architect" class="view-more-arch bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded text-sm">${translations[currentLang].viewArchitect}</button>
         </div>
         <div id="building-detail-${idx}" class="hidden mt-2 text-sm"></div>
         <div id="architect-detail-${idx}" class="hidden mt-2 text-sm"></div>
@@ -378,7 +380,9 @@ function showBuildingOnMap(idx) {
     </div>
     <p class="text-sm"><strong>${translations[currentLang].country}:</strong> ${currentLang==='es'?b.country_es:b.country_en}</p>
     <p class="text-sm"><strong>${translations[currentLang].city}:</strong> ${b.city}</p>
-    <p class="mt-2 text-sm">${currentLang==='es'?b.info_es:b.info_en}</p>`;
+    <p class="mt-2 text-sm">${currentLang==='es'?b.info_es:b.info_en}</p>
+    <p class="mt-2 text-sm"><strong>${translations[currentLang].architect}:</strong> ${b.architect}</p>
+    <p class="text-sm">${currentLang==='es'?b.bio_es:b.bio_en}</p>`;
   info.classList.remove('hidden');
   if(card) card.classList.add('hidden');
   document.getElementById('close-map-info').addEventListener('click', () => {
