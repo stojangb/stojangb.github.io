@@ -36,6 +36,7 @@
     </div>
     <div id="animation-area" class="h-48 relative flex flex-col items-center justify-center"></div>
     <ul id="car-list" class="space-y-4"></ul>
+    <div id="descriptions" class="mt-8 space-y-2"></div>
   </main>
   <footer class="text-center py-4 text-gray-500 text-xs">Fuente: Ventas globales 2024</footer>
   <script>
@@ -52,16 +53,16 @@
       }
     };
     const cars = [
-      { brand: "Toyota", model: "Corolla", year: 1966 },
-      { brand: "Ford", model: "F-Series", year: 1948 },
-      { brand: "Volkswagen", model: "Golf", year: 1974 },
-      { brand: "Honda", model: "Civic", year: 1972 },
-      { brand: "Honda", model: "Accord", year: 1976 },
-      { brand: "Volkswagen", model: "Passat", year: 1973 },
-      { brand: "Chevrolet", model: "Silverado", year: 1998 },
-      { brand: "Toyota", model: "RAV4", year: 1994 },
-      { brand: "Volkswagen", model: "Beetle", year: 1938 },
-      { brand: "Ford", model: "Escort", year: 1968 }
+      { brand: "Toyota", model: "Corolla", year: 1966, desc: "El Toyota Corolla es un autom\u00f3vil compacto producido desde 1966." },
+      { brand: "Ford", model: "F-Series", year: 1948, desc: "La Ford F-Series es una l\u00ednea de camionetas pickup introducida en 1948." },
+      { brand: "Volkswagen", model: "Golf", year: 1974, desc: "El Volkswagen Golf es un hatchback ic\u00f3nico lanzado en 1974." },
+      { brand: "Honda", model: "Civic", year: 1972, desc: "El Honda Civic es un auto compacto popular desde 1972." },
+      { brand: "Honda", model: "Accord", year: 1976, desc: "El Honda Accord es un sed\u00e1n mediano introducido en 1976." },
+      { brand: "Volkswagen", model: "Passat", year: 1973, desc: "El Volkswagen Passat es un sed\u00e1n familiar desde 1973." },
+      { brand: "Chevrolet", model: "Silverado", year: 1998, desc: "La Chevrolet Silverado es una pickup robusta que debut\u00f3 en 1998." },
+      { brand: "Toyota", model: "RAV4", year: 1994, desc: "El Toyota RAV4 es un SUV compacto presentado en 1994." },
+      { brand: "Volkswagen", model: "Beetle", year: 1938, desc: "El Volkswagen Beetle es un cl\u00e1sico auto compacto lanzado en 1938." },
+      { brand: "Ford", model: "Escort", year: 1968, desc: "El Ford Escort fue un auto econ\u00f3mico popular desde 1968." }
     ];
 
     let currentLang = 'es';
@@ -77,6 +78,7 @@
     function startAnimation(){
       document.getElementById('car-list').innerHTML = '';
       document.getElementById('animation-area').innerHTML = '';
+      document.getElementById('descriptions').innerHTML = '';
       index = 0;
       document.getElementById('start-btn').disabled = true;
       showNext();
@@ -85,28 +87,38 @@
     function showNext(){
       if(index >= sortedCars.length){
         document.getElementById('start-btn').disabled = false;
+        showDescriptions();
         return;
       }
-      const car = sortedCars[index++];
+      const car = sortedCars[index];
+      const rank = index + 1;
+      index++;
       const area = document.getElementById('animation-area');
       area.innerHTML = '';
-      const carDiv = document.createElement('div');
-      carDiv.className = 'text-4xl font-bold flex items-center space-x-2';
-      carDiv.innerHTML = `<span class="car-emoji">🚗</span><span>${car.brand} ${car.model}</span>`;
+
       const yearDiv = document.createElement('div');
-      yearDiv.className = 'text-6xl font-bold mt-2';
+      yearDiv.className = 'text-6xl font-bold';
       yearDiv.textContent = car.year;
-      area.appendChild(carDiv);
       area.appendChild(yearDiv);
 
-      setTimeout(()=>moveToList(car, carDiv, yearDiv), 500);
+      const carDiv = document.createElement('div');
+      carDiv.className = 'text-4xl font-bold flex items-center space-x-2 mt-2';
+      carDiv.style.opacity = '0';
+      carDiv.innerHTML = `<span class="car-emoji">🚗</span><span>${car.brand} ${car.model}</span>`;
+      area.appendChild(carDiv);
+
+      setTimeout(()=>{
+        carDiv.style.opacity = '1';
+      },1000);
+
+      setTimeout(()=>moveToList(car, rank, carDiv, yearDiv),1500);
     }
 
-    function moveToList(car, carDiv, yearDiv){
+    function moveToList(car, rank, carDiv, yearDiv){
       const list = document.getElementById('car-list');
       const li = document.createElement('li');
       li.className = 'flex items-center space-x-2';
-      li.innerHTML = `<span class="car-emoji">🚗</span><span>${car.brand} ${car.model}</span><span class="ml-auto year">${car.year}</span>`;
+      li.innerHTML = `<span class="w-6 text-right font-bold">${rank}.</span><span class="car-emoji">🚗</span><span>${car.brand} ${car.model}</span><span class="ml-auto year">${car.year}</span>`;
       li.style.opacity = '0';
       list.appendChild(li);
 
@@ -137,6 +149,24 @@
         li.style.opacity = '1';
         showNext();
       },500);
+    }
+
+    function typeText(el, text, i = 0){
+      if(i < text.length){
+        el.textContent += text.charAt(i);
+        setTimeout(()=>typeText(el, text, i+1), 40);
+      }
+    }
+
+    function showDescriptions(){
+      const container = document.getElementById('descriptions');
+      container.innerHTML = '';
+      sortedCars.forEach((c, idx)=>{
+        const p = document.createElement('p');
+        container.appendChild(p);
+        const text = `${idx+1}. ${c.year} - ${c.brand} ${c.model}: ${c.desc}`;
+        typeText(p, text);
+      });
     }
 
     document.getElementById('lang-select').addEventListener('change', e=>{
