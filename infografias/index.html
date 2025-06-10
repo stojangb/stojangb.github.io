@@ -3,61 +3,279 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edificios más Altos del Mundo</title>
+  <title>Infografías - Edificios</title>
   <script src="../extras/tailwind.js"></script>
-  <style>
-    .bar {
-      width: 40px;
-      border-radius: 0.25rem 0.25rem 0 0;
-      background-image: linear-gradient(to top, #6366f1, #818cf8);
-      transition: height 1s ease-out;
-    }
-  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
   <header class="bg-indigo-700 text-white py-4">
-    <h1 class="text-3xl font-bold text-center">Edificios más Altos del Mundo</h1>
-  </header>
-  <main class="flex-grow flex items-center justify-center p-8">
-    <div>
-      <div class="flex items-end space-x-4 h-80">
-        <div class="flex flex-col items-center">
-          <div class="bar" data-height="300"></div>
-          <span class="mt-2 text-center text-sm">Burj Khalifa<br>828 m</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <div class="bar" data-height="229"></div>
-          <span class="mt-2 text-center text-sm">Shanghai Tower<br>632 m</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <div class="bar" data-height="218"></div>
-          <span class="mt-2 text-center text-sm">Makkah Clock Tower<br>601 m</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <div class="bar" data-height="217"></div>
-          <span class="mt-2 text-center text-sm">Ping An Finance Center<br>599 m</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <div class="bar" data-height="201"></div>
-          <span class="mt-2 text-center text-sm">Lotte World Tower<br>555 m</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <div class="bar" data-height="196"></div>
-          <span class="mt-2 text-center text-sm">One World Trade Center<br>541 m</span>
-        </div>
-      </div>
-      <p class="text-center text-gray-600 mt-4 text-sm">Altura en metros</p>
+    <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+      <h1 id="page-title" class="text-2xl font-bold">Los 10 edificios más altos del mundo</h1>
+      <select id="lang-select" class="bg-indigo-600 text-white p-1 rounded">
+        <option value="es">ES</option>
+        <option value="en">EN</option>
+      </select>
     </div>
+  </header>
+  <main class="flex-grow max-w-6xl mx-auto p-4 space-y-10">
+    <section>
+      <canvas id="heightChart" height="300"></canvas>
+      <p class="text-center text-gray-600 mt-2 text-sm" id="height-label">Altura (m)</p>
+    </section>
+    <section>
+      <canvas id="continentChart" height="250"></canvas>
+      <h2 class="text-center mt-2 font-semibold" id="continents-title">Edificios altos por continente</h2>
+    </section>
+    <section id="cards" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></section>
   </main>
   <footer class="text-center py-4 text-gray-500 text-xs">Fuente: CTBUH 2024</footer>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.bar').forEach(bar => {
-        const h = bar.getAttribute('data-height');
-        bar.style.height = '0px';
-        setTimeout(() => { bar.style.height = h + 'px'; }, 100);
-      });
+const translations = {
+  es: {
+    pageTitle: "Los 10 edificios más altos del mundo",
+    heightLabel: "Altura (m)",
+    occupancy: "Porcentaje de ocupación",
+    country: "País",
+    architect: "Arquitecto",
+    viewMore: "Ver más",
+    continentsTitle: "Edificios altos por continente"
+  },
+  en: {
+    pageTitle: "Top 10 tallest buildings in the world",
+    heightLabel: "Height (m)",
+    occupancy: "Occupancy",
+    country: "Country",
+    architect: "Architect",
+    viewMore: "View more",
+    continentsTitle: "High-rises by continent"
+  }
+};
+
+const buildings = [
+  {
+    name: "Burj Khalifa",
+    height: 828,
+    occupancy: 80,
+    continent: "Asia",
+    country_es: "Emiratos Árabes Unidos",
+    country_en: "United Arab Emirates",
+    architect: "Adrian Smith",
+    bio_es: "Adrian Smith es un arquitecto estadounidense conocido por diseñar el Burj Khalifa y otros rascacielos icónicos.",
+    bio_en: "Adrian Smith is an American architect known for designing the Burj Khalifa and other iconic skyscrapers.",
+    buildingImage: "https://upload.wikimedia.org/wikipedia/commons/9/93/Burj_Khalifa.jpg",
+    architectImage: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Adrian_Smith_%28architect%29.jpg"
+  },
+  {
+    name: "Merdeka 118",
+    height: 679,
+    occupancy: 60,
+    continent: "Asia",
+    country_es: "Malasia",
+    country_en: "Malaysia",
+    architect: "Fender Katsalidis",
+    bio_es: "Fender Katsalidis es un estudio australiano responsable de este proyecto monumental en Kuala Lumpur.",
+    bio_en: "Fender Katsalidis is an Australian practice responsible for this monumental project in Kuala Lumpur.",
+    buildingImage: "https://upload.wikimedia.org/wikipedia/commons/8/89/Merdeka_118_April2021.jpg",
+    architectImage: "https://upload.wikimedia.org/wikipedia/commons/9/97/Nonda_Katsalidis.jpg"
+  },
+  {
+    name: "Shanghai Tower",
+    height: 632,
+    occupancy: 70,
+    continent: "Asia",
+    country_es: "China",
+    country_en: "China",
+    architect: "Gensler",
+    bio_es: "Gensler es una firma global de diseño con múltiples proyectos en todo el mundo.",
+    bio_en: "Gensler is a global design firm with projects around the world.",
+    buildingImage: "https://upload.wikimedia.org/wikipedia/commons/5/58/Shanghai_Tower_2015.jpg",
+    architectImage: "https://upload.wikimedia.org/wikipedia/commons/1/12/Art_Gensler_headshot.jpg"
+  },
+  {
+    name: "Abraj Al-Bait Clock Tower",
+    height: 601,
+    occupancy: 95,
+    continent: "Asia",
+    country_es: "Arabia Saudita",
+    country_en: "Saudi Arabia",
+    architect: "Dar Al-Handasah",
+    bio_es: "Dar Al-Handasah es un grupo internacional de diseño con sede en Beirut.",
+    bio_en: "Dar Al-Handasah is an international design group headquartered in Beirut.",
+    buildingImage: "https://upload.wikimedia.org/wikipedia/commons/7/71/Abraj_Al_Bait_Towers.jpg",
+    architectImage: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Dar_Al_Handasah_logo.png"
+  },
+  {
+    name: "Ping An Finance Center",
+    height: 599,
+    occupancy: 80,
+    continent: "Asia",
+    country_es: "China",
+    country_en: "China",
+    architect: "Kohn Pedersen Fox",
+    bio_es: "Kohn Pedersen Fox es una firma de arquitectura estadounidense especializada en rascacielos.",
+    bio_en: "Kohn Pedersen Fox is a US architecture firm specializing in skyscrapers.",
+    buildingImage: "https://upload.wikimedia.org/wikipedia/commons/6/65/PingAnFinanceCenter.jpg",
+    architectImage: "https://upload.wikimedia.org/wikipedia/commons/4/48/KPF_logo.svg"
+  },
+  {
+    name: "Lotte World Tower",
+    height: 555,
+    occupancy: 75,
+    continent: "Asia",
+    country_es: "Corea del Sur",
+    country_en: "South Korea",
+    architect: "Kohn Pedersen Fox",
+    bio_es: "Kohn Pedersen Fox es una firma de arquitectura estadounidense especializada en rascacielos.",
+    bio_en: "Kohn Pedersen Fox is a US architecture firm specializing in skyscrapers.",
+    buildingImage: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Lotte_World_Tower_2017.jpg",
+    architectImage: "https://upload.wikimedia.org/wikipedia/commons/4/48/KPF_logo.svg"
+  },
+  {
+    name: "One World Trade Center",
+    height: 541,
+    occupancy: 85,
+    continent: "North America",
+    country_es: "Estados Unidos",
+    country_en: "United States",
+    architect: "Skidmore, Owings & Merrill",
+    bio_es: "SOM es una prestigiosa firma estadounidense responsable de numerosos rascacielos emblemáticos.",
+    bio_en: "SOM is a renowned American firm responsible for numerous landmark skyscrapers.",
+    buildingImage: "https://upload.wikimedia.org/wikipedia/commons/d/d7/OneWorldTradeCenter2015.jpg",
+    architectImage: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Skidmore_Owings_%26_Merrill_logo.svg"
+  },
+  {
+    name: "Guangzhou CTF Finance Centre",
+    height: 530,
+    occupancy: 90,
+    continent: "Asia",
+    country_es: "China",
+    country_en: "China",
+    architect: "Kohn Pedersen Fox",
+    bio_es: "Kohn Pedersen Fox es una firma de arquitectura estadounidense especializada en rascacielos.",
+    bio_en: "Kohn Pedersen Fox is a US architecture firm specializing in skyscrapers.",
+    buildingImage: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Guangzhou_Taikoo_Finance_Centre.jpg",
+    architectImage: "https://upload.wikimedia.org/wikipedia/commons/4/48/KPF_logo.svg"
+  },
+  {
+    name: "Tianjin CTF Finance Centre",
+    height: 530,
+    occupancy: 85,
+    continent: "Asia",
+    country_es: "China",
+    country_en: "China",
+    architect: "Skidmore, Owings & Merrill",
+    bio_es: "SOM es una prestigiosa firma estadounidense responsable de numerosos rascacielos emblemáticos.",
+    bio_en: "SOM is a renowned American firm responsible for numerous landmark skyscrapers.",
+    buildingImage: "https://upload.wikimedia.org/wikipedia/commons/a/aa/Tianjin_CTF_Finance_Center.jpg",
+    architectImage: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Skidmore_Owings_%26_Merrill_logo.svg"
+  },
+  {
+    name: "CITIC Tower",
+    height: 528,
+    occupancy: 80,
+    continent: "Asia",
+    country_es: "China",
+    country_en: "China",
+    architect: "TFP Farrells",
+    bio_es: "TFP Farrells es un estudio de arquitectura británico especializado en proyectos de gran escala.",
+    bio_en: "TFP Farrells is a British architecture studio specializing in large-scale projects.",
+    buildingImage: "https://upload.wikimedia.org/wikipedia/commons/1/10/CITIC_Tower_2019.jpg",
+    architectImage: "https://upload.wikimedia.org/wikipedia/commons/8/87/Farrells_logo.png"
+  }
+];
+
+let currentLang = 'es';
+let barChart = null;
+let continentChart = null;
+
+function drawCharts() {
+  const barCtx = document.getElementById('heightChart').getContext('2d');
+  const labels = buildings.map(b => b.name);
+  const heights = buildings.map(b => b.height);
+  if (barChart) barChart.destroy();
+  barChart = new Chart(barCtx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: translations[currentLang].heightLabel,
+        data: heights,
+        backgroundColor: 'rgba(99,102,241,0.7)'
+      }]
+    },
+    options: {
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+
+  const counts = {};
+  buildings.forEach(b => { counts[b.continent] = (counts[b.continent] || 0) + 1; });
+  const cLabels = Object.keys(counts);
+  const cData = Object.values(counts);
+  const contCtx = document.getElementById('continentChart').getContext('2d');
+  if (continentChart) continentChart.destroy();
+  continentChart = new Chart(contCtx, {
+    type: 'doughnut',
+    data: {
+      labels: cLabels,
+      datasets: [{
+        data: cData,
+        backgroundColor: ['#6366f1','#818cf8','#a5b4fc','#c4b5fd','#7dd3fc']
+      }]
+    },
+    options: { plugins: { legend: { position: 'bottom' } } }
+  });
+}
+
+function createCards() {
+  const container = document.getElementById('cards');
+  container.innerHTML = '';
+  buildings.forEach((b, idx) => {
+    const card = document.createElement('div');
+    card.className = 'bg-white shadow rounded overflow-hidden flex flex-col';
+    card.innerHTML = `
+      <img src="${b.buildingImage}" alt="${b.name}" class="w-full h-40 object-cover">
+      <div class="p-4 flex-1 flex flex-col">
+        <h3 class="text-xl font-semibold mb-2">${b.name}</h3>
+        <p class="text-sm mb-1"><strong>${translations[currentLang].country}:</strong> ${currentLang==='es'?b.country_es:b.country_en}</p>
+        <p class="text-sm mb-1"><strong>${translations[currentLang].occupancy}:</strong> ${b.occupancy}%</p>
+        <div class="flex items-center mt-auto">
+          <img src="${b.architectImage}" alt="${b.architect}" class="w-12 h-12 rounded-full object-cover mr-2">
+          <div>
+            <p class="font-semibold text-sm">${translations[currentLang].architect}: ${b.architect}</p>
+            <button data-idx="${idx}" class="view-more text-indigo-600 underline text-sm">${translations[currentLang].viewMore}</button>
+          </div>
+        </div>
+        <div id="detail-${idx}" class="hidden mt-2 text-sm">${currentLang==='es'?b.bio_es:b.bio_en}</div>
+      </div>`;
+    container.appendChild(card);
+  });
+  container.querySelectorAll('.view-more').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const i = e.target.getAttribute('data-idx');
+      document.getElementById('detail-'+i).classList.toggle('hidden');
     });
+  });
+}
+
+function updateLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  const t = translations[lang];
+  document.getElementById('page-title').textContent = t.pageTitle;
+  document.getElementById('height-label').textContent = t.heightLabel;
+  document.getElementById('continents-title').textContent = t.continentsTitle;
+  drawCharts();
+  createCards();
+}
+
+document.getElementById('lang-select').addEventListener('change', e => {
+  updateLang(e.target.value);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateLang('es');
+});
   </script>
 </body>
 </html>
