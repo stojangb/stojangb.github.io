@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infografías - Edificios</title>
+  <script src="../extras/tailwind.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    @keyframes fadeIn { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.3s forwards; }
+  </style>
+</head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+  <nav class="bg-indigo-700 text-white py-2">
+    <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+      <a href="../index.html" class="underline">Inicio</a>
+      <select id="lang-select" class="bg-indigo-600 text-white p-1 rounded">
+        <option value="es">ES</option>
+        <option value="en">EN</option>
+      </select>
+    </div>
+  </nav>
+  <main class="flex-grow max-w-6xl mx-auto p-4 space-y-6">
+    <h1 id="page-title" class="text-3xl font-bold text-center"></h1>
+    <section class="grid md:grid-cols-2 gap-4 items-start">
+      <div>
+        <canvas id="heightChart" height="200"></canvas>
+        <p class="text-center text-gray-600 mt-2 text-sm" id="height-label">Altura (m)</p>
+      </div>
+      <div>
+        <canvas id="continentChart" height="180"></canvas>
+        <h2 class="text-center mt-2 font-semibold" id="continents-title">Edificios altos por continente</h2>
+      </div>
+    </section>
+    <div id="map" class="h-96 w-full"></div>
+    <section id="cards" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></section>
+  </main>
+  <footer class="text-center py-4 text-gray-500 text-xs">Fuente: CTBUH 2024</footer>
+  <script>
+const translations = {
+  es: {
+    pageTitle: "Los 10 edificios más altos del mundo",
+    heightLabel: "Altura (m)",
+    occupancy: "Porcentaje de ocupación",
+    country: "País",
+    city: "Ciudad",
+    architect: "Arquitecto",
+    viewMore: "Ver más",
+    continentsTitle: "Edificios altos por continente"
+  },
+  en: {
+    pageTitle: "Top 10 tallest buildings in the world",
+    heightLabel: "Height (m)",
+    occupancy: "Occupancy",
+    city: "City",
+    country: "Country",
+    architect: "Architect",
+    viewMore: "View more",
+    continentsTitle: "High-rises by continent"
+  }
+};
+
+const buildings = [
+  {
+    name: "Burj Khalifa",
+    height: 828,
+    occupancy: 80,
+    continent: "Asia",
+    country_es: "Emiratos Árabes Unidos",
+    country_en: "United Arab Emirates",
+    city: "Dubai",
+    architect: "Adrian Smith",
+    info_es: "El Burj Khalifa fue inaugurado en 2010 y es actualmente el rascacielos más alto del mundo.",
+    info_en: "Burj Khalifa opened in 2010 and is currently the tallest skyscraper in the world.",
+    bio_es: "Adrian Smith es un arquitecto estadounidense conocido por diseñar el Burj Khalifa y otros rascacielos icónicos.",
+    bio_en: "Adrian Smith is an American architect known for designing the Burj Khalifa and other iconic skyscrapers.",
+    buildingImage: "../image_data/building1.txt",
+    architectImage: "../image_data/architect1.txt",
+    lat: 25.1972,
+    lng: 55.2744
+  },
+  {
+    name: "Merdeka 118",
+    height: 679,
+    occupancy: 60,
+    continent: "Asia",
+    country_es: "Malasia",
+    country_en: "Malaysia",
+    architect: "Fender Katsalidis",
+    city: "Kuala Lumpur",
+    info_es: "Merdeka 118 se completó en 2023 y es actualmente el edificio más alto del sudeste asiático.",
+    info_en: "Merdeka 118 was completed in 2023 and is currently the tallest building in Southeast Asia.",
+    bio_es: "Fender Katsalidis es un estudio australiano responsable de este proyecto monumental en Kuala Lumpur.",
+    bio_en: "Fender Katsalidis is an Australian practice responsible for this monumental project in Kuala Lumpur.",
+    buildingImage: "../image_data/building2.txt",
+    architectImage: "../image_data/architect2.txt",
+    lat: 3.1412,
+    lng: 101.6931
+  },
+  {
+    name: "Shanghai Tower",
+    height: 632,
+    occupancy: 70,
+    continent: "Asia",
+    country_es: "China",
+    country_en: "China",
+    architect: "Gensler",
+    bio_es: "Gensler es una firma global de diseño con múltiples proyectos en todo el mundo.",
+    city: "Shanghai",
+    info_es: "La Shanghai Tower fue finalizada en 2015 y es el edificio más alto de China.",
+    info_en: "Shanghai Tower was finished in 2015 and is the tallest building in China.",
+    bio_en: "Gensler is a global design firm with projects around the world.",
+    buildingImage: "../image_data/building3.txt",
+    architectImage: "../image_data/architect3.txt",
+    lat: 31.2336,
+    lng: 121.5055
+  },
+  {
+    name: "Abraj Al-Bait Clock Tower",
+    height: 601,
+    occupancy: 95,
+    continent: "Asia",
+    country_es: "Arabia Saudita",
+    country_en: "Saudi Arabia",
+    architect: "Dar Al-Handasah",
+    bio_es: "Dar Al-Handasah es un grupo internacional de diseño con sede en Beirut.",
+    city: "Mecca",
+    info_es: "La torre del reloj fue completada en 2012 y es parte de un complejo junto a la Gran Mezquita.",
+    info_en: "The clock tower was completed in 2012 and is part of a complex next to the Great Mosque.",
+    bio_en: "Dar Al-Handasah is an international design group headquartered in Beirut.",
+    buildingImage: "../image_data/building4.txt",
+    architectImage: "../image_data/architect4.txt",
+    lat: 21.4187,
+    lng: 39.8256
+  },
+  {
+    name: "Ping An Finance Center",
+    height: 599,
+    occupancy: 80,
+    continent: "Asia",
+    country_es: "China",
+    country_en: "China",
+    architect: "Kohn Pedersen Fox",
+    bio_es: "Kohn Pedersen Fox es una firma de arquitectura estadounidense especializada en rascacielos.",
+    city: "Shenzhen",
+    info_es: "El rascacielos se terminó en 2017 y destaca por su elegante forma afilada.",
+    info_en: "The skyscraper was finished in 2017 and is noted for its sleek tapered form.",
+    bio_en: "Kohn Pedersen Fox is a US architecture firm specializing in skyscrapers.",
+    buildingImage: "../image_data/building5.txt",
+    architectImage: "../image_data/architect5.txt",
+    lat: 22.5333,
+    lng: 114.0540
+  },
+  {
+    name: "Lotte World Tower",
+    height: 555,
+    occupancy: 75,
+    continent: "Asia",
+    country_es: "Corea del Sur",
+    country_en: "South Korea",
+    architect: "Kohn Pedersen Fox",
+    city: "Seoul",
+    info_es: "La torre se completó en 2016 y cuenta con un mirador popular en la ciudad.",
+    info_en: "The tower was completed in 2016 and features a popular observation deck in Seoul.",
+    bio_es: "Kohn Pedersen Fox es una firma de arquitectura estadounidense especializada en rascacielos.",
+    bio_en: "Kohn Pedersen Fox is a US architecture firm specializing in skyscrapers.",
+    buildingImage: "../image_data/building6.txt",
+    architectImage: "../image_data/architect6.txt",
+    lat: 37.5131,
+    lng: 127.1025
+  },
+  {
+    name: "One World Trade Center",
+    height: 541,
+    occupancy: 85,
+    continent: "North America",
+    country_es: "Estados Unidos",
+    country_en: "United States",
+    architect: "Skidmore, Owings & Merrill",
+    bio_es: "SOM es una prestigiosa firma estadounidense responsable de numerosos rascacielos emblemáticos.",
+    city: "New York",
+    info_es: "Finalizado en 2014, es el edificio principal del nuevo World Trade Center en Manhattan.",
+    info_en: "Completed in 2014, it is the signature building of the new World Trade Center in Manhattan.",
+    bio_en: "SOM is a renowned American firm responsible for numerous landmark skyscrapers.",
+    buildingImage: "../image_data/building7.txt",
+    architectImage: "../image_data/architect7.txt",
+    lat: 40.7126,
+    lng: -74.0131
+  },
+  {
+    name: "Guangzhou CTF Finance Centre",
+    height: 530,
+    occupancy: 90,
+    continent: "Asia",
+    country_es: "China",
+    country_en: "China",
+    architect: "Kohn Pedersen Fox",
+    bio_es: "Kohn Pedersen Fox es una firma de arquitectura estadounidense especializada en rascacielos.",
+    city: "Guangzhou",
+    info_es: "Completado en 2016, es uno de los dos rascacielos gemelos CTF en China.",
+    info_en: "Completed in 2016, it is one of the twin CTF skyscrapers in China.",
+    bio_en: "Kohn Pedersen Fox is a US architecture firm specializing in skyscrapers.",
+    buildingImage: "../image_data/building8.txt",
+    architectImage: "../image_data/architect8.txt",
+    lat: 23.1180,
+    lng: 113.3215
+  },
+  {
+    name: "Tianjin CTF Finance Centre",
+    height: 530,
+    occupancy: 85,
+    continent: "Asia",
+    country_es: "China",
+    country_en: "China",
+    architect: "Skidmore, Owings & Merrill",
+    bio_es: "SOM es una prestigiosa firma estadounidense responsable de numerosos rascacielos emblemáticos.",
+    city: "Tianjin",
+    info_es: "Inaugurado en 2019, comparte altura con su gemelo de Guangzhou.",
+    info_en: "Opened in 2019, it shares its height with its Guangzhou twin.",
+    bio_en: "SOM is a renowned American firm responsible for numerous landmark skyscrapers.",
+    buildingImage: "../image_data/building9.txt",
+    architectImage: "../image_data/architect9.txt",
+    lat: 39.0845,
+    lng: 117.2059
+  },
+  {
+    name: "CITIC Tower",
+    height: 528,
+    occupancy: 80,
+    continent: "Asia",
+    country_es: "China",
+    country_en: "China",
+    architect: "TFP Farrells",
+    bio_es: "TFP Farrells es un estudio de arquitectura británico especializado en proyectos de gran escala.",
+    city: "Beijing",
+    info_es: "Conocida también como China Zun, la torre se terminó en 2018 y domina el skyline de Pekín.",
+    info_en: "Also known as China Zun, the tower was completed in 2018 and dominates Beijing's skyline.",
+    bio_en: "TFP Farrells is a British architecture studio specializing in large-scale projects.",
+    buildingImage: "../image_data/building10.txt",
+    architectImage: "../image_data/architect10.txt",
+    lat: 39.9122,
+    lng: 116.3971
+  }
+];
+
+let currentLang = 'es';
+let barChart = null;
+let continentChart = null;
+
+function drawCharts() {
+  const barCtx = document.getElementById('heightChart').getContext('2d');
+  const labels = buildings.map(b => b.name);
+  const heights = buildings.map(b => b.height);
+  if (barChart) barChart.destroy();
+  barChart = new Chart(barCtx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: translations[currentLang].heightLabel,
+        data: heights,
+        backgroundColor: 'rgba(99,102,241,0.7)'
+      }]
+    },
+    options: {
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+
+  const counts = {};
+  buildings.forEach(b => { counts[b.continent] = (counts[b.continent] || 0) + 1; });
+  const cLabels = Object.keys(counts);
+  const cData = Object.values(counts);
+  const contCtx = document.getElementById('continentChart').getContext('2d');
+  if (continentChart) continentChart.destroy();
+  continentChart = new Chart(contCtx, {
+    type: 'doughnut',
+    data: {
+      labels: cLabels,
+      datasets: [{
+        data: cData,
+        backgroundColor: ['#6366f1','#f59e0b','#10b981','#ef4444','#3b82f6']
+      }]
+    },
+    options: { plugins: { legend: { position: 'bottom' } } }
+  });
+}
+
+function createCards() {
+  const container = document.getElementById('cards');
+  container.innerHTML = '';
+  buildings.forEach((b, idx) => {
+    const card = document.createElement('div');
+    card.className = 'bg-white shadow rounded overflow-hidden flex flex-col';
+    card.innerHTML = `
+      <img id="build-${idx}" alt="${b.name}" class="w-full h-40 object-cover">
+      <div class="p-4 flex-1 flex flex-col">
+        <h3 class="text-xl font-semibold mb-2">${b.name}</h3>
+        <p class="text-sm mb-1"><strong>${translations[currentLang].country}:</strong> ${currentLang==='es'?b.country_es:b.country_en}</p>
+        <p class="text-sm mb-1"><strong>${translations[currentLang].city}:</strong> ${b.city}</p>
+        <p class="text-sm mb-1"><strong>${translations[currentLang].occupancy}:</strong> ${b.occupancy}%</p>
+        <div class="flex items-center mt-2">
+          <img id="arch-${idx}" alt="${b.architect}" class="w-12 h-12 rounded-full object-cover mr-2">
+          <p class="font-semibold text-sm">${translations[currentLang].architect}: ${b.architect}</p>
+        </div>
+        <div class="mt-auto space-x-2">
+          <button data-idx="${idx}" data-type="building" class="view-more-building text-indigo-600 underline text-sm">${translations[currentLang].viewMore}</button>
+          <button data-idx="${idx}" data-type="architect" class="view-more-arch text-indigo-600 underline text-sm">${translations[currentLang].viewMore}</button>
+        </div>
+        <div id="building-detail-${idx}" class="hidden mt-2 text-sm"></div>
+        <div id="architect-detail-${idx}" class="hidden mt-2 text-sm"></div>
+      </div>`;
+    container.appendChild(card);
+    document.getElementById(`building-detail-${idx}`).textContent = currentLang==='es'?b.info_es:b.info_en;
+    document.getElementById(`architect-detail-${idx}`).textContent = currentLang==='es'?b.bio_es:b.bio_en;
+    card.querySelector('.view-more-building').addEventListener('click', () => {
+      const d = document.getElementById('building-detail-'+idx);
+      d.classList.toggle('hidden');
+      if(!d.classList.contains('hidden')) d.classList.add('fade-in');
+    });
+    card.querySelector('.view-more-arch').addEventListener('click', () => {
+      const d = document.getElementById('architect-detail-'+idx);
+      d.classList.toggle('hidden');
+      if(!d.classList.contains('hidden')) d.classList.add('fade-in');
+    });
+    fetch(b.buildingImage)
+      .then(r => r.text())
+      .then(data => {
+        document.getElementById(`build-${idx}`).src =
+          'data:image/jpeg;base64,' + data.trim();
+      });
+    fetch(b.architectImage)
+      .then(r => r.text())
+      .then(data => {
+        document.getElementById(`arch-${idx}`).src =
+          'data:image/jpeg;base64,' + data.trim();
+      });
+  });
+}
+
+let mapInstance = null;
+function createMap() {
+  if (mapInstance) { mapInstance.remove(); }
+  mapInstance = L.map('map').setView([20,0], 2);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(mapInstance);
+  buildings.forEach(b => {
+    L.marker([b.lat, b.lng]).addTo(mapInstance).bindTooltip(b.name);
+  });
+}
+
+function updateLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  const t = translations[lang];
+  document.getElementById('page-title').textContent = t.pageTitle;
+  document.getElementById('height-label').textContent = t.heightLabel;
+  document.getElementById('continents-title').textContent = t.continentsTitle;
+  drawCharts();
+  createCards();
+  createMap();
+}
+
+document.getElementById('lang-select').addEventListener('change', e => {
+  updateLang(e.target.value);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateLang('es');
+});
+  </script>
+</body>
+</html>
