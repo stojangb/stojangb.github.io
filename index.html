@@ -304,7 +304,8 @@
           {
             title: "Desarrollo de Juego de Plataformas en Unity 3D",
             description: "Creación de un juego de plataformas utilizando Unity 3D y Blender, con mecánicas implementadas en C# que simulan una jugabilidad real.",
-            tech: "Unity 3D, Blender, C#"
+            tech: "Unity 3D, Blender, C#",
+            link: "singame/index.html"
           },
           {
             title: "Migración de Procedimientos Almacenados",
@@ -373,7 +374,8 @@
           {
             title: "Platformer Game Development in Unity 3D",
             description: "Creation of a platformer game using Unity 3D and Blender, with gameplay mechanics implemented in C# to simulate real-world play.",
-            tech: "Unity 3D, Blender, C#"
+            tech: "Unity 3D, Blender, C#",
+            link: "singame/index.html"
           },
           {
             title: "Stored Procedures Migration",
@@ -551,19 +553,14 @@
         `;
         projectsContainer.appendChild(div);
         if (project.link) {
-          if (project.link.includes('infografias')) {
-            const btn = document.createElement('button');
-            btn.textContent = currentLanguage === 'es' ? 'Abrir' : 'Open';
-            btn.className = 'mt-3 px-2 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-sm';
-            btn.addEventListener('click', (e) => {
-              e.stopPropagation();
-              openProject(project.link);
-            });
-            div.appendChild(btn);
-          } else {
-            div.classList.add('cursor-pointer');
-            div.addEventListener('click', () => openProject(project.link));
-          }
+          const btn = document.createElement('button');
+          btn.textContent = currentLanguage === 'es' ? 'Abrir' : 'Open';
+          btn.className = 'mt-3 px-2 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-sm';
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openProject(project.link);
+          });
+          div.appendChild(btn);
         }
       });
 
