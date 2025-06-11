@@ -9,7 +9,14 @@
 </head>
 <body class="bg-white min-h-screen flex flex-col items-center justify-center">
   <canvas id="hero-chart" class="w-full max-w-xl mb-8"></canvas>
-  <button id="back-btn" class="bg-indigo-600 text-white px-4 py-2 rounded">Back</button>
+  <div id="game-container" class="relative w-full max-w-xl h-64 mb-4 border">
+    <div id="ground" class="absolute bottom-0 left-0 w-full h-1 bg-gray-800"></div>
+    <div id="ball" class="absolute top-0 left-1/2 w-6 h-6 bg-red-500 rounded-full transform -translate-x-1/2"></div>
+  </div>
+  <div class="flex space-x-2">
+    <button id="start-btn" class="bg-green-600 text-white px-4 py-2 rounded">Start</button>
+    <button id="back-btn" class="bg-indigo-600 text-white px-4 py-2 rounded">Back</button>
+  </div>
   <script>
     const ctx = document.getElementById('hero-chart').getContext('2d');
     new Chart(ctx, {
@@ -30,6 +37,29 @@
         plugins: { legend: { display: false } },
         scales: { x: { display: false }, y: { display: false } }
       }
+    });
+    const ball = document.getElementById('ball');
+    const ground = document.getElementById('ground');
+    const container = document.getElementById('game-container');
+    let anim;
+    document.getElementById('start-btn').addEventListener('click', () => {
+      cancelAnimationFrame(anim);
+      let pos = 0;
+      let vel = 0;
+      const gravity = 0.5;
+      const maxPos = container.clientHeight - ground.offsetHeight - ball.offsetHeight;
+      function step() {
+        vel += gravity;
+        pos += vel;
+        if (pos >= maxPos) {
+          pos = maxPos;
+          ball.style.top = pos + 'px';
+          return;
+        }
+        ball.style.top = pos + 'px';
+        anim = requestAnimationFrame(step);
+      }
+      step();
     });
     document.getElementById('back-btn').addEventListener('click', () => {
       window.history.back();
