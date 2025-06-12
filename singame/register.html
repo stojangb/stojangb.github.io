@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro - Singame</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <script src="../extras/tailwind.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    body { background:#0e112f; color:#cfd9ff; font-family:'Poppins',sans-serif; }
+    .container { max-width:400px; margin:80px auto; padding:20px; background:#1b1b3a; border-radius:8px; box-shadow:0 0 10px #5514b4; }
+    label { display:block; margin-bottom:10px; }
+    input { width:100%; padding:8px; margin-top:4px; border-radius:4px; }
+    button { margin-top:10px; background:#5514b4; padding:10px 20px; border-radius:9999px; }
+    .message { margin-top:10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-2xl font-bold mb-4 text-center">Registro</h1>
+    <div id="g_id_onload"
+         data-client_id="YOUR_GOOGLE_CLIENT_ID"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
+    <form id="registration-form">
+      <label>Usuario
+        <input type="text" id="username" required>
+      </label>
+      <label>Contraseña
+        <input type="password" id="password" required>
+      </label>
+      <button type="submit" class="w-full">Registrar</button>
+    </form>
+    <div id="message" class="message text-center"></div>
+  </div>
+<script>
+  const form = document.getElementById('registration-form');
+  const msg = document.getElementById('message');
+
+  function handleCredentialResponse(response) {
+    try {
+      const data = JSON.parse(atob(response.credential.split('.')[1]));
+      const users = JSON.parse(localStorage.getItem('googleUsers') || '{}');
+      users[data.sub] = { name: data.name, email: data.email, picture: data.picture };
+      localStorage.setItem('googleUsers', JSON.stringify(users));
+      msg.textContent = `Registro exitoso como ${data.name}`;
+    } catch (e) {
+      msg.textContent = 'Error procesando el inicio de sesión con Google';
+    }
+  }
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    if (!username || !password) {
+      msg.textContent = 'Completa todos los campos';
+      return;
+    }
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    if (users[username]) {
+      msg.textContent = 'El usuario ya existe';
+      return;
+    }
+    users[username] = { password };
+    localStorage.setItem('users', JSON.stringify(users));
+    msg.textContent = 'Registro exitoso';
+    form.reset();
+  });
+</script>
+</body>
+</html>
