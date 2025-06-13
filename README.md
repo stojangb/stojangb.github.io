@@ -44,6 +44,7 @@ estadísticas.
    DNS. Consulta `ARCHITECTURE.md` para más detalles.
 3. Para que el workflow funcione debes añadir en la configuración del repositorio
    el secreto `GCP_SA_KEY_BASE64` con las credenciales de servicio en base64.
+4. Para la infraestructura, el workflow `.github/workflows/terraform.yml` planifica los cambios en los pull requests y los aplica al fusionar en `main`.
 
 ## Clave de OpenAI
 

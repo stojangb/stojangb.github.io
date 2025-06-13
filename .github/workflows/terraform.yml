@@ -1,0 +1,32 @@
+name: Terraform
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v3
+      - id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY_BASE64 }}
+      - uses: hashicorp/setup-terraform@v2
+      - name: Terraform Init
+        working-directory: infra
+        run: terraform init
+      - name: Terraform Plan
+        if: github.event_name == 'pull_request'
+        working-directory: infra
+        run: terraform plan -input=false
+      - name: Terraform Apply
+        if: github.event_name == 'push'
+        working-directory: infra
+        run: terraform apply -auto-approve -input=false
