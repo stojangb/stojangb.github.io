@@ -1,0 +1,2 @@
+# Ignore local development secrets
+extras/local-secrets.js
