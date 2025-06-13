@@ -3,18 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Singame Phaser Demo</title>
+  <title>Ciudad Fantasma IA</title>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
   <style>
-    body, html { margin:0; padding:0; background:#0e112f; color:#9f6aff; font-family: Arial, sans-serif; }
-    h1 { text-align:center; margin:20px 0; }
+    body, html {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0e112f, #1b1b3a);
+      color: #cfd9ff;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    h1 {
+      margin: 0 0 20px 0;
+      text-align: center;
+    }
     .neon { text-shadow: 0 0 5px #fff, 0 0 10px #9f6aff, 0 0 20px #9f6aff; }
-    #game { display:block; margin:0 auto; }
+    #game { margin: 0 auto; }
+    #dialog {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.6);
+      color: #cfd9ff;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      max-width: 80%;
+      font-size: 1rem;
+    }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <h1 class="neon">SINGAME GAME 2</h1>
+  <h1 class="neon">Ciudad Fantasma IA</h1>
   <div id="game"></div>
+  <div id="dialog" class="hidden"></div>
+  <script>
+    // OPENAI_API_KEY must be injected from the hosting environment
+    window.OPENAI_API_KEY = window.OPENAI_API_KEY || '';
+  </script>
   <script src="game.js"></script>
 </body>
 </html>
