@@ -1,5 +1,3 @@
-const OPENAI_API_KEY = window.OPENAI_API_KEY || '';
-
 const config = {
   type: Phaser.AUTO,
   parent: 'game',
@@ -9,69 +7,53 @@ const config = {
     default: 'arcade',
     arcade: { debug: false }
   },
-  scene: { preload, create }
+  scene: { preload, create, update }
 };
 
-let ghost;
-let dialog;
-const history = [
-  { role: 'system', content: 'Eres un fantasma de una ciudad abandonada. Responde siempre en español con frases cortas.' }
-];
+let player;
+let sheep;
+let cursors;
+let winText;
 
 function preload() {
   this.load.setBaseURL('https://labs.phaser.io');
-  this.load.image('bg', 'assets/skies/deep-space.jpg');
-  this.load.image('ghost', 'assets/sprites/ghost.png');
+  this.load.image('player', 'assets/sprites/dude.png');
+  this.load.image('sheep', 'assets/demoscene/star2.png');
 }
 
 function create() {
-  dialog = document.getElementById('dialog');
-  this.add.image(400, 300, 'bg');
-  ghost = this.physics.add.image(400, 300, 'ghost');
-  ghost.setInteractive();
-  ghost.on('pointerdown', () => talk.call(this));
-  showDialog('Haz clic en el fantasma para hablar.');
+  this.cameras.main.setBackgroundColor('#000');
+  player = this.physics.add.sprite(100, 300, 'player').setScale(0.5);
+  player.setCollideWorldBounds(true);
+
+  sheep = this.physics.add.sprite(700, 300, 'sheep').setScale(1.2);
+  sheep.setBlendMode(Phaser.BlendModes.ADD);
+
+  cursors = this.input.keyboard.createCursorKeys();
+  winText = this.add.text(400, 50, '', { font: '24px Arial', fill: '#fff' }).setOrigin(0.5);
+
+  this.physics.add.overlap(player, sheep, win, null, this);
 }
 
-function showDialog(text) {
-  dialog.textContent = text;
-  dialog.classList.remove('hidden');
-}
+function update() {
+  if (winText.text) return;
 
-async function talk() {
-  showDialog('...');
-  const response = await getGhostMessage('Habla con el jugador');
-  showDialog(response);
-  this.tweens.add({
-    targets: ghost,
-    x: Phaser.Math.Between(100, 700),
-    y: Phaser.Math.Between(100, 500),
-    duration: 800,
-    ease: 'Sine.easeInOut'
-  });
-}
-
-async function getGhostMessage(prompt) {
-  if (!OPENAI_API_KEY) {
-    return 'Falta la API key de OpenAI.';
+  player.setVelocity(0);
+  if (cursors.left.isDown) {
+    player.setVelocityX(-160);
+  } else if (cursors.right.isDown) {
+    player.setVelocityX(160);
   }
-  history.push({ role: 'user', content: prompt });
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + OPENAI_API_KEY
-    },
-    body: JSON.stringify({
-      model: 'gpt-3.5-turbo',
-      messages: history,
-      max_tokens: 60
-    })
-  });
-  const data = await res.json();
-  const msg = data.choices?.[0]?.message?.content?.trim() || '...';
-  history.push({ role: 'assistant', content: msg });
-  return msg;
+  if (cursors.up.isDown) {
+    player.setVelocityY(-160);
+  } else if (cursors.down.isDown) {
+    player.setVelocityY(160);
+  }
+}
+
+function win() {
+  winText.setText('¡Ganaste!');
+  sheep.destroy();
 }
 
 new Phaser.Game(config);
