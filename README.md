@@ -45,13 +45,3 @@ estadísticas.
 3. Para que el workflow funcione debes añadir en la configuración del repositorio
    el secreto `GCP_SA_KEY_BASE64` con las credenciales de servicio en base64.
 
-## Clave de OpenAI
-
-El minijuego `singame/game2` necesita una API key de OpenAI. No la incluyas en el
-frontend. Crea un backend o función serverless que use la clave y exponga un
-endpoint al que llame el juego.
-Para desarrollo local crea un archivo `extras/local-secrets.js` que defina `window.OPENAI_API_KEY` y que está en `.gitignore` para evitar que se suba.
-
-Al desplegar ese backend puedes leer la clave desde un secreto (`OPENAI_API_KEY`)
-en GitHub o desde Secret Manager en Google Cloud. Nunca la subas al código
-público.
