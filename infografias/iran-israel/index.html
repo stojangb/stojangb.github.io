@@ -21,6 +21,37 @@
     <h1 id="page-title" class="text-4xl text-center font-bold mb-4"></h1>
     <canvas id="barChart" height="250"></canvas>
     <p id="notes" class="text-center text-xs text-gray-600"></p>
+
+    <div id="progress-section" class="hidden mt-6">
+      <div class="relative h-2 bg-gray-300 overflow-hidden">
+        <div id="progress-bar" class="absolute top-0 left-0 h-full bg-red-600" style="width:0%"></div>
+        <div id="bomb-icon" class="absolute -top-3 left-0 text-xl">💣</div>
+      </div>
+    </div>
+
+    <div id="support-section" class="hidden mt-6 flex justify-between">
+      <div class="w-1/2 pr-2">
+        <h2 id="iran-title" class="text-center font-bold text-red-600 mb-2"></h2>
+        <ul id="iran-countries" class="list-disc list-inside"></ul>
+      </div>
+      <div class="w-1/2 pl-2">
+        <h2 id="israel-title" class="text-center font-bold text-blue-600 mb-2"></h2>
+        <ul id="israel-countries" class="list-disc list-inside"></ul>
+      </div>
+    </div>
+
+    <button id="info-button" class="hidden mt-4 bg-indigo-600 text-white py-2 px-4 rounded"></button>
+
+    <div id="info-section" class="hidden mt-4 space-y-4">
+      <div>
+        <h3 id="iran-info-title" class="font-bold text-red-600"></h3>
+        <ul id="iran-info" class="list-disc list-inside"></ul>
+      </div>
+      <div>
+        <h3 id="israel-info-title" class="font-bold text-blue-600"></h3>
+        <ul id="israel-info" class="list-disc list-inside"></ul>
+      </div>
+    </div>
   </main>
   <footer class="text-center py-4 text-gray-500 text-xs">2024</footer>
 <script>
@@ -30,14 +61,24 @@ const translations = {
     notes: 'Datos aproximados de fuentes públicas (2024)',
     labels: ['Personal activo (miles)', 'Presupuesto (B USD)', 'Tanques', 'Aeronaves de combate', 'Submarinos', 'Ojivas nucleares'],
     iran: 'Irán',
-    israel: 'Israel'
+    israel: 'Israel',
+    iranSupportTitle: 'Países que apoyan a Irán',
+    israelSupportTitle: 'Países que apoyan a Israel',
+    moreInfo: 'Mostrar más información',
+    iranInfoTitle: 'Detalles de los países que apoyan a Irán',
+    israelInfoTitle: 'Detalles de los países que apoyan a Israel'
   },
   en: {
     pageTitle: 'Military power comparison: Iran vs Israel',
     notes: 'Approximate data from public sources (2024)',
     labels: ['Active personnel (k)', 'Budget (B USD)', 'Tanks', 'Combat aircraft', 'Submarines', 'Nuclear warheads'],
     iran: 'Iran',
-    israel: 'Israel'
+    israel: 'Israel',
+    iranSupportTitle: 'Countries supporting Iran',
+    israelSupportTitle: 'Countries supporting Israel',
+    moreInfo: 'Show more information',
+    iranInfoTitle: 'Details of countries supporting Iran',
+    israelInfoTitle: 'Details of countries supporting Israel'
   }
 };
 
@@ -48,6 +89,20 @@ const data = {
 
 let currentLang = 'es';
 let chart;
+
+const countriesIran = [
+  { name: 'Rusia', capital: 'Mosc\u00fa', money: '$1.8T', population: '144M', strategy: 'Gran arsenal de misiles y fuerzas terrestres' },
+  { name: 'Siria', capital: 'Damasco', money: '$60B', population: '17M', strategy: 'Apoyo ruso e iran\u00ed en su ej\u00e9rcito' },
+  { name: 'Irak', capital: 'Bagdad', money: '$225B', population: '40M', strategy: 'Reestructuraci\u00f3n de fuerzas de seguridad' },
+  { name: 'L\u00edbano', capital: 'Beirut', money: '$20B', population: '5M', strategy: 'Influencia de Hezbollah en la defensa' }
+];
+
+const countriesIsrael = [
+  { name: 'Estados Unidos', capital: 'Washington D.C.', money: '$25T', population: '331M', strategy: 'Superioridad a\u00e9rea y capacidad nuclear' },
+  { name: 'Reino Unido', capital: 'Londres', money: '$3.1T', population: '67M', strategy: 'Apoyo log\u00edstico y naval' },
+  { name: 'Francia', capital: 'Par\u00eds', money: '$3T', population: '65M', strategy: 'Fuerzas de reacci\u00f3n r\u00e1pida y arsenal nuclear' },
+  { name: 'Alemania', capital: 'Berl\u00edn', money: '$4T', population: '83M', strategy: 'Industria militar avanzada y apoyo log\u00edstico' }
+];
 
 function drawChart(){
   const ctx = document.getElementById('barChart').getContext('2d');
@@ -68,18 +123,93 @@ function drawChart(){
   });
 }
 
+function populateLists(){
+  const iranList = document.getElementById('iran-countries');
+  const israelList = document.getElementById('israel-countries');
+  iranList.innerHTML = '';
+  israelList.innerHTML = '';
+  countriesIran.forEach(c => {
+    const li = document.createElement('li');
+    li.textContent = c.name;
+    iranList.appendChild(li);
+  });
+  countriesIsrael.forEach(c => {
+    const li = document.createElement('li');
+    li.textContent = c.name;
+    israelList.appendChild(li);
+  });
+}
+
+function populateInfo(){
+  const iranInfo = document.getElementById('iran-info');
+  const israelInfo = document.getElementById('israel-info');
+  iranInfo.innerHTML = '';
+  israelInfo.innerHTML = '';
+  countriesIran.forEach(c => {
+    const li = document.createElement('li');
+    li.textContent = `${c.name} - Capital: ${c.capital}, PIB: ${c.money}, Poblaci\u00f3n: ${c.population}, Estrategia: ${c.strategy}`;
+    iranInfo.appendChild(li);
+  });
+  countriesIsrael.forEach(c => {
+    const li = document.createElement('li');
+    li.textContent = `${c.name} - Capital: ${c.capital}, PIB: ${c.money}, Poblaci\u00f3n: ${c.population}, Estrategia: ${c.strategy}`;
+    israelInfo.appendChild(li);
+  });
+}
+
+function startProgress(){
+  const bar = document.getElementById('progress-bar');
+  const bomb = document.getElementById('bomb-icon');
+  const duration = 4000;
+  const start = performance.now();
+  function step(now){
+    const progress = Math.min((now - start) / duration, 1);
+    bar.style.width = (progress * 100) + '%';
+    bomb.style.left = `calc(${progress * 100}% - 0.5rem)`;
+    if(progress < 1){
+      requestAnimationFrame(step);
+    } else {
+      document.getElementById('support-section').classList.remove('hidden');
+      document.getElementById('info-button').classList.remove('hidden');
+      populateLists();
+    }
+  }
+  requestAnimationFrame(step);
+}
+
 function updateLang(lang){
   currentLang = lang;
   const t = translations[lang];
   document.documentElement.lang = lang;
   document.getElementById('page-title').textContent = t.pageTitle;
   document.getElementById('notes').textContent = t.notes;
+  document.getElementById('iran-title').textContent = t.iranSupportTitle;
+  document.getElementById('israel-title').textContent = t.israelSupportTitle;
+  document.getElementById('info-button').textContent = t.moreInfo;
+  document.getElementById('iran-info-title').textContent = t.iranInfoTitle;
+  document.getElementById('israel-info-title').textContent = t.israelInfoTitle;
   drawChart();
 }
 
 document.getElementById('lang-select').addEventListener('change', e => updateLang(e.target.value));
 
-document.addEventListener('DOMContentLoaded', () => updateLang('es'));
+document.getElementById('info-button').addEventListener('click', () => {
+  const info = document.getElementById('info-section');
+  if(info.classList.contains('hidden')){
+    populateInfo();
+    info.classList.remove('hidden');
+  } else {
+    info.classList.add('hidden');
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateLang('es');
+  setTimeout(() => {
+    document.getElementById('progress-section').classList.remove('hidden');
+    startProgress();
+  }, 5000);
+});
 </script>
 </body>
 </html>
