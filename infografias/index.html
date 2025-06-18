@@ -14,12 +14,28 @@
     gtag("config", "G-XXXXXXXXXX");
   </script>
   <style>
+    body {
+      background: #eceff1;
+    }
+    header {
+      background: #6200ee;
+      color: white;
+    }
+    nav a {
+      color: white;
+      font-weight: 500;
+    }
     .infographic-card {
       background: white;
-      border-radius: 10px;
+      border-radius: 8px;
       padding: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .infographic-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
   </style>
 
@@ -31,7 +47,6 @@
       <a href="about.html">About</a>
       <a href="pricing.html">Pricing</a>
       <a href="contact.html">Contact</a>
-      <button class="hamburger-menu">☰</button>
     </nav>
   </header>
   <main class="flex-grow grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4" id="posts"></main>
