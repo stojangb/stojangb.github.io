@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Oveja Brillante</title>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+  <script src="../../extras/tailwind.js"></script>
   <style>
     body, html {
       margin: 0;
@@ -24,6 +25,12 @@
   </style>
 </head>
 <body>
+  <nav class="bg-black bg-opacity-40 text-white px-4 py-2 flex justify-between items-center">
+    <a href="../index.html" class="font-bold">Singame</a>
+    <div class="space-x-4">
+      <a href="../index.html#projects" class="hover:text-indigo-300">Projects</a>
+    </div>
+  </nav>
   <h1 class="neon">Busca la Oveja Brillante</h1>
   <div id="game"></div>
   <script src="game.js"></script>
