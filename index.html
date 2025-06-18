@@ -425,7 +425,7 @@
     };
 
     let currentLanguage = "es";
-    let activeSection = "about";
+    let activeSection = window.location.hash ? window.location.hash.substring(1) : "about";
 
     function updateContent() {
       const t = data[currentLanguage];
@@ -603,6 +603,7 @@
         }
         btnDesktop.addEventListener("click", () => {
           activeSection = key;
+          window.location.hash = key;
           updateSections();
           createNavButtons();
         });
@@ -618,6 +619,7 @@
         }
         btnMobile.addEventListener("click", () => {
           activeSection = key;
+          window.location.hash = key;
           updateSections();
           createNavButtons();
           document.getElementById("mobile-menu").classList.add("hidden");
@@ -788,6 +790,11 @@
         mobileMenu.classList.toggle("hidden");
       });
       document.getElementById("close-modal").addEventListener("click", closeProject);
+      window.addEventListener('hashchange', () => {
+        activeSection = window.location.hash ? window.location.hash.substring(1) : 'about';
+        updateSections();
+        createNavButtons();
+      });
     });
   </script>
 </body>
