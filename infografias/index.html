@@ -21,16 +21,6 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       position: relative;
     }
-    .badge-new {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: #007BFF;
-      color: white;
-      padding: 2px 8px;
-      font-size: 0.75rem;
-      border-radius: 6px;
-    }
   </style>
 
 </head>
@@ -38,9 +28,9 @@
   <header class="flex justify-between items-center p-4 bg-white shadow">
     <h1 class="text-2xl font-bold">Infographics</h1>
     <nav class="space-x-4">
-      <a href="#">About</a>
-      <a href="#">Pricing</a>
-      <a href="#">Contact</a>
+      <a href="about.html">About</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="contact.html">Contact</a>
       <button class="hamburger-menu">☰</button>
     </nav>
   </header>
@@ -79,7 +69,7 @@ posts.forEach((p, idx)=>{
   card.href = p.link;
   card.className = 'infographic-card block';
   const date = new Date(p.date).toLocaleDateString('en-US', { day: 'numeric', month: 'long' });
-  card.innerHTML = `${idx===0?'<div class="badge-new">New</div>':''}<h2 class="date mb-2">${date}</h2><div class="content"><img id="img-${idx}" class="w-full h-40 object-cover rounded" /></div><h3 class="mt-2 font-semibold">${p.title}</h3>`;
+  card.innerHTML = `<h2 class="date mb-2">${date}</h2><div class="content"><img id="img-${idx}" class="w-full h-40 object-cover rounded" /></div><h3 class="mt-2 font-semibold">${p.title}</h3>`;
   container.appendChild(card);
   fetch(p.image).then(r=>r.text()).then(d=>{document.getElementById(`img-${idx}`).src='data:image/jpeg;base64,'+d.trim();});
 });
