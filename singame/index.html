@@ -306,9 +306,9 @@
 
         function update() {
           if (gameOverText.text) return;
-          ball.setVelocityX(0);
-          if (cursors.left.isDown) ball.setVelocityX(-200);
-          else if (cursors.right.isDown) ball.setVelocityX(200);
+          ball.body.setVelocityX(0);
+          if (cursors.left.isDown) ball.body.setVelocityX(-200);
+          else if (cursors.right.isDown) ball.body.setVelocityX(200);
           obstacles.getChildren().forEach(o => { if (o.y < -20) o.destroy(); });
           if (ball.y < 0) lose.call(this);
         }
