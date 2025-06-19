@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
   <script src="../extras/tailwind.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
@@ -51,6 +52,12 @@
     #tech-animation svg {
       width: 100%;
       height: 100%;
+    }
+    #game-container {
+      width: 100%;
+      max-width: 600px;
+      height: 400px;
+      margin: 2rem auto;
     }
   </style>
 </head>
@@ -101,6 +108,12 @@
     <p class="mt-2 italic" data-es="▶️ Disponible próximamente">►️ Coming soon</p>
   </section>
 
+  <section id="minigame-section" class="max-w-3xl mx-auto p-8 text-center">
+    <h3 class="text-2xl font-bold mb-4" data-es="Juega para desbloquear">Play to Unlock</h3>
+    <div id="game-container"></div>
+    <p data-es="Completa este minijuego para revelar más contenido." class="mt-4">Complete this mini-game to reveal more content.</p>
+  </section>
+
   <section class="bg-indigo-800 bg-opacity-30 p-8">
     <h3 class="text-2xl font-bold mb-4" data-es="💡 Tecnología Propia. IA Real. Diversión Garantizada.">💡 Proprietary Technology. Real AI. Fun Guaranteed.</h3>
     <p data-es="Desde los primeros prototipos hasta las versiones más avanzadas, cada juego de Singame está construido con una arquitectura de IA que aprende, se adapta y mejora contigo. Nuestra misión:">From the early prototypes to the most advanced versions, every Singame game is built with an AI architecture that learns, adapts and improves with you. Our mission:</p>
@@ -119,13 +132,13 @@
     <p data-es="Compatible con móviles, tablets y PC.">Compatible with mobile, tablet and PC.</p>
   </section>
 
-  <section id="about-us-section" class="max-w-3xl mx-auto p-8">
+  <section id="about-us-section" class="max-w-3xl mx-auto p-8 hidden locked">
     <h3 class="text-2xl font-bold mb-2" data-es="🤖 Un equipo de soñadores, ingenieros y artistas.">🤖 A team of dreamers, engineers and artists.</h3>
     <p data-es="Singame es más que una empresa.">Singame is more than a company.</p>
     <p data-es="Es una revolución creativa.">It is a creative revolution.</p>
     <p data-es="Es una señal de lo que viene.">It is a sign of what's coming.</p>
   </section>
-<section id="start-section" class="max-w-3xl mx-auto p-8 text-center">
+<section id="start-section" class="max-w-3xl mx-auto p-8 text-center hidden locked">
   <h3 class="text-2xl font-bold mb-2" data-es="Cómo Comenzar">How to Get Started</h3>
   <p data-es="<a href=\"register.html\" class=\"underline\">Regístrate con tu cuenta de Google</a> y sigue el desarrollo."><a href="register.html" class="underline">Sign up with your Google account</a> and follow the development.</p>
   <p data-es="Únete a la comunidad y sé parte del futuro del gaming.">Join the community and be part of the future of gaming.</p>
@@ -237,9 +250,51 @@
       }
       animateNetwork();
     }
-      document.addEventListener("DOMContentLoaded", () => {
+
+    function initMiniGame() {
+      const config = {
+        type: Phaser.AUTO,
+        parent: 'game-container',
+        width: 600,
+        height: 400,
+        physics: { default: 'arcade', arcade: { debug: false } },
+        scene: { preload, create, update }
+      };
+      let player, sheep, cursors, winText;
+      function preload() {
+        this.load.setBaseURL('https://labs.phaser.io');
+        this.load.image('player', 'assets/sprites/dude.png');
+        this.load.image('sheep', 'assets/demoscene/star2.png');
+      }
+      function create() {
+        this.cameras.main.setBackgroundColor('#0e112f');
+        player = this.physics.add.sprite(100, 200, 'player').setScale(0.5);
+        player.setCollideWorldBounds(true);
+        sheep = this.physics.add.sprite(500, 200, 'sheep').setScale(1.1);
+        sheep.setBlendMode(Phaser.BlendModes.ADD);
+        cursors = this.input.keyboard.createCursorKeys();
+        winText = this.add.text(300, 50, '', { font: '24px Arial', fill: '#fff' }).setOrigin(0.5);
+        this.physics.add.overlap(player, sheep, win, null, this);
+      }
+      function update() {
+        if (winText.text) return;
+        player.setVelocity(0);
+        if (cursors.left.isDown) player.setVelocityX(-160);
+        else if (cursors.right.isDown) player.setVelocityX(160);
+        if (cursors.up.isDown) player.setVelocityY(-160);
+        else if (cursors.down.isDown) player.setVelocityY(160);
+      }
+      function win() {
+        winText.setText('Unlocked!');
+        sheep.destroy();
+        document.querySelectorAll('.locked').forEach(el => el.classList.remove('hidden', 'locked'));
+      }
+      new Phaser.Game(config);
+    }
+    document.addEventListener("DOMContentLoaded", () => {
         initChart();
         initTechAnimation();
+        initMiniGame();
         document.querySelectorAll("[data-es]").forEach(el => { el.dataset.en = el.textContent; });
         const toggle = document.getElementById("lang-toggle");
         if (toggle) {
