@@ -17,9 +17,10 @@ function preload() {}
 
 function create() {
   this.cameras.main.setBackgroundColor('#0e112f');
-  ball = this.physics.add.circle(300, 50, 15, 0x00ffff);
-  ball.setBounce(0.6);
-  ball.setCollideWorldBounds(true);
+  ball = this.add.circle(300, 50, 15, 0x00ffff);
+  this.physics.add.existing(ball);
+  ball.body.setBounce(0.6);
+  ball.body.setCollideWorldBounds(true);
 
   cursors = this.input.keyboard.createCursorKeys();
   obstacles = this.physics.add.group();
