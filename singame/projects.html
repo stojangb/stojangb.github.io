@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proyectos - Singame</title>
+  <title>Projects - Singame</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
   <script src="../extras/tailwind.js"></script>
@@ -24,33 +24,33 @@
       <div class="flex justify-between items-center py-4">
         <a href="index.html" class="text-2xl font-bold tracking-tight">Singame</a>
         <div class="space-x-4">
-          <a href="index.html" data-en="Home" class="hover:text-indigo-300">Inicio</a>
-          <button id="lang-toggle" class="hero-btn" data-lang="es">EN</button>
+          <a href="index.html" data-es="Inicio" class="hover:text-indigo-300">Home</a>
+          <button id="lang-toggle" class="hero-btn" data-lang="en">ES</button>
         </div>
       </div>
     </div>
   </nav>
   <section class="max-w-5xl mx-auto p-8">
-    <h3 class="text-2xl font-bold mb-6" data-en="🎮 Projects">🎮 Proyectos</h3>
+    <h3 class="text-2xl font-bold mb-6" data-es="🎮 Proyectos">🎮 Projects</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <a href="game2/index.html" class="bg-indigo-800 bg-opacity-30 p-6 rounded-lg hover:bg-opacity-50 transition-all block text-center">
-        <h4 class="text-xl font-bold mb-2" data-en="Brilliant Sheep">Oveja Brillante</h4>
+        <h4 class="text-xl font-bold mb-2" data-es="Oveja Brillante">Brilliant Sheep</h4>
       </a>
       <a href="game1/index.html" class="bg-indigo-800 bg-opacity-30 p-6 rounded-lg hover:bg-opacity-50 transition-all block text-center">
-        <h4 class="text-xl font-bold mb-2" data-en="Singame Platformer">Singame Platformer</h4>
+        <h4 class="text-xl font-bold mb-2" data-es="Singame Platformer">Singame Platformer</h4>
       </a>
     </div>
   </section>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll("[data-en]").forEach(el => { el.dataset.es = el.textContent; });
+      document.querySelectorAll("[data-es]").forEach(el => { el.dataset.en = el.textContent; });
       const toggle = document.getElementById("lang-toggle");
       if (toggle) {
         toggle.addEventListener("click", () => {
           const lang = toggle.dataset.lang === "es" ? "en" : "es";
           toggle.dataset.lang = lang;
           toggle.textContent = lang === "es" ? "EN" : "ES";
-          document.querySelectorAll("[data-en]").forEach(el => { el.textContent = el.dataset[lang]; });
+          document.querySelectorAll("[data-es]").forEach(el => { el.textContent = el.dataset[lang]; });
         });
       }
     });
