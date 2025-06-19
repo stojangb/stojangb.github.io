@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro - Singame</title>
+  <title>Register - Singame</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <script src="../extras/tailwind.js"></script>
   <!-- Google Analytics -->
@@ -27,7 +27,8 @@
 </head>
 <body>
   <div class="container">
-    <h1 class="text-2xl font-bold mb-4 text-center">Registro</h1>
+    <button id="lang-toggle" class="float-right mb-2 bg-indigo-700 px-3 py-1 rounded" data-lang="en">ES</button>
+    <h1 class="text-2xl font-bold mb-4 text-center" data-es="Registro">Register</h1>
     <div id="g_id_onload"
          data-client_id="YOUR_GOOGLE_CLIENT_ID"
          data-callback="handleCredentialResponse"
@@ -35,19 +36,46 @@
     </div>
     <div class="g_id_signin" data-type="standard"></div>
     <form id="registration-form">
-      <label>Usuario
+      <label data-es="Usuario">Username
         <input type="text" id="username" required>
       </label>
-      <label>Contraseña
+      <label data-es="Contraseña">Password
         <input type="password" id="password" required>
       </label>
-      <button type="submit" class="w-full">Registrar</button>
+      <button type="submit" class="w-full" data-es="Registrar">Register</button>
     </form>
     <div id="message" class="message text-center"></div>
   </div>
 <script>
   const form = document.getElementById('registration-form');
   const msg = document.getElementById('message');
+  let currentLang = 'en';
+  const messages = {
+    en: {
+      successGoogle: name => `Successfully registered as ${name}`,
+      googleError: 'Error processing Google login',
+      fillAll: 'Fill all fields',
+      exists: 'User already exists',
+      success: 'Registration successful'
+    },
+    es: {
+      successGoogle: name => `Registro exitoso como ${name}`,
+      googleError: 'Error procesando el inicio de sesión con Google',
+      fillAll: 'Completa todos los campos',
+      exists: 'El usuario ya existe',
+      success: 'Registro exitoso'
+    }
+  };
+  document.querySelectorAll('[data-es]').forEach(el => { el.dataset.en = el.textContent; });
+  const toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      currentLang = currentLang === 'es' ? 'en' : 'es';
+      toggle.textContent = currentLang === 'es' ? 'EN' : 'ES';
+      document.documentElement.lang = currentLang;
+      document.querySelectorAll('[data-es]').forEach(el => { el.textContent = el.dataset[currentLang]; });
+    });
+  }
 
   function handleCredentialResponse(response) {
     try {
@@ -55,9 +83,9 @@
       const users = JSON.parse(localStorage.getItem('googleUsers') || '{}');
       users[data.sub] = { name: data.name, email: data.email, picture: data.picture };
       localStorage.setItem('googleUsers', JSON.stringify(users));
-      msg.textContent = `Registro exitoso como ${data.name}`;
+      msg.textContent = messages[currentLang].successGoogle(data.name);
     } catch (e) {
-      msg.textContent = 'Error procesando el inicio de sesión con Google';
+      msg.textContent = messages[currentLang].googleError;
     }
   }
   form.addEventListener('submit', e => {
@@ -65,17 +93,17 @@
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
     if (!username || !password) {
-      msg.textContent = 'Completa todos los campos';
+      msg.textContent = messages[currentLang].fillAll;
       return;
     }
     const users = JSON.parse(localStorage.getItem('users') || '{}');
     if (users[username]) {
-      msg.textContent = 'El usuario ya existe';
+      msg.textContent = messages[currentLang].exists;
       return;
     }
     users[username] = { password };
     localStorage.setItem('users', JSON.stringify(users));
-    msg.textContent = 'Registro exitoso';
+    msg.textContent = messages[currentLang].success;
     form.reset();
   });
 </script>

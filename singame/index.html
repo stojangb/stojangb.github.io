@@ -22,26 +22,28 @@
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(to bottom right, #0e112f, #1b1b3a);
       color: #cfd9ff;
+      line-height: 1.6;
     }
     .neon-text {
       text-shadow: 0 0 5px #fff, 0 0 10px #9f6aff, 0 0 20px #9f6aff;
     }
     #singame-hero {
-      background: linear-gradient(to right, #1b1b3a, #262b63);
+      background: radial-gradient(circle at top left, #1b1b3a 0%, #262b63 70%);
       color: white;
-      padding: 4rem 1rem;
+      padding: 6rem 1rem;
       text-align: center;
     }
     .hero-btn {
-      background: #5514b4;
+      background: linear-gradient(to right, #5514b4, #7b1fa2);
       border-radius: 9999px;
       padding: 1rem 2rem;
       margin: 0 0.5rem;
       box-shadow: 0 0 10px #5514b4;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.2s;
     }
     .hero-btn:hover {
-      background: #7b1fa2;
+      background: linear-gradient(to right, #7b1fa2, #9f6aff);
+      transform: translateY(-2px);
     }
     #tech-animation {
       overflow: hidden;
@@ -53,100 +55,88 @@
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
-  <nav class="sticky top-0 z-50 backdrop-blur-md bg-black bg-opacity-40 text-white shadow-lg">
+  <nav class="sticky top-0 z-50 backdrop-blur-md bg-black/60 text-white shadow-lg">
     <div class="max-w-6xl mx-auto px-4">
       <div class="flex justify-between items-center py-4">
         <a href="../index.html" class="text-2xl font-bold tracking-tight">Singame</a>
         <div class="space-x-4">
-          <a href="projects.html" data-en="Projects" class="hover:text-indigo-300">Proyectos</a>
-          <a href="register.html" data-en="Register" class="hover:text-indigo-300">Registrarse</a>
+          <a href="projects.html" data-es="Proyectos" class="transition-colors duration-200 hover:text-indigo-300">Projects</a>
+          <a href="register.html" data-es="Registrarse" class="transition-colors duration-200 hover:text-indigo-300">Register</a>
         </div>
       </div>
     </div>
   </nav>
   <section id="singame-hero">
     <h1 class="text-6xl font-bold neon-text">SINGAME</h1>
-    <p id="hero-tagline" class="mt-2 text-xl" data-en="We are a video game company that drives artificial intelligence in gaming">Somos una empresa de videojuegos que impulsa la inteligencia artificial en el gaming</p>
+    <p id="hero-tagline" class="mt-2 text-xl" data-es="Somos una empresa de videojuegos que impulsa la inteligencia artificial en el gaming">We are a video game company that drives artificial intelligence in gaming</p>
     <canvas id="hero-chart" class="mx-auto my-6 max-w-xl"></canvas>
     <div class="flex justify-center mt-4">
-      <a href="register.html" id="btn-register" class="hero-btn" data-en="SIGN UP WITH GOOGLE">Regístrate con Google</a>
-        <button id="lang-toggle" class="hero-btn" data-lang="es">EN</button>
+      <a href="register.html" id="btn-register" class="hero-btn" data-es="Regístrate con Google">SIGN UP WITH GOOGLE</a>
+        <button id="lang-toggle" class="hero-btn" data-lang="en">ES</button>
     </div>
   </section>
 <section id="tech-section" class="mt-8 text-center">
-  <h2 class="text-2xl font-bold mb-4 neon-text" data-en="OUR TECHNOLOGY">NUESTRA TECNOLOGÍA</h2>
+  <h2 class="text-2xl font-bold mb-4 neon-text" data-es="NUESTRA TECNOLOGÍA">OUR TECHNOLOGY</h2>
   <div id="tech-animation" class="relative w-full h-64 mb-8 mx-auto"></div>
 </section>
   <section class="max-w-3xl mx-auto p-8 text-center">
-    <h2 class="text-3xl md:text-4xl font-bold mb-4" data-en="The Future of Gaming Begins Here">El Futuro del Juego Comienza Aquí</h2>
-    <p class="mb-4" data-en="Have fun instantly, no fuss.">Diviértete al instante, sin rodeos.</p>
-    <p data-en="We create video games with artificial intelligence that understand, learn and evolve with you. At Singame, we redefine what it means to play.">Creamos videojuegos con inteligencia artificial que entienden, aprenden y evolucionan contigo. En Singame, redefinimos lo que significa jugar.</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-4" data-es="El Futuro del Juego Comienza Aquí">The Future of Gaming Begins Here</h2>
+    <p class="mb-4" data-es="Diviértete al instante, sin rodeos.">Have fun instantly, no fuss.</p>
+    <p data-es="Creamos videojuegos con inteligencia artificial que entienden, aprenden y evolucionan contigo. En Singame, redefinimos lo que significa jugar.">We create video games with artificial intelligence that understand, learn and evolve with you. At Singame, we redefine what it means to play.</p>
   </section>
 
   <section class="bg-indigo-800 bg-opacity-30 p-8">
-    <h3 class="text-2xl font-bold mb-4" data-en="🚀 Why Singame?">🚀 ¿Por qué Singame?</h3>
+    <h3 class="text-2xl font-bold mb-4" data-es="¿Por qué Singame?">🚀 Why Singame?</h3>
     <ul class="space-y-3 text-lg">
-      <li data-en="AI at every level – Every mechanic, enemy and decision is powered by AI for a unique, dynamic and unrepeatable experience."><strong>IA en todos los niveles</strong> – Cada mecánica, enemigo y decisión es impulsada por IA para una experiencia única, dinámica e irrepetible.</li>
-      <li data-en="Games that think, feel and respond – Our technology allows worlds to react to you. You're no longer playing inside the game, you're part of it."><strong>Juegos que piensan, sienten y responden</strong> – Nuestra tecnología permite que los mundos reaccionen a ti. Ya no juegas dentro del juego, ahora formas parte de él.</li>
-      <li data-en="Design without limits – Immersive visuals, real-time generated animations and styles that adapt to how you play."><strong>Diseño sin límites</strong> – Visuales envolventes, animaciones generadas en tiempo real y estilos que se adaptan a tu forma de jugar.</li>
+      <li data-es="IA en todos los niveles – Cada mecánica, enemigo y decisión es impulsada por IA para una experiencia única, dinámica e irrepetible.">AI at every level – Every mechanic, enemy and decision is powered by AI for a unique, dynamic and unrepeatable experience.</li>
+      <li data-es="Juegos que piensan, sienten y responden – Nuestra tecnología permite que los mundos reaccionen a ti. Ya no juegas dentro del juego, ahora formas parte de él.">Games that think, feel and respond – Our technology allows worlds to react to you. You're no longer playing inside the game, you're part of it.</li>
+      <li data-es="Diseño sin límites – Visuales envolventes, animaciones generadas en tiempo real y estilos que se adaptan a tu forma de jugar.">Design without limits – Immersive visuals, real-time generated animations and styles that adapt to how you play.</li>
     </ul>
   </section>
 
   <section class="max-w-3xl mx-auto p-8 text-center">
-    <h3 data-en="🔥 Binbunlock" class="text-2xl font-bold mb-2">🔥 Binbunlock</h3>
-    <p data-en="The game that will change everything.">El juego que cambiará todo.</p>
-    <p data-en="A mini-game that evolves with the way you think.">Un minijuego que evoluciona con tu forma de pensar.</p>
-    <p class="mt-2 italic" data-en="►️ Coming soon">▶️ Disponible próximamente</p>
+    <h3 data-es="🔥 Binbunlock" class="text-2xl font-bold mb-2">🔥 Binbunlock</h3>
+    <p data-es="El juego que cambiará todo.">The game that will change everything.</p>
+    <p data-es="Un minijuego que evoluciona con tu forma de pensar.">A mini-game that evolves with the way you think.</p>
+    <p class="mt-2 italic" data-es="▶️ Disponible próximamente">►️ Coming soon</p>
   </section>
 
   <section class="bg-indigo-800 bg-opacity-30 p-8">
-    <h3 class="text-2xl font-bold mb-4" data-en="💡 Proprietary Technology. Real AI. Fun Guaranteed.">💡 Tecnología Propia. IA Real. Diversión Garantizada.</h3>
-    <p data-en="From the early prototypes to the most advanced versions, every Singame game is built with an AI architecture that learns, adapts and improves with you. Our mission:">Desde los primeros prototipos hasta las versiones más avanzadas, cada juego de Singame está construido con una arquitectura de IA que aprende, se adapta y mejora contigo. Nuestra misión:</p>
-    <blockquote data-en="Turn every match into an unrepeatable experience." class="border-l-4 border-indigo-500 pl-4 my-4 italic">Convertir cada partida en una experiencia irrepetible.</blockquote>
+    <h3 class="text-2xl font-bold mb-4" data-es="💡 Tecnología Propia. IA Real. Diversión Garantizada.">💡 Proprietary Technology. Real AI. Fun Guaranteed.</h3>
+    <p data-es="Desde los primeros prototipos hasta las versiones más avanzadas, cada juego de Singame está construido con una arquitectura de IA que aprende, se adapta y mejora contigo. Nuestra misión:">From the early prototypes to the most advanced versions, every Singame game is built with an AI architecture that learns, adapts and improves with you. Our mission:</p>
+    <blockquote data-es="Convertir cada partida en una experiencia irrepetible." class="border-l-4 border-indigo-500 pl-4 my-4 italic">Turn every match into an unrepeatable experience.</blockquote>
   </section>
 
   <section class="max-w-3xl mx-auto p-8">
-    <h3 class="text-2xl font-bold mb-2" data-en="🌍 Designed for Everyone. Played by the Future.">🌍 Pensado para Todos. Jugado por el Futuro.</h3>
-    <p data-en="We no longer talk about ordinary video games. We talk about a new language between humans and machines.">Ya no hablamos de videojuegos comunes. Hablamos de un nuevo lenguaje entre humanos y máquinas.</p>
-    <p data-en="A new universe where you decide the rules.">Un nuevo universo donde tú decides las reglas.</p>
+    <h3 class="text-2xl font-bold mb-2" data-es="🌍 Pensado para Todos. Jugado por el Futuro.">🌍 Designed for Everyone. Played by the Future.</h3>
+    <p data-es="Ya no hablamos de videojuegos comunes. Hablamos de un nuevo lenguaje entre humanos y máquinas.">We no longer talk about ordinary video games. We talk about a new language between humans and machines.</p>
+    <p data-es="Un nuevo universo donde tú decides las reglas.">A new universe where you decide the rules.</p>
   </section>
 
   <section class="bg-indigo-800 bg-opacity-30 p-8">
-    <h3 class="text-2xl font-bold mb-2" data-en="👁️ Futuristic Design. No Downloads. No Waiting.">👁️ Diseño Futurista. Sin Descargas. Sin Esperas.</h3>
-    <p data-en="Everything in the cloud. Play from wherever you are.">Todo en la nube. Juega desde donde estés.</p>
-    <p data-en="Compatible with mobile, tablet and PC.">Compatible con móviles, tablets y PC.</p>
-  </section>
-
-  <section id="projects" class="max-w-5xl mx-auto p-8">
-    <h3 class="text-2xl font-bold mb-6" data-en="🎮 Projects">🎮 Proyectos</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <a href="game1/index.html" class="bg-indigo-800 bg-opacity-30 p-6 rounded-lg hover:bg-opacity-50 transition-all block text-center">
-        <h4 class="text-xl font-bold mb-2" data-en="Singame Platformer">Singame Platformer</h4>
-      </a>
-      <a href="game2/index.html" class="bg-indigo-800 bg-opacity-30 p-6 rounded-lg hover:bg-opacity-50 transition-all block text-center">
-        <h4 class="text-xl font-bold mb-2" data-en="Brilliant Sheep">Oveja Brillante</h4>
-      </a>
-    </div>
+    <h3 class="text-2xl font-bold mb-2" data-es="👁️ Diseño Futurista. Sin Descargas. Sin Esperas.">👁️ Futuristic Design. No Downloads. No Waiting.</h3>
+    <p data-es="Todo en la nube. Juega desde donde estés.">Everything in the cloud. Play from wherever you are.</p>
+    <p data-es="Compatible con móviles, tablets y PC.">Compatible with mobile, tablet and PC.</p>
   </section>
 
   <section id="about-us-section" class="max-w-3xl mx-auto p-8">
-    <h3 class="text-2xl font-bold mb-2" data-en="🤖 A team of dreamers, engineers and artists.">🤖 Un equipo de soñadores, ingenieros y artistas.</h3>
-    <p data-en="Singame is more than a company.">Singame es más que una empresa.</p>
-    <p data-en="It is a creative revolution.">Es una revolución creativa.</p>
-    <p data-en="It is a sign of what's coming.">Es una señal de lo que viene.</p>
+    <h3 class="text-2xl font-bold mb-2" data-es="🤖 Un equipo de soñadores, ingenieros y artistas.">🤖 A team of dreamers, engineers and artists.</h3>
+    <p data-es="Singame es más que una empresa.">Singame is more than a company.</p>
+    <p data-es="Es una revolución creativa.">It is a creative revolution.</p>
+    <p data-es="Es una señal de lo que viene.">It is a sign of what's coming.</p>
   </section>
 <section id="start-section" class="max-w-3xl mx-auto p-8 text-center">
-  <h3 class="text-2xl font-bold mb-2" data-en="How to Get Started">Cómo Comenzar</h3>
-  <p data-en="Sign up with your Google account and follow the development."><a href="register.html" class="underline">Regístrate con tu cuenta de Google</a> y sigue el desarrollo.</p>
-  <p data-en="Join the community and be part of the future of gaming.">Únete a la comunidad y sé parte del futuro del gaming.</p>
+  <h3 class="text-2xl font-bold mb-2" data-es="Cómo Comenzar">How to Get Started</h3>
+  <p data-es="<a href=\"register.html\" class=\"underline\">Regístrate con tu cuenta de Google</a> y sigue el desarrollo."><a href="register.html" class="underline">Sign up with your Google account</a> and follow the development.</p>
+  <p data-es="Únete a la comunidad y sé parte del futuro del gaming.">Join the community and be part of the future of gaming.</p>
 </section>
 
   <section class="bg-indigo-800 bg-opacity-30 p-8 text-center">
-    <h3 class="text-2xl font-bold mb-2" data-en="📬 Want to collaborate with us?">📬 ¿Quieres colaborar con nosotros?</h3>
-    <p class="mb-4" data-en="Developers, testers, investors and dreamers: Contact us. The future is built together.">Desarrolladores, testers, inversores y soñadores: Contáctanos. El futuro se construye juntos.</p>
+    <h3 class="text-2xl font-bold mb-2" data-es="📬 ¿Quieres colaborar con nosotros?">📬 Want to collaborate with us?</h3>
+    <p class="mb-4" data-es="Desarrolladores, testers, inversores y soñadores: Contáctanos. El futuro se construye juntos.">Developers, testers, investors and dreamers: Contact us. The future is built together.</p>
     <a href="https://www.stojangasic.com" class="underline text-indigo-300">www.stojangasic.com</a>
   </section>
-  <p class="text-center mt-10 text-gray-300" data-en="The start of a unique futuristic project.">El inicio de un proyecto futurista sin igual.</p>
+  <p class="text-center mt-10 text-gray-300" data-es="El inicio de un proyecto futurista sin igual.">The start of a unique futuristic project.</p>
   <script>
     function initChart(){
       const ctx = document.getElementById('hero-chart').getContext('2d');
@@ -250,14 +240,14 @@
       document.addEventListener("DOMContentLoaded", () => {
         initChart();
         initTechAnimation();
-        document.querySelectorAll("[data-en]").forEach(el => { el.dataset.es = el.textContent; });
+        document.querySelectorAll("[data-es]").forEach(el => { el.dataset.en = el.textContent; });
         const toggle = document.getElementById("lang-toggle");
         if (toggle) {
           toggle.addEventListener("click", () => {
             const lang = toggle.dataset.lang === "es" ? "en" : "es";
             toggle.dataset.lang = lang;
             toggle.textContent = lang === "es" ? "EN" : "ES";
-            document.querySelectorAll("[data-en]").forEach(el => { el.textContent = el.dataset[lang]; });
+            document.querySelectorAll("[data-es]").forEach(el => { el.textContent = el.dataset[lang]; });
           });
         }
       });
