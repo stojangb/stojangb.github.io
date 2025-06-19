@@ -39,8 +39,13 @@
         <tr><th id="nutrient" class="p-2 text-left"></th><th id="amount" class="p-2 text-left"></th></tr>
       </thead>
       <tbody id="nutri-body"></tbody>
-    </table>
-  </main>
+      </table>
+      <div id="facts-container" class="relative bg-white rounded shadow p-4 mt-6">
+        <p id="drag-instruction" class="text-center italic mb-2"></p>
+        <div id="mussel" class="absolute top-0 left-0 w-8 h-8 bg-indigo-700 text-white flex items-center justify-center rounded-full cursor-pointer select-none">🦪</div>
+        <ul id="facts" class="ml-12 space-y-2 text-sm list-disc"></ul>
+      </div>
+    </main>
   <footer class="text-center py-4 text-gray-500 text-xs">Fuente: estimaciones 2024</footer>
   <script>
 const translations = {
@@ -50,7 +55,8 @@ const translations = {
     expLabel: 'Exportaciones %',
     nutrient: 'Nutriente',
     amount: 'Cantidad por 100g',
-    intro: 'Mytilus chilensis se cultiva de forma industrial desde 1979 y hoy Puerto Montt aporta cerca de un cuarto de la cosecha regional.'
+    intro: 'Mytilus chilensis se cultiva de forma industrial desde 1979 y hoy Puerto Montt aporta cerca de un cuarto de la cosecha regional.',
+    drag: 'Arrastra el chorito para descubrir datos'
   },
   en: {
     pageTitle: 'Mussels in Puerto Montt',
@@ -58,8 +64,28 @@ const translations = {
     expLabel: 'Exports %',
     nutrient: 'Nutrient',
     amount: 'Amount per 100g',
-    intro: 'Mytilus chilensis has been farmed industrially since 1979 and Puerto Montt now provides about a quarter of the region\'s harvest.'
+    intro: 'Mytilus chilensis has been farmed industrially since 1979 and Puerto Montt now provides about a quarter of the region\'s harvest.',
+    drag: 'Drag the mussel to reveal facts'
   }
+};
+
+const factsData = {
+  es: [
+    'Especie Mytilus chilensis presente en costas de Chile y Argentina.',
+    'La producción en 2019 fue 379\u00A0096 t (26,9% nacional).',
+    'Los Lagos aporta m\u00E1s del 56% y Puerto Montt alrededor del 20–25%.',
+    'Exportaciones de USD 202M en 2015 y 15M en nov 2023; Espa\u00F1a y Rusia destacan.',
+    'La mitilicultura sustenta a 17\u00A0000 familias con 12\u00A0000 empleos directos.',
+    'Innovaciones como el \u201CSem\u00E1foro de la Semilla\u201D optimizan la captaci\u00F3n.'
+  ],
+  en: [
+    'Species Mytilus chilensis found along Chile and Argentina.',
+    'Production in 2019 reached 379,096 t (26.9% of national aquaculture).',
+    'Los Lagos provides over 56% and Puerto Montt about 20–25%.',
+    'Exports totaled USD 202M in 2015 and 15M in Nov 2023; Spain and Russia lead.',
+    'Mussel farming supports 17,000 families with 12,000 direct jobs.',
+    'Innovations such as the \u201CSeed Traffic Light\u201D help optimize seed collection.'
+  ]
 };
 
 const production = [
@@ -86,6 +112,7 @@ const nutrients = [
 
 let currentLang = 'es';
 let prodChart, expChart, mapInstance;
+let showIndex = 0;
 
 function setTexts(){
   const t = translations[currentLang];
@@ -98,11 +125,14 @@ function setTexts(){
   document.getElementById('nutrient').textContent = t.nutrient;
   document.getElementById('amount').textContent = t.amount;
   document.getElementById('intro').textContent = t.intro;
+  document.getElementById('drag-instruction').textContent = t.drag;
+  populateFacts();
 }
 
 document.getElementById('lang-select').addEventListener('change', e=>{
   currentLang = e.target.value;
   setTexts();
+  populateFacts();
 });
 
 function initCharts(){
@@ -160,11 +190,49 @@ function fillTable(){
   });
 }
 
+function populateFacts(){
+  const ul = document.getElementById('facts');
+  ul.innerHTML = '';
+  factsData[currentLang].forEach(text => {
+    const li = document.createElement('li');
+    li.textContent = text;
+    li.classList.add('hidden');
+    ul.appendChild(li);
+  });
+  showIndex = 0;
+  document.getElementById('mussel').style.left = '0px';
+}
+
+function initDrag(){
+  const container = document.getElementById('facts-container');
+  const mussel = document.getElementById('mussel');
+  const ul = document.getElementById('facts');
+  let dragging = false;
+  function reveal(idx){
+    const items = ul.querySelectorAll('li');
+    for(let i=0;i<items.length;i++){
+      if(i<=idx) items[i].classList.remove('hidden');
+    }
+  }
+  mussel.addEventListener('pointerdown', e=>{ dragging=true; mussel.setPointerCapture(e.pointerId); });
+  mussel.addEventListener('pointerup', e=>{ dragging=false; mussel.releasePointerCapture(e.pointerId); });
+  mussel.addEventListener('pointermove', e=>{
+    if(!dragging) return;
+    const rect = container.getBoundingClientRect();
+    let x = e.clientX - rect.left - mussel.offsetWidth/2;
+    x = Math.max(0, Math.min(x, rect.width - mussel.offsetWidth));
+    mussel.style.left = x + 'px';
+    const idx = Math.floor(x / (rect.width - mussel.offsetWidth) * factsData[currentLang].length);
+    reveal(idx);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', ()=>{
   initCharts();
   initMap();
   fillTable();
   setTexts();
+  initDrag();
 });
   </script>
 </body>
