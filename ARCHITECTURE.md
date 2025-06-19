@@ -14,7 +14,7 @@ visible immediately.
 
 ## API Key Handling
 
-El minijuego `singame/game2` ya no usa servicios externos ni claves de API. Todo
+El minijuego `singame/game2` (Super Ball) ya no usa servicios externos ni claves de API. Todo
 el código se ejecuta en el navegador, por lo que basta con desplegar el sitio
 estático sin preocuparse por credenciales.
 
