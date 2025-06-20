@@ -57,6 +57,10 @@
           <span>Puerto Montt ~21%</span>
         </div>
       </div>
+      <div id="timeline" class="bg-white rounded shadow p-4 mt-4">
+        <p id="timeline-title" class="text-center font-semibold mb-2"></p>
+        <div id="timeline-stages" class="flex justify-between"></div>
+      </div>
     </main>
   <footer class="text-center py-4 text-gray-500 text-xs">Fuente: estimaciones 2024</footer>
   <script>
@@ -69,7 +73,8 @@ const translations = {
     amount: 'Cantidad por 100g',
     intro: 'Mytilus chilensis se cultiva de forma industrial desde 1979 y hoy Puerto Montt aporta cerca de un cuarto de la cosecha regional.',
     drag: 'Arrastra el chorito para descubrir datos',
-    comparison: 'Participación en la producción'
+    comparison: 'Participación en la producción',
+    timelineTitle: 'Ciclo de producción'
   },
   en: {
     pageTitle: 'Mussels in Puerto Montt',
@@ -79,7 +84,8 @@ const translations = {
     amount: 'Amount per 100g',
     intro: 'Mytilus chilensis has been farmed industrially since 1979 and Puerto Montt now provides about a quarter of the region\'s harvest.',
     drag: 'Drag the mussel to reveal facts',
-    comparison: 'Share of production'
+    comparison: 'Share of production',
+    timelineTitle: 'Production cycle'
   }
 };
 
@@ -101,6 +107,23 @@ const factsData = {
     'Exports worth USD 14.7M in 2023; Russia and Spain are top buyers.',
     'Mussel farming provides 12,000 direct jobs and supports 17,000 families.',
     'Tools like the \u201CSeed Traffic Light\u201D help optimize seed collection.'
+  ]
+};
+
+const timelineStages = {
+  es: [
+    {label:'Semilla', duration:'0-6 meses'},
+    {label:'Juvenil', duration:'6-12 meses'},
+    {label:'Engorda', duration:'12-18 meses'},
+    {label:'Cosecha', duration:'18-24 meses'},
+    {label:'Venta', duration:'>24 meses'}
+  ],
+  en: [
+    {label:'Seed', duration:'0-6 months'},
+    {label:'Juvenile', duration:'6-12 months'},
+    {label:'Fattening', duration:'12-18 months'},
+    {label:'Harvest', duration:'18-24 months'},
+    {label:'Sale', duration:'>24 months'}
   ]
 };
 
@@ -144,13 +167,16 @@ function setTexts(){
   document.getElementById('drag-instruction').textContent = t.drag;
   const share = document.getElementById('share-title');
   if (share) share.textContent = t.comparison;
+  document.getElementById('timeline-title').textContent = t.timelineTitle;
   populateFacts();
+  fillTimeline();
 }
 
 document.getElementById('lang-select').addEventListener('change', e=>{
   currentLang = e.target.value;
   setTexts();
   populateFacts();
+  fillTimeline();
 });
 
 function initCharts(){
@@ -221,6 +247,27 @@ function populateFacts(){
   document.getElementById('mussel').style.left = '0px';
 }
 
+function fillTimeline(){
+  const container = document.getElementById('timeline-stages');
+  container.innerHTML = '';
+  timelineStages[currentLang].forEach(stage => {
+    const div = document.createElement('div');
+    div.className = 'flex-1 text-center text-xs';
+    const dot = document.createElement('div');
+    dot.className = 'w-2 h-2 mx-auto bg-indigo-700 rounded-full';
+    const label = document.createElement('div');
+    label.className = 'mt-1 font-medium';
+    label.textContent = stage.label;
+    const time = document.createElement('div');
+    time.className = 'text-gray-500';
+    time.textContent = stage.duration;
+    div.appendChild(dot);
+    div.appendChild(label);
+    div.appendChild(time);
+    container.appendChild(div);
+  });
+}
+
 function initDrag(){
   const container = document.getElementById('facts-container');
   const mussel = document.getElementById('mussel');
@@ -264,6 +311,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   initMap();
   fillTable();
   setTexts();
+  fillTimeline();
   initDrag();
   setTimeout(()=>{
     document.getElementById('comparison').classList.remove('hidden');
