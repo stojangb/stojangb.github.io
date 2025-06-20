@@ -683,10 +683,7 @@
 
 
     function openProject(link) {
-      const modal = document.getElementById('project-modal');
-      const iframe = document.getElementById('project-iframe');
-      iframe.src = link;
-      modal.classList.remove('hidden');
+      window.location.href = link;
     }
 
     function closeProject() {
