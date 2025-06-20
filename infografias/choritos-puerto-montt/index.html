@@ -45,6 +45,18 @@
         <div id="mussel" class="absolute top-0 left-0 w-8 h-8 bg-indigo-700 text-white flex items-center justify-center rounded-full cursor-pointer select-none">🦪</div>
         <ul id="facts" class="ml-12 space-y-2 text-sm list-disc"></ul>
       </div>
+      <div id="comparison" class="hidden bg-white rounded shadow p-4 mt-4">
+        <p id="share-title" class="text-center font-semibold mb-2"></p>
+        <div class="relative h-6 bg-gray-200 rounded overflow-hidden">
+          <div id="bar-loslagos" class="absolute left-0 top-0 h-full bg-indigo-300" style="width:0"></div>
+          <div id="bar-pm" class="absolute left-0 top-0 h-full bg-indigo-700" style="width:0"></div>
+        </div>
+        <div class="flex justify-between text-xs mt-1">
+          <span>Chile 100%</span>
+          <span>Los Lagos ~56%</span>
+          <span>Puerto Montt ~21%</span>
+        </div>
+      </div>
     </main>
   <footer class="text-center py-4 text-gray-500 text-xs">Fuente: estimaciones 2024</footer>
   <script>
@@ -56,7 +68,8 @@ const translations = {
     nutrient: 'Nutriente',
     amount: 'Cantidad por 100g',
     intro: 'Mytilus chilensis se cultiva de forma industrial desde 1979 y hoy Puerto Montt aporta cerca de un cuarto de la cosecha regional.',
-    drag: 'Arrastra el chorito para descubrir datos'
+    drag: 'Arrastra el chorito para descubrir datos',
+    comparison: 'Participación en la producción'
   },
   en: {
     pageTitle: 'Mussels in Puerto Montt',
@@ -65,26 +78,29 @@ const translations = {
     nutrient: 'Nutrient',
     amount: 'Amount per 100g',
     intro: 'Mytilus chilensis has been farmed industrially since 1979 and Puerto Montt now provides about a quarter of the region\'s harvest.',
-    drag: 'Drag the mussel to reveal facts'
+    drag: 'Drag the mussel to reveal facts',
+    comparison: 'Share of production'
   }
 };
 
 const factsData = {
   es: [
-    'Especie Mytilus chilensis presente en costas de Chile y Argentina.',
-    'La producción en 2019 fue 379\u00A0096 t (26,9% nacional).',
-    'Los Lagos aporta m\u00E1s del 56% y Puerto Montt alrededor del 20–25%.',
-    'Exportaciones de USD 202M en 2015 y 15M en nov 2023; Espa\u00F1a y Rusia destacan.',
-    'La mitilicultura sustenta a 17\u00A0000 familias con 12\u00A0000 empleos directos.',
-    'Innovaciones como el \u201CSem\u00E1foro de la Semilla\u201D optimizan la captaci\u00F3n.'
+    'Molusco filtrador presente desde Per\u00FA hasta Tierra del Fuego.',
+    'Cultivo industrial desde 1979: 2k t en 1990, 116k t en 2006 y 170k t en 2007.',
+    'En 2019 se cosecharon 379\u00A0096 t (27% de la acuicultura nacional).',
+    'Los Lagos aporta m\u00E1s del 56% y Puerto Montt cerca del 20% del total.',
+    'Exportaciones por USD 14,7M en 2023; Rusia y Espa\u00F1a lideran las compras.',
+    'La mitilicultura genera 12\u00A0000 empleos directos y apoya a 17\u00A0000 familias.',
+    'Herramientas como el \u201CSem\u00E1foro de la Semilla\u201D optimizan la captaci\u00F3n.'
   ],
   en: [
-    'Species Mytilus chilensis found along Chile and Argentina.',
-    'Production in 2019 reached 379,096 t (26.9% of national aquaculture).',
-    'Los Lagos provides over 56% and Puerto Montt about 20–25%.',
-    'Exports totaled USD 202M in 2015 and 15M in Nov 2023; Spain and Russia lead.',
-    'Mussel farming supports 17,000 families with 12,000 direct jobs.',
-    'Innovations such as the \u201CSeed Traffic Light\u201D help optimize seed collection.'
+    'Filter-feeding mollusk found from Peru to Tierra del Fuego.',
+    'Industrial farming since 1979: 2k t in 1990, 116k t in 2006 and 170k t in 2007.',
+    '2019 harvest reached 379,096 t (27% of national aquaculture).',
+    'Los Lagos supplies over 56% and Puerto Montt about 20% of output.',
+    'Exports worth USD 14.7M in 2023; Russia and Spain are top buyers.',
+    'Mussel farming provides 12,000 direct jobs and supports 17,000 families.',
+    'Tools like the \u201CSeed Traffic Light\u201D help optimize seed collection.'
   ]
 };
 
@@ -126,6 +142,8 @@ function setTexts(){
   document.getElementById('amount').textContent = t.amount;
   document.getElementById('intro').textContent = t.intro;
   document.getElementById('drag-instruction').textContent = t.drag;
+  const share = document.getElementById('share-title');
+  if (share) share.textContent = t.comparison;
   populateFacts();
 }
 
@@ -227,12 +245,31 @@ function initDrag(){
   });
 }
 
+function showComparison(){
+  const ll = document.getElementById('bar-loslagos');
+  const pm = document.getElementById('bar-pm');
+  let w = 0;
+  const llTarget = 56;
+  const pmTarget = 21;
+  const timer = setInterval(()=>{
+    if(w <= llTarget) ll.style.width = w + '%';
+    if(w <= pmTarget) pm.style.width = w + '%';
+    w++;
+    if(w > llTarget && w > pmTarget) clearInterval(timer);
+  },20);
+}
+
 document.addEventListener('DOMContentLoaded', ()=>{
   initCharts();
   initMap();
   fillTable();
   setTexts();
   initDrag();
+  setTimeout(()=>{
+    document.getElementById('comparison').classList.remove('hidden');
+    setTexts();
+    showComparison();
+  },2000);
 });
   </script>
 </body>
