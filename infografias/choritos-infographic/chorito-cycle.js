@@ -9,7 +9,7 @@ class ChoritoCycle extends HTMLElement{
     this.shadowRoot.appendChild(link);
     const iconsUrl = new URL('./assets/infographic-icons.svg', import.meta.url);
     this.shadowRoot.innerHTML+=`
-    <h1 class="title">Chilean Mussel Production Cycle</h1>
+    <h1 class="title"></h1>
     <section class="timeline">
       <svg class="timeline__icons">
         <use href="${iconsUrl}#seed" id="icon-seed"></use>
@@ -21,7 +21,8 @@ class ChoritoCycle extends HTMLElement{
       <input type="range" id="timeSlider" class="timeline__slider" min="0" max="30" step="1" value="0" aria-label="months">
       <div id="stageInfo" class="timeline__panel is-hidden"></div>
     </section>`;
-    initChoritoCycle(this.shadowRoot, iconsUrl.toString());
+    const lang=document.documentElement.lang||'en';
+    initChoritoCycle(this.shadowRoot, iconsUrl.toString(), lang);
   }
 }
 customElements.define('chorito-cycle', ChoritoCycle);
