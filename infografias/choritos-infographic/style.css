@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&display=swap');
+
+:root{
+  --blue-dark:#0e2237;
+  --blue-light:#1b4e74;
+  --accent:#FF8A00;
+  color-scheme: dark;
+  color:#e0f0ff;
+  background:var(--blue-dark);
+  font-family:'Inter', sans-serif;
+}
+@media (prefers-color-scheme: light){
+  :root{color:#222;background:white;}
+}
+
+.title{ text-align:center; margin-bottom:1rem; }
+.timeline{ max-width:600px; margin:auto; }
+.timeline__icons{ display:flex; justify-content:space-between; margin-bottom:1rem; }
+.timeline__icons use{ width:40px; height:40px; color:var(--blue-light); transition:color 0.3s; animation:sway 4s ease-in-out infinite; transform-origin:50% 0; }
+.timeline__icons use.is-active{ color:var(--accent); }
+.timeline__slider{ width:100%; }
+.timeline__panel{ background:var(--blue-light); padding:1rem; border-radius:8px; margin-top:1rem; font-size:0.9rem; }
+.is-hidden{ display:none; }
+@keyframes sway{0%{transform:rotate(-2deg);}50%{transform:rotate(2deg);}100%{transform:rotate(-2deg);}}
+@keyframes bubbles{from{transform:translateY(0);opacity:1;}to{transform:translateY(-80px);opacity:0;}}
+.bubble{position:absolute;fill:#70d6ff;animation:bubbles 3s linear forwards;}
