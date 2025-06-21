@@ -11,6 +11,7 @@ let ball;
 let cursors;
 let obstacles;
 let obstacleTimer;
+let winTimer;
 let gameOverText;
 
 function preload() {}
@@ -26,12 +27,13 @@ function create() {
   obstacles = this.physics.add.group();
   this.physics.add.collider(ball, obstacles, hit, null, this);
 
-  obstacleTimer = this.time.addEvent({ delay: 1500, callback: addObstacle, callbackScope: this, loop: true });
+  obstacleTimer = this.time.addEvent({ delay: 2000, callback: addObstacle, callbackScope: this, loop: true });
+  winTimer = this.time.delayedCall(5000, win, null, this);
   gameOverText = this.add.text(300, 200, '', { font: '24px Arial', fill: '#fff' }).setOrigin(0.5);
 }
 
 function addObstacle() {
-  const gapWidth = Phaser.Math.Between(100, 180);
+  const gapWidth = Phaser.Math.Between(160, 220);
   const gapX = Phaser.Math.Between(50, 550 - gapWidth);
   const leftW = gapX;
   const rightW = 600 - gapX - gapWidth;
@@ -40,7 +42,7 @@ function addObstacle() {
     this.physics.add.existing(l);
     l.body.setAllowGravity(false);
     l.body.setImmovable(true);
-    l.body.setVelocityY(-120);
+    l.body.setVelocityY(-80);
     obstacles.add(l);
   }
   if (rightW > 0) {
@@ -48,7 +50,7 @@ function addObstacle() {
     this.physics.add.existing(r);
     r.body.setAllowGravity(false);
     r.body.setImmovable(true);
-    r.body.setVelocityY(-120);
+    r.body.setVelocityY(-80);
     obstacles.add(r);
   }
 }
@@ -67,7 +69,14 @@ function hit() { lose.call(this); }
 function lose() {
   gameOverText.setText('Game Over');
   obstacleTimer.remove();
+  winTimer && winTimer.remove();
   this.time.delayedCall(1000, () => { this.scene.restart(); });
+}
+
+function win() {
+  gameOverText.setText('You Win!');
+  obstacleTimer.remove();
+  winTimer && winTimer.remove();
 }
 
 new Phaser.Game(config);
