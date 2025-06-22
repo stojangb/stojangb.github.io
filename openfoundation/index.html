@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fundación Abierta - StojanGasic.com</title>
+  <title>Open Foundation - StojanGasic.com</title>
   <script src="../extras/tailwind.js"></script>
   <style>
     body {
@@ -18,44 +18,89 @@
   <header class="p-4 bg-black bg-opacity-30 flex justify-between items-center">
     <h1 class="text-2xl font-bold"><a href="../index.html">Stojan Gasic</a></h1>
     <nav class="space-x-4">
-      <a href="../index.html" class="hover:underline">Inicio</a>
-      <a href="#sobre" class="hover:underline">Fundación</a>
-      <a href="#proyectos" class="hover:underline">Proyectos</a>
-      <a href="#donar" class="hover:underline">Donar</a>
+      <a href="projects.html" class="hover:underline" data-key="navProjects">Projects</a>
+      <select id="lang-select" class="bg-indigo-600 text-white p-1 rounded">
+        <option value="en">EN</option>
+        <option value="es">ES</option>
+      </select>
     </nav>
   </header>
   <main class="flex-grow p-6 space-y-10">
-    <section id="sobre" class="section p-6 rounded-lg shadow-lg">
-      <h2 class="text-3xl font-bold mb-4">Fundación Abierta</h2>
-      <p>
-        Open Foundation, o Fundación Abierta, es un nuevo proyecto de StojanGasic.com.
-        Nuestro objetivo es crear una organización que impulse proyectos de toda índole:
-        desde dinámicas solidarias y apoyo a personas, hasta iniciativas creativas
-        que prueben ideas poco convencionales.
+    <section id="about" class="section p-6 rounded-lg shadow-lg">
+      <h2 class="text-3xl font-bold mb-4" data-key="foundationHeader">Open Foundation</h2>
+      <p data-key="mission">
+        Open Foundation is a new project from StojanGasic.com. Our goal is to create an organization that drives all kinds of projects: from solidarity activities and support for people, to creative initiatives that test unconventional ideas.
       </p>
     </section>
-    <section id="proyectos" class="section p-6 rounded-lg shadow-lg">
-      <h3 class="text-2xl font-semibold mb-3">Líneas de acción</h3>
+    <section id="lines" class="section p-6 rounded-lg shadow-lg">
+      <h3 class="text-2xl font-semibold mb-3" data-key="linesTitle">Lines of action</h3>
       <ul class="list-disc ml-6 space-y-2">
-        <li>Dinámicas como máquinas de ejercicio que recompensen tu esfuerzo con comida.</li>
-        <li>Campañas de limpieza urbana reuniendo voluntarios y proveyendo materiales.</li>
-        <li>Desarrollo de herramientas éticas de software libre e IA para detectar corrupción,
-            mejorar el acceso a la justicia y simplificar procesos municipales.</li>
-        <li>Conectar personas y causas para visibilizar organizaciones locales que necesiten ayuda.</li>
+        <li data-key="line1">Exercise machines that reward your effort with food.</li>
+        <li data-key="line2">City cleanup campaigns gathering volunteers and providing materials.</li>
+        <li data-key="line3">Development of ethical open-source and AI tools to detect corruption, improve access to justice and simplify municipal processes.</li>
+        <li data-key="line4">Connecting people and causes to highlight local organizations that need help.</li>
       </ul>
-      <p class="mt-4">Todos estos proyectos se pondrán en marcha cuando contemos con el apoyo financiero suficiente.</p>
+      <p class="mt-4" data-key="linesNote">All these projects will launch once we gather enough financial support.</p>
     </section>
-    <section id="donar" class="section p-6 rounded-lg shadow-lg">
-      <h3 class="text-2xl font-semibold mb-3">¿Quieres participar?</h3>
-      <p>
-        Si deseas donar o colaborar, envía un correo a
-        <a href="mailto:stojangasic@gmail.com" class="underline">stojangasic@gmail.com</a>
-        indicando por qué te gustaría formar parte de esta iniciativa.
+    <section id="donate" class="section p-6 rounded-lg shadow-lg">
+      <h3 class="text-2xl font-semibold mb-3" data-key="donateTitle">Want to participate?</h3>
+      <p data-key="donateText">
+        If you wish to donate or collaborate, send an email to <a href="mailto:stojangasic@gmail.com" class="underline">stojangasic@gmail.com</a> explaining why you'd like to join this initiative.
       </p>
     </section>
   </main>
   <footer class="text-center py-4 bg-black bg-opacity-30 text-sm">
     © 2025 Stojan Gasic
   </footer>
+  <script>
+const translations = {
+  en: {
+    navProjects: 'Projects',
+    foundationHeader: 'Open Foundation',
+    mission: 'Open Foundation is a new project from StojanGasic.com. Our goal is to create an organization that drives all kinds of projects: from solidarity activities and support for people, to creative initiatives that test unconventional ideas.',
+    linesTitle: 'Lines of action',
+    line1: 'Exercise machines that reward your effort with food.',
+    line2: 'City cleanup campaigns gathering volunteers and providing materials.',
+    line3: 'Development of ethical open-source and AI tools to detect corruption, improve access to justice and simplify municipal processes.',
+    line4: 'Connecting people and causes to highlight local organizations that need help.',
+    linesNote: 'All these projects will launch once we gather enough financial support.',
+    donateTitle: 'Want to participate?',
+    donateText: "If you wish to donate or collaborate, send an email to <a href='mailto:stojangasic@gmail.com' class='underline'>stojangasic@gmail.com</a> explaining why you'd like to join this initiative."
+  },
+  es: {
+    navProjects: 'Proyectos',
+    foundationHeader: 'Fundación Abierta',
+    mission: 'Open Foundation, o Fundación Abierta, es un nuevo proyecto de StojanGasic.com. Nuestro objetivo es crear una organización que impulse proyectos de toda índole: desde dinámicas solidarias y apoyo a personas, hasta iniciativas creativas que prueben ideas poco convencionales.',
+    linesTitle: 'Líneas de acción',
+    line1: 'Dinámicas como máquinas de ejercicio que recompensen tu esfuerzo con comida.',
+    line2: 'Campañas de limpieza urbana reuniendo voluntarios y proveyendo materiales.',
+    line3: 'Desarrollo de herramientas éticas de software libre e IA para detectar corrupción, mejorar el acceso a la justicia y simplificar procesos municipales.',
+    line4: 'Conectar personas y causas para visibilizar organizaciones locales que necesiten ayuda.',
+    linesNote: 'Todos estos proyectos se pondrán en marcha cuando contemos con el apoyo financiero suficiente.',
+    donateTitle: '¿Quieres participar?',
+    donateText: "Si deseas donar o colaborar, envía un correo a <a href='mailto:stojangasic@gmail.com' class='underline'>stojangasic@gmail.com</a> indicando por qué te gustaría formar parte de esta iniciativa."
+  }
+};
+
+function updateLang(lang) {
+  document.documentElement.lang = lang;
+  const t = translations[lang];
+  document.querySelector('[data-key="navProjects"]').textContent = t.navProjects;
+  for (const el of document.querySelectorAll('[data-key]')) {
+    if (el.dataset.key !== 'navProjects') {
+      el.innerHTML = t[el.dataset.key];
+    }
+  }
+  document.getElementById('lang-select').value = lang;
+}
+
+document.getElementById('lang-select').addEventListener('change', e => {
+  updateLang(e.target.value);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateLang('en');
+});
+  </script>
 </body>
 </html>
