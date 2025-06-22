@@ -1,61 +1,104 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fundación Abierta - StojanGasic.com</title>
+  <title>Open Foundation - StojanGasic.com</title>
   <script src="../extras/tailwind.js"></script>
   <style>
-    body {
-      background: linear-gradient(to bottom right, #ec4899, #8b5cf6);
-    }
-    .section {
-      background: rgba(255,255,255,0.2);
-    }
+    body { background: linear-gradient(to bottom right, #ec4899, #8b5cf6); }
+    .section { background: rgba(255,255,255,0.2); }
   </style>
 </head>
 <body class="min-h-screen text-white flex flex-col">
   <header class="p-4 bg-black bg-opacity-30 flex justify-between items-center">
     <h1 class="text-2xl font-bold"><a href="../index.html">Stojan Gasic</a></h1>
     <nav class="space-x-4">
-      <a href="../index.html" class="hover:underline">Inicio</a>
-      <a href="#sobre" class="hover:underline">Fundación</a>
-      <a href="#proyectos" class="hover:underline">Proyectos</a>
-      <a href="#donar" class="hover:underline">Donar</a>
+      <a href="#projects" class="hover:underline" id="projects-link">Projects</a>
+      <a href="#donate" class="hover:underline" id="donate-link">Donate</a>
+      <button id="lang-toggle" class="px-2 py-1 bg-indigo-700 rounded">ES</button>
     </nav>
   </header>
   <main class="flex-grow p-6 space-y-10">
-    <section id="sobre" class="section p-6 rounded-lg shadow-lg">
-      <h2 class="text-3xl font-bold mb-4">Fundación Abierta</h2>
-      <p>
-        Open Foundation, o Fundación Abierta, es un nuevo proyecto de StojanGasic.com.
-        Nuestro objetivo es crear una organización que impulse proyectos de toda índole:
-        desde dinámicas solidarias y apoyo a personas, hasta iniciativas creativas
-        que prueben ideas poco convencionales.
-      </p>
+    <section id="about" class="section p-6 rounded-lg shadow-lg">
+      <h2 class="text-3xl font-bold mb-4" id="about-title"></h2>
+      <p id="about-text"></p>
     </section>
-    <section id="proyectos" class="section p-6 rounded-lg shadow-lg">
-      <h3 class="text-2xl font-semibold mb-3">Líneas de acción</h3>
-      <ul class="list-disc ml-6 space-y-2">
-        <li>Dinámicas como máquinas de ejercicio que recompensen tu esfuerzo con comida.</li>
-        <li>Campañas de limpieza urbana reuniendo voluntarios y proveyendo materiales.</li>
-        <li>Desarrollo de herramientas éticas de software libre e IA para detectar corrupción,
-            mejorar el acceso a la justicia y simplificar procesos municipales.</li>
-        <li>Conectar personas y causas para visibilizar organizaciones locales que necesiten ayuda.</li>
-      </ul>
-      <p class="mt-4">Todos estos proyectos se pondrán en marcha cuando contemos con el apoyo financiero suficiente.</p>
+    <section id="projects" class="section p-6 rounded-lg shadow-lg">
+      <h3 class="text-2xl font-semibold mb-3" id="projects-title"></h3>
+      <div class="space-y-6" id="project-list"></div>
     </section>
-    <section id="donar" class="section p-6 rounded-lg shadow-lg">
-      <h3 class="text-2xl font-semibold mb-3">¿Quieres participar?</h3>
-      <p>
-        Si deseas donar o colaborar, envía un correo a
-        <a href="mailto:stojangasic@gmail.com" class="underline">stojangasic@gmail.com</a>
-        indicando por qué te gustaría formar parte de esta iniciativa.
-      </p>
+    <section id="donate" class="section p-6 rounded-lg shadow-lg">
+      <h3 class="text-2xl font-semibold mb-3" id="donate-title"></h3>
+      <p id="donate-text"></p>
     </section>
   </main>
   <footer class="text-center py-4 bg-black bg-opacity-30 text-sm">
     © 2025 Stojan Gasic
   </footer>
+  <script>
+    const data = {
+      en: {
+        langBtn: 'ES',
+        aboutTitle: 'Open Foundation',
+        aboutText: 'Open Foundation is a new project from StojanGasic.com focused on encouraging solidarity and experimental initiatives.',
+        projectsTitle: 'Projects',
+        donateTitle: 'Want to participate?',
+        donateText: 'If you wish to donate or collaborate, send an email to <a href="mailto:stojangasic@gmail.com" class="underline">stojangasic@gmail.com</a> explaining why you would like to join this initiative.',
+        projects: [
+          { title: 'Exercise machines that reward your effort with food.', goal: '40,000€', progress: 0 },
+          { title: 'Urban cleanup campaigns assembling volunteers and providing materials.', goal: '2,000€', progress: 0 },
+          { title: 'Development of ethical free software and AI tools to detect corruption, improve access to justice and simplify municipal processes.', goal: '30,000€', progress: 0 },
+          { title: 'Connecting people and local organizations that provide help to those in need.', goal: '2,000€', progress: 0 }
+        ]
+      },
+      es: {
+        langBtn: 'EN',
+        aboutTitle: 'Fundación Abierta',
+        aboutText: 'Open Foundation, o Fundación Abierta, es un proyecto de StojanGasic.com que impulsa iniciativas solidarias y creativas.',
+        projectsTitle: 'Proyectos',
+        donateTitle: '¿Quieres participar?',
+        donateText: 'Si deseas donar o colaborar, envía un correo a <a href="mailto:stojangasic@gmail.com" class="underline">stojangasic@gmail.com</a> indicando por qué te gustaría formar parte de esta iniciativa.',
+        projects: [
+          { title: 'Dinámicas como máquinas de ejercicio que recompensen tu esfuerzo con comida.', goal: '40.000€', progress: 0 },
+          { title: 'Campañas de limpieza urbana reuniendo voluntarios y proveyendo materiales.', goal: '2.000€', progress: 0 },
+          { title: 'Desarrollo de herramientas éticas de software libre e IA para detectar corrupción, mejorar el acceso a la justicia y simplificar procesos municipales.', goal: '30.000€', progress: 0 },
+          { title: 'Conectar personas y organizaciones locales que brindan ayuda a quienes necesiten.', goal: '2.000€', progress: 0 }
+        ]
+      }
+    };
+    let current = 'en';
+
+    function render() {
+      const t = data[current];
+      document.documentElement.lang = current;
+      document.getElementById('lang-toggle').textContent = t.langBtn;
+      document.getElementById('about-title').textContent = t.aboutTitle;
+      document.getElementById('about-text').innerHTML = t.aboutText;
+      document.getElementById('projects-title').textContent = t.projectsTitle;
+      document.getElementById('donate-title').textContent = t.donateTitle;
+      document.getElementById('donate-text').innerHTML = t.donateText;
+      document.getElementById('projects-link').textContent = t.projectsTitle;
+      document.getElementById('donate-link').textContent = t.donateTitle;
+      const list = document.getElementById('project-list');
+      list.innerHTML = '';
+      t.projects.forEach(p => {
+        const div = document.createElement('div');
+        div.innerHTML = `<h4 class="font-semibold">${p.title}</h4>
+          <div class="w-full bg-gray-300 rounded-full h-3 mt-2">
+            <div class="bg-indigo-500 h-3 rounded-full" style="width:${p.progress}%"></div>
+          </div>
+          <p class="text-sm mt-1">Goal: ${p.goal} - ${p.progress}%</p>`;
+        list.appendChild(div);
+      });
+    }
+
+    document.getElementById('lang-toggle').addEventListener('click', () => {
+      current = current === 'en' ? 'es' : 'en';
+      render();
+    });
+
+    document.addEventListener('DOMContentLoaded', render);
+  </script>
 </body>
 </html>
