@@ -622,14 +622,11 @@
           btnDesktop.classList.add("hover:bg-indigo-800", "text-gray-300");
         }
         btnDesktop.addEventListener("click", () => {
-          if (key === "projects") {
-            window.location.href = "projects.html";
-            return;
-          }
           activeSection = key;
           window.location.hash = key;
           updateSections();
           createNavButtons();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         });
         navContainer.appendChild(btnDesktop);
 
@@ -642,15 +639,12 @@
           btnMobile.classList.add("hover:bg-indigo-800", "text-gray-300");
         }
         btnMobile.addEventListener("click", () => {
-          if (key === "projects") {
-            window.location.href = "projects.html";
-            return;
-          }
           activeSection = key;
           window.location.hash = key;
           updateSections();
           createNavButtons();
           document.getElementById("mobile-menu").classList.add("hidden");
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         });
         mobileContainer.appendChild(btnMobile);
       }
