@@ -269,7 +269,7 @@
     <div id="project-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
       <div class="relative w-11/12 md:w-3/4 h-5/6 bg-gray-900 rounded-lg">
         <button id="close-modal" class="absolute top-2 right-2 text-white bg-red-600 rounded px-2">X</button>
-        <iframe id="project-iframe" src="" class="w-full h-full rounded-b-lg"></iframe>
+        <iframe id="project-iframe" src="about:blank" class="w-full h-full rounded-b-lg"></iframe>
       </div>
     </div>
 
@@ -706,7 +706,7 @@
     function closeProject() {
       const modal = document.getElementById('project-modal');
       const iframe = document.getElementById('project-iframe');
-      iframe.src = '';
+      iframe.src = 'about:blank';
       modal.classList.add('hidden');
     }
 
