@@ -30,35 +30,20 @@
     © 2025 Stojan Gasic
   </footer>
   <script>
-const projects = [
-  { key:'p1', goal:40000 },
-  { key:'p2', goal:2000 },
-  { key:'p3', goal:30000 },
-  { key:'p4', goal:2000 }
+const projects=[
+  {key:'p1',goal:40000},
+  {key:'p2',goal:2000},
+  {key:'p3',goal:30000},
+  {key:'p4',goal:2000}
 ];
-const translations = {
-  en: {
-    navHome:'Home',
-    projectsTitle:'Projects',
-    p1:'Exercise machines that reward your effort with food.',
-    p2:'City cleanup campaigns gathering volunteers and providing materials.',
-    p3:'Development of ethical open-source and AI tools to detect corruption, improve access to justice and simplify municipal processes.',
-    p4:'Connecting people and organizations that provide help to those in need.',
-    goal:'Goal'
-  },
-  es: {
-    navHome:'Inicio',
-    projectsTitle:'Proyectos',
-    p1:'Dinámicas como máquinas de ejercicio que recompensen tu esfuerzo con comida.',
-    p2:'Campañas de limpieza urbana reuniendo voluntarios y proveyendo materiales.',
-    p3:'Desarrollo de herramientas éticas de software libre e IA para detectar corrupción, mejorar el acceso a la justicia y simplificar procesos municipales.',
-    p4:'Conectar personas y organizaciones locales que brindan ayuda a quienes necesiten.',
-    goal:'Meta'
-  }
-};
+let translations={};
+async function loadTranslations(){
+  const res=await fetch('i18n/projects.json');
+  translations=await res.json();
+}
 function render(lang){
   document.documentElement.lang=lang;
-  const t = translations[lang];
+  const t=translations[lang];
   document.querySelector('[data-key="navHome"]').textContent=t.navHome;
   document.querySelector('[data-key="projectsTitle"]').textContent=t.projectsTitle;
   const list=document.getElementById('projects-list');
@@ -73,9 +58,8 @@ function render(lang){
   });
   document.getElementById('lang-select').value=lang;
 }
-
 document.getElementById('lang-select').addEventListener('change',e=>render(e.target.value));
-document.addEventListener('DOMContentLoaded',()=>render('en'));
+document.addEventListener('DOMContentLoaded',async()=>{await loadTranslations();render('en');});
   </script>
 </body>
 </html>
