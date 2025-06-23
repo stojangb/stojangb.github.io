@@ -23,16 +23,16 @@ añadió el siguiente código que debes completar con tu identificador real:
 
 ```html
 <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LZPREGW790"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('config', 'G-LZPREGW790');
 </script>
 ```
 
-Sustituye `G-XXXXXXXXXX` por tu ID de medición para comenzar a recopilar
+Sustituye `G-LZPREGW790` por tu ID de medición para comenzar a recopilar
 estadísticas.
 
 ## Arquitectura y despliegue
