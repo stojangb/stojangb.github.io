@@ -1,0 +1,20 @@
+{
+  "en": {
+    "navHome": "Home",
+    "projectsTitle": "Projects",
+    "p1": "Exercise machines that reward your effort with food.",
+    "p2": "City cleanup campaigns gathering volunteers and providing materials.",
+    "p3": "Development of ethical open-source and AI tools to detect corruption, improve access to justice and simplify municipal processes.",
+    "p4": "Connecting people and organizations that provide help to those in need.",
+    "goal": "Goal"
+  },
+  "es": {
+    "navHome": "Inicio",
+    "projectsTitle": "Proyectos",
+    "p1": "Dinámicas como máquinas de ejercicio que recompensen tu esfuerzo con comida.",
+    "p2": "Campañas de limpieza urbana reuniendo voluntarios y proveyendo materiales.",
+    "p3": "Desarrollo de herramientas éticas de software libre e IA para detectar corrupción, mejorar el acceso a la justicia y simplificar procesos municipales.",
+    "p4": "Conectar personas y organizaciones locales que brindan ayuda a quienes necesiten.",
+    "goal": "Meta"
+  }
+}
