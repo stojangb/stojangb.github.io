@@ -68,6 +68,28 @@
       z-index: 1000;
       display: none;
     }
+
+    /* Animaciones para los recuadros de herramientas */
+    @keyframes spinGrow {
+      0% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.2) rotate(180deg); }
+      100% { transform: scale(1) rotate(360deg); }
+    }
+    .spin-grow {
+      animation: spinGrow 0.8s ease-in-out;
+    }
+
+    /* Animación para el texto del footer */
+    @keyframes footerZoom {
+      from { transform: scale(1); opacity: 1; }
+      to { transform: scale(2); opacity: 0; }
+    }
+    .footer-zoom {
+      animation: footerZoom 0.8s ease-in-out forwards;
+      position: absolute;
+      z-index: 1000;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body class="min-h-screen bg-gray-100 transition-all duration-1000">
@@ -859,6 +881,47 @@
       animateNetwork();
     }
 
+    /* Animaciones secuenciales para herramientas adicionales */
+    let toolAnimating = false;
+    function startToolSequence(start) {
+      if (toolAnimating) return;
+      const items = document.querySelectorAll('#tools-extra > div');
+      if (start < 0 || start >= items.length) return;
+      toolAnimating = true;
+
+      function animateNext(i) {
+        if (i >= items.length) {
+          animateFooter();
+          return;
+        }
+        const el = items[i];
+        el.classList.add('spin-grow');
+        el.addEventListener('animationend', function handler() {
+          el.classList.remove('spin-grow');
+          el.removeEventListener('animationend', handler);
+          animateNext(i + 1);
+        });
+      }
+
+      animateNext(start);
+    }
+
+    function animateFooter() {
+      const footer = document.getElementById('footer-text');
+      if (!footer) { toolAnimating = false; return; }
+      const clone = footer.cloneNode(true);
+      const rect = footer.getBoundingClientRect();
+      clone.style.left = rect.left + window.scrollX + 'px';
+      clone.style.top = rect.top + window.scrollY + 'px';
+      clone.style.width = rect.width + 'px';
+      clone.classList.add('footer-zoom');
+      document.body.appendChild(clone);
+      clone.addEventListener('animationend', () => {
+        clone.remove();
+        toolAnimating = false;
+      });
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById('background-wrapper').classList.add("bg-gradient-to-br", "from-indigo-900", "to-purple-900");
       createParticles();
@@ -866,6 +929,9 @@
       createNavButtons();
       updateSections();
       initTechAnimation();
+      document.querySelectorAll('#tools-extra > div').forEach((div, idx) => {
+        div.addEventListener('click', () => startToolSequence(idx));
+      });
       document.getElementById("menu-toggle").addEventListener("click", () => {
         const mobileMenu = document.getElementById("mobile-menu");
         mobileMenu.classList.toggle("hidden");
