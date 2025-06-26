@@ -53,8 +53,8 @@
       overflow: hidden;
     }
 
-    /* Tooltip for Terraform description */
-    #terraform-tooltip {
+    /* Tooltip for technology descriptions */
+    #tech-tooltip {
       position: absolute;
       background: #000;
       color: #00ff00;
@@ -63,7 +63,8 @@
       font-family: monospace;
       font-size: 0.875rem;
       pointer-events: none;
-      white-space: nowrap;
+      white-space: normal;
+      max-width: 90vw;
       z-index: 1000;
       display: none;
     }
@@ -360,12 +361,12 @@
         footer: "© 2025 Stojan Gasic - Todos los derechos reservados",
         contactButton: "Contactar Ahora",
         technologies: [
-          { name: "AWS", icon: "☁️" },
-          { name: "Terraform", icon: "🖥️" },
-          { name: "Python", icon: "🐍" },
-          { name: "Java", icon: "☕" },
-          { name: "React", icon: "⚛️" },
-          { name: "Kafka", icon: "🗄️" }
+          { name: "AWS", icon: "☁️", description: "AWS es la plataforma de servicios en la nube de Amazon utilizada para implementar aplicaciones escalables." },
+          { name: "Terraform", icon: "🖥️", description: "Terraform es una herramienta de infraestructura como código (IaC) que permite definir y aprovisionar recursos en la nube." },
+          { name: "Python", icon: "🐍", description: "Python es un lenguaje de programación versátil y fácil de aprender, ideal para automatización y análisis de datos." },
+          { name: "Java", icon: "☕", description: "Java es un lenguaje robusto orientado a objetos ampliamente usado en aplicaciones empresariales." },
+          { name: "React", icon: "⚛️", description: "React es una biblioteca de JavaScript para construir interfaces de usuario interactivas." },
+          { name: "Kafka", icon: "🗄️", description: "Kafka es una plataforma de mensajería distribuida para procesar flujos de datos en tiempo real." }
         ]
       },
       en: {
@@ -436,12 +437,12 @@
         footer: "© 2025 Stojan Gasic - All rights reserved",
         contactButton: "Contact Now",
         technologies: [
-          { name: "AWS", icon: "☁️" },
-          { name: "Terraform", icon: "🖥️" },
-          { name: "Python", icon: "🐍" },
-          { name: "Java", icon: "☕" },
-          { name: "React", icon: "⚛️" },
-          { name: "Kafka", icon: "🗄️" }
+          { name: "AWS", icon: "☁️", description: "AWS is Amazon's cloud platform for deploying scalable applications." },
+          { name: "Terraform", icon: "🖥️", description: "Terraform is an infrastructure-as-code tool for defining and provisioning cloud resources." },
+          { name: "Python", icon: "🐍", description: "Python is a versatile programming language that excels at automation and data analysis." },
+          { name: "Java", icon: "☕", description: "Java is a robust object-oriented language widely used in enterprise applications." },
+          { name: "React", icon: "⚛️", description: "React is a JavaScript library for building interactive user interfaces." },
+          { name: "Kafka", icon: "🗄️", description: "Kafka is a distributed messaging platform for processing real-time data streams." }
         ]
       }
     };
@@ -612,11 +613,11 @@
         const div = document.createElement('div');
         div.className = "flex flex-col items-center p-4 rounded-lg bg-indigo-900 bg-opacity-40 hover:bg-opacity-60 transition-all hover:scale-105";
         div.innerHTML = '<div class="text-4xl">' + tech.icon + '</div><span class="mt-2 text-lg font-medium">' + tech.name + '</span>';
-        if (tech.name === 'Terraform') {
-          const message = 'Terraform es una herramienta de infraestructura como código (IaC) que permite definir y aprovisionar recursos en la nube.';
-          div.addEventListener('mouseenter', (e) => showTerraformTooltip(message, e));
-          div.addEventListener('mousemove', moveTerraformTooltip);
-          div.addEventListener('mouseleave', hideTerraformTooltip);
+        const message = tech.description || '';
+        if (message) {
+          div.addEventListener('mouseenter', (e) => showTechTooltip(message, e));
+          div.addEventListener('mousemove', moveTechTooltip);
+          div.addEventListener('mouseleave', hideTechTooltip);
         }
         techContainer.appendChild(div);
       });
@@ -731,34 +732,51 @@
       modal.classList.add('hidden');
     }
 
-    // Tooltip logic for Terraform description
+    // Tooltip logic for technology descriptions
     let tooltipInterval;
-    function showTerraformTooltip(text, evt) {
-      const tooltip = document.getElementById('terraform-tooltip');
+    let lastEvent;
+
+    function positionTooltip(tooltip, evt) {
+      const padding = 15;
+      let x = evt.pageX + padding;
+      let y = evt.pageY + padding;
+      const width = tooltip.offsetWidth;
+      const height = tooltip.offsetHeight;
+      const maxX = window.innerWidth - width - padding;
+      const maxY = window.innerHeight - height - padding;
+      if (x > maxX) x = maxX;
+      if (y > maxY) y = maxY;
+      tooltip.style.left = x + 'px';
+      tooltip.style.top = y + 'px';
+    }
+
+    function showTechTooltip(text, evt) {
+      const tooltip = document.getElementById('tech-tooltip');
       tooltip.style.display = 'block';
-      tooltip.style.left = (evt.pageX + 15) + 'px';
-      tooltip.style.top = (evt.pageY + 15) + 'px';
       tooltip.textContent = '';
-      let index = 0;
+      lastEvent = evt;
       clearInterval(tooltipInterval);
+      let index = 0;
       tooltipInterval = setInterval(() => {
         if (index < text.length) {
           tooltip.textContent += text.charAt(index);
           index++;
+          positionTooltip(tooltip, lastEvent);
         } else {
           clearInterval(tooltipInterval);
         }
       }, 40);
+      positionTooltip(tooltip, evt);
     }
 
-    function moveTerraformTooltip(evt) {
-      const tooltip = document.getElementById('terraform-tooltip');
-      tooltip.style.left = (evt.pageX + 15) + 'px';
-      tooltip.style.top = (evt.pageY + 15) + 'px';
+    function moveTechTooltip(evt) {
+      lastEvent = evt;
+      const tooltip = document.getElementById('tech-tooltip');
+      positionTooltip(tooltip, evt);
     }
 
-    function hideTerraformTooltip() {
-      const tooltip = document.getElementById('terraform-tooltip');
+    function hideTechTooltip() {
+      const tooltip = document.getElementById('tech-tooltip');
       tooltip.style.display = 'none';
       clearInterval(tooltipInterval);
     }
@@ -860,6 +878,6 @@
       });
     });
   </script>
-  <div id="terraform-tooltip"></div>
+  <div id="tech-tooltip"></div>
 </body>
 </html>
