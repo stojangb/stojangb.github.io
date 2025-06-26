@@ -52,6 +52,21 @@
     #tech-animation {
       overflow: hidden;
     }
+
+    /* Tooltip for Terraform description */
+    #terraform-tooltip {
+      position: absolute;
+      background: #000;
+      color: #00ff00;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.25rem;
+      font-family: monospace;
+      font-size: 0.875rem;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 1000;
+      display: none;
+    }
   </style>
 </head>
 <body class="min-h-screen bg-gray-100 transition-all duration-1000">
@@ -597,6 +612,12 @@
         const div = document.createElement('div');
         div.className = "flex flex-col items-center p-4 rounded-lg bg-indigo-900 bg-opacity-40 hover:bg-opacity-60 transition-all hover:scale-105";
         div.innerHTML = '<div class="text-4xl">' + tech.icon + '</div><span class="mt-2 text-lg font-medium">' + tech.name + '</span>';
+        if (tech.name === 'Terraform') {
+          const message = 'Terraform es una herramienta de infraestructura como código (IaC) que permite definir y aprovisionar recursos en la nube.';
+          div.addEventListener('mouseenter', (e) => showTerraformTooltip(message, e));
+          div.addEventListener('mousemove', moveTerraformTooltip);
+          div.addEventListener('mouseleave', hideTerraformTooltip);
+        }
         techContainer.appendChild(div);
       });
     }
@@ -710,6 +731,38 @@
       modal.classList.add('hidden');
     }
 
+    // Tooltip logic for Terraform description
+    let tooltipInterval;
+    function showTerraformTooltip(text, evt) {
+      const tooltip = document.getElementById('terraform-tooltip');
+      tooltip.style.display = 'block';
+      tooltip.style.left = (evt.pageX + 15) + 'px';
+      tooltip.style.top = (evt.pageY + 15) + 'px';
+      tooltip.textContent = '';
+      let index = 0;
+      clearInterval(tooltipInterval);
+      tooltipInterval = setInterval(() => {
+        if (index < text.length) {
+          tooltip.textContent += text.charAt(index);
+          index++;
+        } else {
+          clearInterval(tooltipInterval);
+        }
+      }, 40);
+    }
+
+    function moveTerraformTooltip(evt) {
+      const tooltip = document.getElementById('terraform-tooltip');
+      tooltip.style.left = (evt.pageX + 15) + 'px';
+      tooltip.style.top = (evt.pageY + 15) + 'px';
+    }
+
+    function hideTerraformTooltip() {
+      const tooltip = document.getElementById('terraform-tooltip');
+      tooltip.style.display = 'none';
+      clearInterval(tooltipInterval);
+    }
+
     /* Animación para Technology Skills ya implementada previamente */
     function initTechAnimation() {
       const container = document.getElementById('tech-animation');
@@ -807,5 +860,6 @@
       });
     });
   </script>
+  <div id="terraform-tooltip"></div>
 </body>
 </html>
