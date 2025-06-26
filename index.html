@@ -76,7 +76,7 @@
       100% { transform: scale(1) rotate(360deg); }
     }
     .spin-grow {
-      animation: spinGrow 0.5s ease-in-out;
+      animation: spinGrow 0.3s ease-in-out;
     }
 
     /* Animación para el texto del footer */
@@ -910,17 +910,21 @@
     function animateFooter() {
       const footer = document.getElementById('footer-text');
       if (!footer) { toolAnimating = false; return; }
-      const clone = footer.cloneNode(true);
-      const rect = footer.getBoundingClientRect();
-      clone.style.left = rect.left + window.scrollX + 'px';
-      clone.style.top = rect.top + window.scrollY + 'px';
-      clone.style.width = rect.width + 'px';
-      clone.classList.add('footer-zoom');
-      document.body.appendChild(clone);
-      clone.addEventListener('animationend', () => {
-        clone.remove();
-        toolAnimating = false;
-      });
+      footer.scrollIntoView({behavior: 'smooth', block: 'center'});
+      setTimeout(() => {
+        const clone = footer.cloneNode(true);
+        const rect = footer.getBoundingClientRect();
+        clone.style.position = 'fixed';
+        clone.style.left = rect.left + 'px';
+        clone.style.top = rect.top + 'px';
+        clone.style.width = rect.width + 'px';
+        clone.classList.add('footer-zoom');
+        document.body.appendChild(clone);
+        clone.addEventListener('animationend', () => {
+          clone.remove();
+          toolAnimating = false;
+        });
+      }, 400);
     }
 
     document.addEventListener("DOMContentLoaded", () => {
