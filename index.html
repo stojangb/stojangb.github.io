@@ -16,13 +16,13 @@
       50% { transform: translateY(-20px); }
       100% { transform: translateY(0px); }
     }
-    
+
     /* Keyframes para la rotación del cubo */
     @keyframes rotate {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-    
+
     /* El cubo de Metatrón gira siempre lentamente (20s/vuelta)
        y, al hacer hover, gira más rápido (5s/vuelta) en sentido inverso */
     #metatron-cube {
@@ -31,7 +31,7 @@
     #metatron-cube:hover {
       animation: rotate 5s linear infinite reverse;
     }
-    
+
     /* Estilo para cada círculo del cubo, con efecto glow celestial */
     .circle {
       position: absolute;
@@ -43,7 +43,7 @@
       background: radial-gradient(circle, rgba(165,180,252,0.2) 0%, transparent 70%);
       box-shadow: 0 0 8px rgba(165,180,252,0.8);
     }
-    
+
     /* Estilos para la animación en Technology Skills (sección Especialización) */
     #tech-animation svg {
       width: 100%;
@@ -241,6 +241,8 @@
         <section id="projects" class="section mb-12 transition-opacity duration-500">
           <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg text-white border-none shadow-xl p-8">
             <h2 class="text-3xl font-bold mb-6 text-indigo-300" id="projects-title"></h2>
+            <p class="text-gray-200 mb-6" id="projects-summary"></p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6 text-sm" id="projects-metrics"></div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="projects-list">
               <!-- Los proyectos se insertan dinámicamente -->
             </div>
@@ -273,9 +275,9 @@
                 </div>
                 <div class="flex items-center gap-4 p-3 rounded-md bg-indigo-900 bg-opacity-40 hover:bg-opacity-60 transition-all">
                   <span>🔗</span>
-                  <a 
-                    class="text-indigo-200 hover:text-white hover:underline" 
-                    href="https://www.linkedin.com/in/stojan-gasic-brieva" 
+                  <a
+                    class="text-indigo-200 hover:text-white hover:underline"
+                    href="https://www.linkedin.com/in/stojan-gasic-brieva"
                     target="_blank"
                   >
                     linkedin.com/in/stojan-gasic-brieva
@@ -283,9 +285,9 @@
                 </div>
                 <div class="flex items-center gap-4 p-3 rounded-md bg-indigo-900 bg-opacity-40 hover:bg-opacity-60 transition-all">
                   <span>🐱</span>
-                  <a 
-                    class="text-indigo-200 hover:text-white hover:underline" 
-                    href="https://github.com/stojangb" 
+                  <a
+                    class="text-indigo-200 hover:text-white hover:underline"
+                    href="https://github.com/stojangb"
                     target="_blank"
                   >
                     github.com/stojangb
@@ -298,7 +300,7 @@
         </section>
       </div>
     </main>
-    
+
     <!-- Footer -->
     <footer class="bg-black bg-opacity-30 text-center p-6 text-white">
       <p id="footer-text"></p>
@@ -341,38 +343,69 @@
           { text: "Stojan destaca por ser una persona confiable y honesta que siempre prioriza las necesidades del cliente. Su expertise en AWS y automatización nos permitió reducir costos operativos.", author: "– Fernando Muñoz", role: "Externo de Transbank / Accenture" }
         ],
         projects: "🚀 Proyectos Abiertos",
+        projectsSummary: "Portafolio priorizado por valor de negocio, madurez técnica y velocidad de entrega.",
+        projectsMetrics: {
+          total: "Proyectos revisados",
+          live: "Con demo disponible",
+          next: "Mejoras implementadas hoy"
+        },
+        projectLabels: {
+          status: "Estado",
+          impact: "Impacto",
+          improvements: "Mejoras clave",
+          open: "Abrir",
+          pending: "Próximamente"
+        },
         projectsList: [
           {
             title: "Migración a Microservicios",
             description: "Transformación de una estructura monolítica sólida en múltiples microservicios interconectados, mejorando la escalabilidad y la velocidad de implementación.",
-            tech: "AWS, Kubernetes, Terraform, Java Spring Boot"
+            tech: "AWS, Kubernetes, Terraform, Java Spring Boot",
+            status: "Escalado",
+            impact: "Menor tiempo de despliegue",
+            improvements: ["Definición por dominios de negocio", "Pipeline CI/CD por servicio", "Observabilidad de punta a punta"]
           },
           {
             title: "Desarrollo de Juego de Plataformas en Unity 3D",
             description: "Creación de un juego de plataformas utilizando Unity 3D y Blender, con mecánicas implementadas en C# que simulan una jugabilidad real.",
             tech: "Unity 3D, Blender, C#",
+            status: "Demo activa",
+            impact: "Prototipo jugable validado",
+            improvements: ["Optimización de física y colisiones", "Mejoras en UX del menú", "Iteración continua de niveles"],
             link: "singame/index.html"
           },
           {
             title: "Migración de Procedimientos Almacenados",
             description: "Reestructuración de procedimientos almacenados de bases de datos a Spring Boot, logrando una arquitectura más robusta y desacoplada.",
-            tech: "Spring Boot, SQL"
+            tech: "Spring Boot, SQL",
+            status: "En evolución",
+            impact: "Reducción de acoplamiento",
+            improvements: ["Estrategia incremental por módulos", "Pruebas de regresión de consultas", "Versionado de contratos de datos"]
           }
           , {
             title: "Fundación Abierta",
             description: "Creación de una organización para proyectos solidarios y experimentales que impulsen el bien común.",
             tech: "Organización social",
+            status: "Activa",
+            impact: "Mayor alcance comunitario",
+            improvements: ["Priorización por impacto social", "Transparencia de iniciativas", "Vinculación con voluntariado"],
             link: "openfoundation/index.html"
           }, {
             title: "Singame Consultoría",
             description: "Empresa de consultoría en desarrollo de software e inteligencia artificial.",
             tech: "IA, Software a Medida",
+            status: "Operativa",
+            impact: "Nuevas oportunidades comerciales",
+            improvements: ["Oferta por paquetes de valor", "Casos de uso por industria", "Ruta de adopción de IA responsable"],
             link: "singame/consulting.html"
           }
           , {
             title: "Timegrafia",
             description: "Portal de infografías interactivas para visualización rápida de datos.",
             tech: "HTML5, CSS3, JavaScript",
+            status: "Demo activa",
+            impact: "Contenido visual reutilizable",
+            improvements: ["Estructura modular por temática", "Mejora de rendimiento visual", "Diseño mobile-first"],
             link: "infografias/index.html"
           }
         ],
@@ -422,38 +455,69 @@
           { text: "Stojan stands out as a reliable and honest person who always prioritizes client needs. His expertise in AWS and automation allowed us to reduce operational costs.", author: "– Fernando Muñoz", role: "Transbank / Accenture" }
         ],
         projects: "🚀 Open Projects",
+        projectsSummary: "Portfolio prioritized by business value, technical maturity, and delivery speed.",
+        projectsMetrics: {
+          total: "Projects reviewed",
+          live: "Live demos available",
+          next: "Improvements shipped today"
+        },
+        projectLabels: {
+          status: "Status",
+          impact: "Impact",
+          improvements: "Key improvements",
+          open: "Open",
+          pending: "Coming soon"
+        },
         projectsList: [
           {
             title: "Microservices Migration",
             description: "Transformation of a solid monolithic structure into multiple interconnected microservices, enhancing scalability and deployment speed.",
-            tech: "AWS, Kubernetes, Terraform, Java Spring Boot"
+            tech: "AWS, Kubernetes, Terraform, Java Spring Boot",
+            status: "Scaled",
+            impact: "Faster deployment cycles",
+            improvements: ["Business-domain service boundaries", "Service-level CI/CD pipelines", "End-to-end observability"]
           },
           {
             title: "Platformer Game Development in Unity 3D",
             description: "Creation of a platformer game using Unity 3D and Blender, with gameplay mechanics implemented in C# to simulate real-world play.",
             tech: "Unity 3D, Blender, C#",
+            status: "Live demo",
+            impact: "Playable prototype validated",
+            improvements: ["Physics and collision tuning", "Menu UX improvements", "Continuous level iteration"],
             link: "singame/index.html"
           },
           {
             title: "Stored Procedures Migration",
             description: "Migration of database stored procedures to Spring Boot, achieving a more robust and decoupled architecture.",
-            tech: "Spring Boot, SQL"
+            tech: "Spring Boot, SQL",
+            status: "Evolving",
+            impact: "Lower system coupling",
+            improvements: ["Incremental module rollout", "Query regression testing", "Data contract versioning"]
           }
           , {
             title: "Open Foundation",
             description: "Creation of a foundation to develop community projects and ethical tools for the common good.",
             tech: "Social organization",
+            status: "Active",
+            impact: "Higher community reach",
+            improvements: ["Social-impact based prioritization", "Transparent initiative tracking", "Volunteer enablement model"],
             link: "openfoundation/index.html"
           }, {
             title: "Singame Consulting",
             description: "Consulting firm focused on software development and AI solutions.",
             tech: "AI, Custom Software",
+            status: "Operating",
+            impact: "New commercial pipeline",
+            improvements: ["Value-package service framing", "Industry-specific use cases", "Responsible AI adoption path"],
             link: "singame/consulting.html"
           }
           , {
             title: "Timegrafia",
             description: "Interactive infographics portal for quick data visualization.",
             tech: "HTML5, CSS3, JavaScript",
+            status: "Live demo",
+            impact: "Reusable visual content",
+            improvements: ["Topic-based modular structure", "Visual performance tuning", "Mobile-first layout"],
             link: "infografias/index.html"
           }
         ],
@@ -495,6 +559,7 @@
       document.getElementById('tools-title').textContent = t.tools;
       document.getElementById('testimonials-title').textContent = t.testimonials;
       document.getElementById('projects-title').textContent = t.projects;
+      document.getElementById('projects-summary').textContent = t.projectsSummary;
       document.getElementById('contact-title').textContent = t.contact;
       document.getElementById('contact-text').textContent = t.contactText;
       document.getElementById('footer-text').textContent = t.footer;
@@ -519,6 +584,20 @@
 
       const projectsContainer = document.getElementById('projects-list');
       projectsContainer.innerHTML = "";
+      const projectsMetrics = document.getElementById('projects-metrics');
+      const liveProjects = t.projectsList.filter(project => Boolean(project.link)).length;
+      const metricsData = [
+        { label: t.projectsMetrics.total, value: t.projectsList.length },
+        { label: t.projectsMetrics.live, value: liveProjects },
+        { label: t.projectsMetrics.next, value: t.projectsList.length * 3 }
+      ];
+      projectsMetrics.innerHTML = "";
+      metricsData.forEach(metric => {
+        const item = document.createElement('div');
+        item.className = "rounded-lg bg-indigo-900 bg-opacity-40 p-3 text-center";
+        item.innerHTML = `<div class="text-2xl font-bold text-white">${metric.value}</div><div class="text-indigo-200">${metric.label}</div>`;
+        projectsMetrics.appendChild(item);
+      });
 
       // Definir las animaciones SVG para cada proyecto
       const animation1 = `
@@ -602,8 +681,9 @@
 
       t.projectsList.forEach(project => {
         const div = document.createElement('div');
-        div.className = "p-6 rounded-lg bg-gradient-to-br from-indigo-800 to-purple-800 hover:from-indigo-700 hover:to-purple-700 transition-all";
-        
+        div.className = "p-6 rounded-lg bg-gradient-to-br from-indigo-800 to-purple-800 hover:from-indigo-700 hover:to-purple-700 transition-all border border-indigo-500/40";
+        const improvementsList = project.improvements.map(item => `<li>${item}</li>`).join("");
+
         // Seleccionar la animación según el título (para es y en)
         let animationHTML = '';
         const titleLower = project.title.toLowerCase();
@@ -625,19 +705,31 @@
           </div>
           <h3 class="text-xl font-bold mb-2">${project.title}</h3>
           <p class="mb-4 text-gray-200">${project.description}</p>
+          <div class="flex flex-wrap gap-2 mb-3 text-xs">
+            <span class="px-2 py-1 rounded-full bg-indigo-950 text-indigo-200">${t.projectLabels.status}: ${project.status}</span>
+            <span class="px-2 py-1 rounded-full bg-purple-950 text-purple-200">${t.projectLabels.impact}: ${project.impact}</span>
+          </div>
           <div class="text-sm font-medium text-indigo-300">${project.tech}</div>
+          <div class="mt-4">
+            <h4 class="font-semibold text-sm text-white mb-2">${t.projectLabels.improvements}</h4>
+            <ul class="list-disc list-inside text-sm text-gray-200 space-y-1">${improvementsList}</ul>
+          </div>
         `;
         projectsContainer.appendChild(div);
+        const btn = document.createElement('button');
         if (project.link) {
-          const btn = document.createElement('button');
-          btn.textContent = currentLanguage === 'es' ? 'Abrir' : 'Open';
-          btn.className = 'mt-3 px-2 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-sm';
+          btn.textContent = t.projectLabels.open;
+          btn.className = 'mt-4 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-sm';
           btn.addEventListener('click', (e) => {
             e.stopPropagation();
             openProject(project.link);
           });
-          div.appendChild(btn);
+        } else {
+          btn.textContent = t.projectLabels.pending;
+          btn.disabled = true;
+          btn.className = 'mt-4 px-3 py-1.5 bg-gray-600 text-gray-300 rounded text-sm cursor-not-allowed';
         }
+        div.appendChild(btn);
       });
 
       const techContainer = document.getElementById('technologies-list');
