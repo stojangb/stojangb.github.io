@@ -32,29 +32,52 @@
   </footer>
   <script>
 const projects=[
-  {key:'p1',goal:40000},
-  {key:'p2',goal:2000},
-  {key:'p3',goal:30000},
-  {key:'p4',goal:2000}
+  {key:'p1',goal:40000,raised:12400,status:'statusActive'},
+  {key:'p2',goal:2000,raised:1350,status:'statusPlanning'},
+  {key:'p3',goal:30000,raised:9800,status:'statusBuild'},
+  {key:'p4',goal:2000,raised:1520,status:'statusActive'}
 ];
 let translations={};
 async function loadTranslations(){
   const res=await fetch('i18n/projects.json');
   translations=await res.json();
 }
+function getPercent(raised,goal){
+  return Math.min(100,Math.round((raised/goal)*100));
+}
 function render(lang){
   document.documentElement.lang=lang;
   const t=translations[lang];
   document.querySelector('[data-key="navHome"]').textContent=t.navHome;
-  document.querySelector('[data-key="projectsTitle"]').textContent=t.projectsTitle;
+  document.querySelector('[data-key="projectsTitle"]').innerHTML=`${t.projectsTitle}<span class="block mt-2 text-base font-normal opacity-90">${t.projectsIntro}</span>`;
   const list=document.getElementById('projects-list');
   list.innerHTML='';
   projects.forEach(p=>{
+    const progress=getPercent(p.raised,p.goal);
     const wrapper=document.createElement('div');
-    wrapper.innerHTML=`<p class='font-semibold mb-2'>${t[p.key]} - ${t.goal}: €${p.goal}</p>
-    <div class='w-full bg-white bg-opacity-40 h-4 rounded'>
-      <div class='bg-green-500 h-4 rounded' style='width:0%'></div>
-    </div>`;
+    wrapper.className='bg-black bg-opacity-20 rounded-xl p-5 border border-white border-opacity-20';
+    wrapper.innerHTML=`
+      <div class='flex flex-wrap gap-3 items-center justify-between mb-3'>
+        <h3 class='text-xl font-bold'>${t[`${p.key}Title`]}</h3>
+        <span class='text-xs px-3 py-1 rounded-full bg-indigo-500 bg-opacity-80 uppercase tracking-wide'>${t.statusLabel}: ${t[p.status]}</span>
+      </div>
+      <p class='mb-3 opacity-95'>${t[p.key]}</p>
+      <p class='text-sm mb-3'><span class='font-semibold'>${t.impactLabel}:</span> ${t[`${p.key}Impact`]}</p>
+      <div class='mb-2 flex justify-between text-sm'>
+        <span>${t.raised}: €${p.raised.toLocaleString()}</span>
+        <span>${t.goal}: €${p.goal.toLocaleString()}</span>
+      </div>
+      <div class='w-full bg-white bg-opacity-40 h-4 rounded mb-1 overflow-hidden'>
+        <div class='bg-green-500 h-4 rounded' style='width:${progress}%'></div>
+      </div>
+      <p class='text-xs mb-3'>${t.progressLabel}: ${progress}%</p>
+      <p class='font-semibold text-sm mb-1'>${t.milestonesLabel}</p>
+      <ul class='list-disc ml-5 text-sm space-y-1 opacity-95'>
+        <li>${t[`${p.key}Milestone1`]}</li>
+        <li>${t[`${p.key}Milestone2`]}</li>
+        <li>${t[`${p.key}Milestone3`]}</li>
+      </ul>
+    `;
     list.appendChild(wrapper);
   });
   document.getElementById('lang-select').value=lang;
