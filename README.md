@@ -45,3 +45,22 @@ estadísticas.
 3. Para que el workflow funcione debes añadir en la configuración del repositorio
    el secreto `GCP_SA_KEY_BASE64` con las credenciales de servicio en base64.
 
+## Publicar este repositorio con GitHub Pages
+
+Si prefieres que el sitio quede online directamente con GitHub Pages (sin GCS),
+haz lo siguiente:
+
+1. Ve a **GitHub → Settings → Pages**.
+2. En **Build and deployment**, selecciona **Deploy from a branch**.
+3. En **Branch**, elige `main` y carpeta `/ (root)`.
+4. Guarda los cambios y espera 1–3 minutos.
+5. Tu URL quedará como:
+   - `https://<tu-usuario>.github.io/<nombre-del-repo>/`
+   - Si el repo se llama `<tu-usuario>.github.io`, será `https://<tu-usuario>.github.io/`
+
+Notas importantes para este repo:
+
+- Ya existe un `index.html` en la raíz, así que Pages puede servirlo sin cambios.
+- Si mantienes el workflow actual de GCS (`.github/workflows/deploy.yml`), tendrás
+  dos despliegues distintos (GCS y GitHub Pages). Puedes dejar ambos o desactivar
+  uno para evitar confusión.
