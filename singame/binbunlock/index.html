@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Binbunlock — guía el trenecito con bombas, fuego y vapor en 12 niveles de física. Juego Android de Singame." />
+  <title>Binbunlock — Singame</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <script src="../../extras/tailwind.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #0e112f, #1b1b3a);
+      color: #cfd9ff;
+      line-height: 1.6;
+    }
+    .neon-text {
+      text-shadow: 0 0 5px #fff, 0 0 10px #9f6aff, 0 0 20px #9f6aff;
+    }
+    .shot-placeholder {
+      border: 2px dashed #9f6aff;
+      border-radius: 0.75rem;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(85, 20, 180, 0.12);
+      color: #e6e1ff;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <nav class="sticky top-0 z-50 backdrop-blur-md bg-black bg-opacity-40 text-white shadow-lg">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <a href="../index.html" class="text-2xl font-bold tracking-tight">Singame</a>
+        <div class="space-x-4">
+          <a href="../projects.html" data-es="Proyectos" class="hover:text-indigo-300">Projects</a>
+          <a href="privacidad.html" data-es="Privacidad" class="hover:text-indigo-300">Privacy</a>
+          <button id="lang-toggle" data-lang="es">EN</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="max-w-5xl mx-auto p-8 text-center">
+    <img src="images/logo-binbunlock-1024.png" alt="Logo de Binbunlock" class="mx-auto w-40 h-40 object-contain rounded-2xl shadow-lg" />
+    <h1 class="text-4xl md:text-5xl font-bold mt-4 neon-text">Binbunlock</h1>
+    <p class="mt-2 text-xl" data-es="Guía el trenecito con bombas, fuego y vapor en 12 niveles de física.">Guide the little train with bombs, fire and steam through 12 physics levels.</p>
+    <p class="mt-2 italic" data-es="▶️ Próximamente en Google Play · Gratis, sin compras dentro de la app">▶️ Coming soon on Google Play · Free, no in-app purchases</p>
+    <div class="mt-4 flex justify-center gap-3">
+      <span class="px-4 py-2 rounded-full bg-indigo-800 bg-opacity-50 text-sm" data-es="🚂 12 niveles hechos a mano">🚂 12 hand-made levels</span>
+      <span class="px-4 py-2 rounded-full bg-indigo-800 bg-opacity-50 text-sm">Android</span>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-8 pb-12 w-full">
+    <section class="bg-indigo-800 bg-opacity-30 p-6 rounded-lg">
+      <h2 class="text-2xl font-bold mb-3" data-es="🔥 El juego">🔥 The game</h2>
+      <p data-es="¡Sube a bordo de Binbunlock, el trenecito que lo puede con todo! Supera 12 niveles de física y precisión: coloca bombas, dispara fuego, planea con el vapor y resuelve puzzles para llegar a la llave de cada etapa. Si te quedas sin vidas, consigue más viendo un vídeo.">All aboard Binbunlock, the little train that could! Clear 12 hand-made physics levels: place bombs, shoot fire, glide on steam and solve puzzles to reach each stage key. Out of lives? Earn more by watching a video.</p>
+      <ul class="mt-4 space-y-2 list-disc list-inside">
+        <li data-es="12 niveles hechos a mano, de lo facilito a lo infernal">12 hand-made levels, from easy-peasy to infernal</li>
+        <li data-es="Física de verdad: gravedad, hielo, pinchos, temporizador y zonas raras">Real physics: gravity, ice, spikes, timers and weird zones</li>
+        <li data-es="Bombas que sirven de punto de control, y explosiones que te impulsan">Bombs double as checkpoints, and blasts boost your jumps</li>
+        <li data-es="Montaña rusa, medialunas giratorias y puzzle de conos en las últimas etapas">Rollercoaster, spinning half-moons and a cone puzzle in later stages</li>
+        <li data-es="Gratis, sin compras dentro de la app y con anuncios que dan recompensas">Free, no in-app purchases, rewarded ads only</li>
+      </ul>
+      <p class="mt-4 italic" data-es="¿Te atascas? Respira, apunta bien la bomba y vuelve a intentarlo, maquinista.">Stuck? Breathe, aim the bomb well and try again, engineer.</p>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-2xl font-bold mb-1" data-es="📸 Galería">📸 Gallery</h2>
+      <p class="mb-4 text-sm text-indigo-200" data-es="Para poner capturas: suelta los PNG/JPG en singame/binbunlock/images/ y cámbialos por los bloques de abajo. Tamaño recomendado: 1920×1080 apaisado.">To add screenshots: drop the PNG/JPG files into singame/binbunlock/images/ and swap them with the blocks below. Recommended size: 1920×1080 landscape.</p>
+      <img src="images/feature-1024x500.png" alt="Arte promocional de Binbunlock" class="w-full rounded-lg shadow-lg mb-6" />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="shot-placeholder">
+          <p data-es="ESPACIO CAPTURA 1 — Etapa inicial / tren en marcha. Sustituir por: images/captura-1.png">SCREENSHOT SLOT 1 — Early stage / train moving. Replace with: images/captura-1.png</p>
+        </div>
+        <div class="shot-placeholder">
+          <p data-es="ESPACIO CAPTURA 2 — Bomba + explosión que impulsa el salto. Sustituir por: images/captura-2.png">SCREENSHOT SLOT 2 — Bomb + boost jump. Replace with: images/captura-2.png</p>
+        </div>
+        <div class="shot-placeholder">
+          <p data-es="ESPACIO CAPTURA 3 — Puzzle de conos (Etapa 10). Sustituir por: images/captura-3.png">SCREENSHOT SLOT 3 — Cone puzzle (Stage 10). Replace with: images/captura-3.png</p>
+        </div>
+        <div class="shot-placeholder">
+          <p data-es="ESPACIO CAPTURA 4 — Montaña rusa / medialunas (Etapa 12). Sustituir por: images/captura-4.png">SCREENSHOT SLOT 4 — Rollercoaster / half-moons (Stage 12). Replace with: images/captura-4.png</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-8 bg-indigo-800 bg-opacity-30 p-6 rounded-lg">
+      <h2 class="text-2xl font-bold mb-3" data-es="📦 Ficha técnica">📦 Facts</h2>
+      <ul class="space-y-2">
+        <li><strong data-es="Estudio:">Studio:</strong> Singame</li>
+        <li><strong data-es="Plataforma:">Platform:</strong> Android</li>
+        <li><strong data-es="Motor:">Engine:</strong> Unity 6000.6</li>
+        <li><strong data-es="Precio:">Price:</strong> <span data-es="Gratis, sin compras dentro de la app">Free, no in-app purchases</span></li>
+        <li><strong>Ads:</strong> <span data-es="Solo vídeos con recompensa (vidas). Sin intersticiales durante el juego.">Rewarded videos only (lives). No interstitials during gameplay.</span></li>
+        <li><strong data-es="Contacto:">Contact:</strong> <a href="mailto:singameconsulting@gmail.com" class="underline text-indigo-300">singameconsulting@gmail.com</a></li>
+        <li><strong data-es="Privacidad:">Privacy:</strong> <a href="privacidad.html" class="underline text-indigo-300" data-es="Leer la política de privacidad de Binbunlock">Read the Binbunlock privacy policy</a></li>
+      </ul>
+    </section>
+
+    <p class="text-center mt-8">
+      <a href="../projects.html" class="underline text-indigo-300" data-es="← Volver a proyectos">← Back to projects</a>
+    </p>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll("[data-es]").forEach(el => { el.dataset.en = el.innerHTML; });
+      const toggle = document.getElementById("lang-toggle");
+      if (toggle) {
+        toggle.addEventListener("click", () => {
+          const lang = toggle.dataset.lang === "es" ? "en" : "es";
+          toggle.dataset.lang = lang;
+          toggle.textContent = lang === "es" ? "EN" : "ES";
+          document.documentElement.lang = lang;
+          document.querySelectorAll("[data-es]").forEach(el => { el.innerHTML = el.dataset[lang]; });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
