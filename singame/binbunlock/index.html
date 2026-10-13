@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Binbunlock — guía el trenecito con bombas, fuego y vapor en 12 niveles de física. Juego Android de Singame." />
+  <meta name="description" content="Binbunlock — guía el trenecito con bombas, fuego y vapor en 12 niveles de física hechos a mano. Juego Android de Singame." />
   <title>Binbunlock — Singame</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
@@ -18,17 +18,34 @@
     .neon-text {
       text-shadow: 0 0 5px #fff, 0 0 10px #9f6aff, 0 0 20px #9f6aff;
     }
-    .shot-placeholder {
-      border: 2px dashed #9f6aff;
+    .card {
+      background: rgba(67, 56, 202, 0.25);
+      border: 1px solid rgba(129, 140, 248, 0.25);
       border-radius: 0.75rem;
-      min-height: 220px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
       padding: 1.5rem;
-      background: rgba(85, 20, 180, 0.12);
-      color: #e6e1ff;
+    }
+    .card:hover {
+      background: rgba(67, 56, 202, 0.38);
+    }
+    .shot img {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .shot:hover img {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 12px 32px rgba(159, 106, 255, 0.45);
+    }
+    .shot figcaption {
+      font-size: 0.85rem;
+      color: #c7d2fe;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+    .pill {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      background: rgba(67, 56, 202, 0.5);
+      font-size: 0.85rem;
     }
   </style>
 </head>
@@ -37,53 +54,113 @@
     <div class="max-w-6xl mx-auto px-4">
       <div class="flex justify-between items-center py-4">
         <a href="../index.html" class="text-2xl font-bold tracking-tight">Singame</a>
-        <div class="space-x-4">
+        <div class="space-x-4 flex items-center">
+          <a href="../index.html" data-es="Estudio" class="hover:text-indigo-300">Studio</a>
           <a href="../projects.html" data-es="Proyectos" class="hover:text-indigo-300">Projects</a>
           <a href="privacidad.html" data-es="Privacidad" class="hover:text-indigo-300">Privacy</a>
-          <button id="lang-toggle" data-lang="es">EN</button>
+          <button id="lang-toggle" data-lang="es" class="bg-indigo-700 hover:bg-indigo-600 px-3 py-1 rounded">EN</button>
         </div>
       </div>
     </div>
   </nav>
 
-  <header class="max-w-5xl mx-auto p-8 text-center">
-    <img src="images/logo-binbunlock-1024.png" alt="Logo de Binbunlock" class="mx-auto w-40 h-40 object-contain rounded-2xl shadow-lg" />
-    <h1 class="text-4xl md:text-5xl font-bold mt-4 neon-text">Binbunlock</h1>
-    <p class="mt-2 text-xl" data-es="Guía el trenecito con bombas, fuego y vapor en 12 niveles de física.">Guide the little train with bombs, fire and steam through 12 physics levels.</p>
-    <p class="mt-2 italic" data-es="▶️ Próximamente en Google Play · Gratis, sin compras dentro de la app">▶️ Coming soon on Google Play · Free, no in-app purchases</p>
-    <div class="mt-4 flex justify-center gap-3">
-      <span class="px-4 py-2 rounded-full bg-indigo-800 bg-opacity-50 text-sm" data-es="🚂 12 niveles hechos a mano">🚂 12 hand-made levels</span>
-      <span class="px-4 py-2 rounded-full bg-indigo-800 bg-opacity-50 text-sm">Android</span>
+  <!-- HERO -->
+  <header class="max-w-5xl mx-auto px-6 pt-10 pb-6 text-center w-full">
+    <img src="images/logo-binbunlock-1024.png" alt="Logo de Binbunlock" class="mx-auto w-36 h-36 md:w-44 md:h-44 object-contain rounded-2xl shadow-lg" />
+    <h1 class="text-4xl md:text-6xl font-bold mt-4 neon-text">Binbunlock</h1>
+    <p class="mt-3 text-xl text-white" data-es="El trenecito que lo puede con todo: 12 niveles de física, bombas, fuego y vapor.">The little train that could: 12 physics levels with bombs, fire and steam.</p>
+    <p class="mt-2 italic text-indigo-200" data-es="▶️ Próximamente en Google Play · Gratis, sin compras dentro de la app">▶️ Coming soon on Google Play · Free, no in-app purchases</p>
+    <div class="mt-5 flex flex-wrap justify-center gap-2">
+      <span class="pill">🚂 <span data-es="12 niveles hechos a mano">12 hand-made levels</span></span>
+      <span class="pill">💣 <span data-es="Bombas, fuego y vapor">Bombs, fire and steam</span></span>
+      <span class="pill">📱 Android</span>
+      <span class="pill">🎮 Unity</span>
     </div>
+    <img src="images/feature-1024x500.png" alt="Arte promocional de Binbunlock" class="w-full rounded-xl shadow-lg mt-8" />
   </header>
 
-  <main class="max-w-5xl mx-auto px-8 pb-12 w-full">
-    <section class="bg-indigo-800 bg-opacity-30 p-6 rounded-lg">
-      <h2 class="text-2xl font-bold mb-3" data-es="🔥 El juego">🔥 The game</h2>
-      <p data-es="¡Sube a bordo de Binbunlock, el trenecito que lo puede con todo! Supera 12 niveles de física y precisión: coloca bombas, dispara fuego, planea con el vapor y resuelve puzzles para llegar a la llave de cada etapa. Si te quedas sin vidas, consigue más viendo un vídeo.">All aboard Binbunlock, the little train that could! Clear 12 hand-made physics levels: place bombs, shoot fire, glide on steam and solve puzzles to reach each stage key. Out of lives? Earn more by watching a video.</p>
-      <ul class="mt-4 space-y-2 list-disc list-inside">
-        <li data-es="12 niveles hechos a mano, de lo facilito a lo infernal">12 hand-made levels, from easy-peasy to infernal</li>
-        <li data-es="Física de verdad: gravedad, hielo, pinchos, temporizador y zonas raras">Real physics: gravity, ice, spikes, timers and weird zones</li>
-        <li data-es="Bombas que sirven de punto de control, y explosiones que te impulsan">Bombs double as checkpoints, and blasts boost your jumps</li>
-        <li data-es="Montaña rusa, medialunas giratorias y puzzle de conos en las últimas etapas">Rollercoaster, spinning half-moons and a cone puzzle in later stages</li>
-        <li data-es="Gratis, sin compras dentro de la app y con anuncios que dan recompensas">Free, no in-app purchases, rewarded ads only</li>
-      </ul>
-      <p class="mt-4 italic" data-es="¿Te atascas? Respira, apunta bien la bomba y vuelve a intentarlo, maquinista.">Stuck? Breathe, aim the bomb well and try again, engineer.</p>
-    </section>
+  <main class="max-w-5xl mx-auto px-6 pb-12 w-full space-y-10">
 
-    <section class="mt-8">
-      <h2 class="text-2xl font-bold mb-1" data-es="📸 Galería">📸 Gallery</h2>
-      <p class="mb-4 text-sm text-indigo-200" data-es="Para poner capturas: suelta los PNG/JPG en singame/binbunlock/images/ y cámbialos por los bloques de abajo. Tamaño recomendado: 1920×1080 apaisado.">To add screenshots: drop the PNG/JPG files into singame/binbunlock/images/ and swap them with the blocks below. Recommended size: 1920×1080 landscape.</p>
-      <img src="images/feature-1024x500.png" alt="Arte promocional de Binbunlock" class="w-full rounded-lg shadow-lg mb-6" />
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <img src="images/captura-1.png" alt="Binbunlock: el tren en marcha en la etapa inicial" class="w-full rounded-lg shadow-lg" />
-        <img src="images/captura-2.png" alt="Binbunlock: bomba y explosion que impulsa el salto" class="w-full rounded-lg shadow-lg" />
-        <img src="images/captura-3.png" alt="Binbunlock: puzzle de conos de la etapa 10" class="w-full rounded-lg shadow-lg" />
-        <img src="images/captura-4.png" alt="Binbunlock: medialunas giratorias de la etapa 12" class="w-full rounded-lg shadow-lg" />
+    <!-- EL JUEGO -->
+    <section class="card">
+      <h2 class="text-2xl font-bold mb-3" data-es="🔥 El juego">🔥 The game</h2>
+      <p data-es="¡Sube a bordo de Binbunlock, el trenecito que lo puede con todo! Coloca bombas, dispara fuego y planea con el vapor para superar 12 niveles de física y precisión y alcanzar la llave de cada etapa. Cada bomba recogida es tu punto de control… y cada explosión, un impulso para volar más lejos.">All aboard Binbunlock, the little train that could! Place bombs, shoot fire and glide on steam to beat 12 hand-made physics levels and reach each stage key. Every bomb you pick up is your checkpoint… and every blast is a boost to fly further.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+        <div class="bg-black bg-opacity-30 rounded-lg p-4">
+          <div class="text-3xl mb-2">💣</div>
+          <h3 class="font-bold mb-1" data-es="Bombas que salvan e impulsan">Bombs that save and boost</h3>
+          <p class="text-sm" data-es="Cada bomba marca tu punto de reaparición. Detónala cerca y su explosión multiplica tu salto.">Each bomb marks your respawn point. Detonate it close by and the blast multiplies your jump.</p>
+        </div>
+        <div class="bg-black bg-opacity-30 rounded-lg p-4">
+          <div class="text-3xl mb-2">🔥</div>
+          <h3 class="font-bold mb-1" data-es="Fuego que resuelve puzzles">Fire that solves puzzles</h3>
+          <p class="text-sm" data-es="Quema obstáculos, activa mecanismos y encadena rachas para recuperar el vuelo a mitad de etapa.">Burn obstacles, trigger mechanisms and chain streaks to recover flight mid-stage.</p>
+        </div>
+        <div class="bg-black bg-opacity-30 rounded-lg p-4">
+          <div class="text-3xl mb-2">💨</div>
+          <h3 class="font-bold mb-1" data-es="Vapor para planear">Steam to glide</h3>
+          <p class="text-sm" data-es="Un vuelo por etapa: úsalo en el momento justo para cruzar pinchos, hielo y temporizadores.">One flight per stage: spend it at the right moment to cross spikes, ice and timers.</p>
+        </div>
       </div>
     </section>
 
-    <section class="mt-8 bg-indigo-800 bg-opacity-30 p-6 rounded-lg">
+    <!-- GALERÍA -->
+    <section>
+      <h2 class="text-2xl font-bold mb-1" data-es="📸 Galería">📸 Gallery</h2>
+      <p class="mb-5 text-sm text-indigo-200" data-es="Capturas reales del juego: de las primeras vías a la montaña rusa final.">Real in-game screenshots: from the first tracks to the final rollercoaster.</p>
+
+      <h3 class="font-bold text-indigo-200 mb-3" data-es="Etapas 1–4 · Aprende a conducir">Stages 1–4 · Learn the ropes</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <figure class="shot">
+          <img src="images/nivel-01-tren.png" alt="Binbunlock: el trenecito avanzando por la etapa 1" class="w-full rounded-lg shadow-lg" loading="lazy" />
+          <figcaption data-es="Etapa 1 · El trenecito sale a la vía: salta y llega a la llave.">Stage 1 · The little train hits the track: jump and reach the key.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="images/nivel-01-bomba.png" alt="Binbunlock: colocando una bomba que sirve de punto de control" class="w-full rounded-lg shadow-lg" loading="lazy" />
+          <figcaption data-es="Etapa 1 · Tu primera bomba: punto de control y trampolín explosivo.">Stage 1 · Your first bomb: checkpoint and explosive springboard.</figcaption>
+        </figure>
+      </div>
+
+      <h3 class="font-bold text-indigo-200 mb-3" data-es="Etapa 10 · El puzzle de los conos">Stage 10 · The cone puzzle</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <figure class="shot">
+          <img src="images/nivel-10-conos.png" alt="Binbunlock: puzzle de conos numerados de la etapa 10" class="w-full rounded-lg shadow-lg" loading="lazy" />
+          <figcaption data-es="Etapa 10 · Los conos piden 1-2-3 en orden: cada fuego suma.">Stage 10 · The cones want 1-2-3 in order: every fire shot counts.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="images/nivel-10-fuego.png" alt="Binbunlock: disparando fuego contra el puzzle de conos" class="w-full rounded-lg shadow-lg" loading="lazy" />
+          <figcaption data-es="Etapa 10 · Apunta el fuego sin repetir número para abrir el muro.">Stage 10 · Aim your fire without repeating numbers to open the wall.</figcaption>
+        </figure>
+      </div>
+
+      <h3 class="font-bold text-indigo-200 mb-3" data-es="Etapa 12 · Medialunas y montaña rusa">Stage 12 · Half-moons and rollercoaster</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <figure class="shot">
+          <img src="images/nivel-12-lunas.png" alt="Binbunlock: medialunas giratorias de la etapa 12" class="w-full rounded-lg shadow-lg" loading="lazy" />
+          <figcaption data-es="Etapa 12 · Medialunas giratorias sobre el vacío: mide el salto.">Stage 12 · Spinning half-moons over the void: time your jump.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="images/nivel-12-lunas-2.png" alt="Binbunlock: tramo final de medialunas antes de la meta" class="w-full rounded-lg shadow-lg" loading="lazy" />
+          <figcaption data-es="Etapa 12 · El tramo final: encadena vapor y bombas hasta la llave.">Stage 12 · The final stretch: chain steam and bombs to the key.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- EL VIAJE -->
+    <section class="card">
+      <h2 class="text-2xl font-bold mb-3" data-es="🛤️ El viaje, etapa a etapa">🛤️ The journey, stage by stage</h2>
+      <ol class="space-y-2 list-none">
+        <li><strong>1–4 ·</strong> <span data-es="Sin cronómetro: aprende a saltar, bombardear y planear.">No timer: learn to jump, bomb and glide.</span></li>
+        <li><strong>5–8 ·</strong> <span data-es="Entra el cronómetro (60″→30″), el hielo y los pinchos.">The timer kicks in (60″→30″), plus ice and spikes.</span></li>
+        <li><strong>9–11 ·</strong> <span data-es="Gravedad rara, temporizadores ajustados y zonas que exigen puntería.">Weird gravity, tight timers and zones that demand aim.</span></li>
+        <li><strong>10 ·</strong> <span data-es="Puzzle de conos 1-2-3 que solo se abre en orden.">1-2-3 cone puzzle that only opens in order.</span></li>
+        <li><strong>12 ·</strong> <span data-es="Gran final: medialunas giratorias y montaña rusa hacia la meta.">Grand finale: spinning half-moons and a rollercoaster to the goal.</span></li>
+      </ol>
+      <p class="mt-4 italic text-sm" data-es="¿Te atascas? Respira, apunta bien la bomba y vuelve a intentarlo, maquinista.">Stuck? Breathe, aim the bomb well and try again, engineer.</p>
+    </section>
+
+    <!-- FICHA -->
+    <section class="card">
       <h2 class="text-2xl font-bold mb-3" data-es="📦 Ficha técnica">📦 Facts</h2>
       <ul class="space-y-2">
         <li><strong data-es="Estudio:">Studio:</strong> Singame</li>
@@ -96,10 +173,16 @@
       </ul>
     </section>
 
-    <p class="text-center mt-8">
+    <p class="text-center">
       <a href="../projects.html" class="underline text-indigo-300" data-es="← Volver a proyectos">← Back to projects</a>
+      <span class="mx-2 text-indigo-500">·</span>
+      <a href="../index.html" class="underline text-indigo-300" data-es="Conoce al estudio Singame →">Meet the Singame studio →</a>
     </p>
   </main>
+
+  <footer class="text-center py-4 bg-black bg-opacity-30 text-sm text-white mt-auto">
+    © 2025 Singame · Binbunlock
+  </footer>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {

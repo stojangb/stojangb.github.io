@@ -3,18 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Singame - video games powered by AI" />
-  <title>Singame</title>
+  <meta name="description" content="Singame — software studio & consultancy: custom software, video games (Binbunlock) and applied AI." />
+  <title>Singame — Software Studio & Consultancy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
   <script src="../extras/tailwind.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js" defer integrity="sha384-bcpiSslshEqIfUoxXWFNw7kqGDrRhwSYbr2IHOzGmD5dX3pDoM89ZGkqW9qFP0Ks" crossorigin="anonymous"></script>
   <!-- Google Analytics -->
   <script src="../extras/ga.js" defer></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer integrity="sha384-XcdcwHqIPULERb2yDEM4R0XaQKU3YnDsrTmjACBZyfdVVqjh6xQ4/DCMd7XLcA6Y" crossorigin="anonymous"></script>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -28,20 +26,38 @@
     #singame-hero {
       background: radial-gradient(circle at top left, #1b1b3a 0%, #262b63 70%);
       color: white;
-      padding: 6rem 1rem;
+      padding: 5rem 1rem 4rem;
       text-align: center;
     }
     .hero-btn {
       background: linear-gradient(to right, #5514b4, #7b1fa2);
       border-radius: 9999px;
-      padding: 1rem 2rem;
-      margin: 0 0.5rem;
+      padding: 0.9rem 1.8rem;
+      margin: 0.25rem;
       box-shadow: 0 0 10px #5514b4;
       transition: background 0.3s, transform 0.2s;
+      display: inline-block;
+      color: #fff;
     }
     .hero-btn:hover {
       background: linear-gradient(to right, #7b1fa2, #9f6aff);
       transform: translateY(-2px);
+    }
+    .hero-btn.secondary {
+      background: transparent;
+      border: 1px solid #9f6aff;
+      box-shadow: none;
+    }
+    .card {
+      background: rgba(67, 56, 202, 0.25);
+      border: 1px solid rgba(129, 140, 248, 0.25);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .card:hover {
+      background: rgba(67, 56, 202, 0.38);
+      transform: translateY(-3px);
     }
     #tech-animation {
       overflow: hidden;
@@ -50,12 +66,10 @@
       width: 100%;
       height: 100%;
     }
-    #game-container {
-      width: 100%;
-      max-width: 600px;
-      height: 60vh;
-      max-height: 400px;
-      margin: 2rem auto;
+    .step-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #9f6aff;
     }
   </style>
 </head>
@@ -64,114 +78,144 @@
     <div class="max-w-6xl mx-auto px-4">
       <div class="flex justify-between items-center py-4">
         <a href="../index.html" class="text-2xl font-bold tracking-tight">Singame</a>
-        <div class="space-x-4">
+        <div class="space-x-4 flex items-center text-sm md:text-base">
+          <a href="#servicios" data-es="Servicios" class="transition-colors duration-200 hover:text-indigo-300">Services</a>
+          <a href="#producto" data-es="Videojuego" class="transition-colors duration-200 hover:text-indigo-300">Game</a>
           <a href="projects.html" data-es="Proyectos" class="transition-colors duration-200 hover:text-indigo-300">Projects</a>
-          <a href="register.html" data-es="Registrarse" class="transition-colors duration-200 hover:text-indigo-300">Register</a>
+          <a href="#contacto" data-es="Contacto" class="transition-colors duration-200 hover:text-indigo-300">Contact</a>
+          <button id="lang-toggle" class="bg-indigo-700 hover:bg-indigo-600 px-3 py-1 rounded" data-lang="en">ES</button>
         </div>
       </div>
     </div>
   </nav>
+
+  <!-- HERO -->
   <section id="singame-hero">
-    <h1 class="text-6xl font-bold neon-text">SINGAME</h1>
-    <p id="hero-tagline" class="mt-2 text-xl" data-es="Somos una empresa de videojuegos que impulsa la inteligencia artificial en el gaming">We are a video game company that drives artificial intelligence in gaming</p>
-    <canvas id="hero-chart" class="mx-auto my-6 max-w-xl"></canvas>
-    <div class="flex justify-center mt-4">
-      <a href="register.html" id="btn-register" class="hero-btn" data-es="Regístrate con Google">SIGN UP WITH GOOGLE</a>
-        <button id="lang-toggle" class="hero-btn" data-lang="en">ES</button>
+    <h1 class="text-5xl md:text-6xl font-bold neon-text">SINGAME</h1>
+    <p id="hero-tagline" class="mt-3 text-xl text-indigo-100" data-es="Estudio y consultora de software: programas a medida, videojuegos e IA aplicada.">Software studio & consultancy: custom software, video games and applied AI.</p>
+    <div class="flex flex-wrap justify-center mt-6">
+      <a href="#contacto" id="btn-contact" class="hero-btn" data-es="Pide tu presupuesto">Get a quote</a>
+      <a href="#producto" class="hero-btn secondary" data-es="Ver nuestro videojuego">See our video game</a>
+      <a href="consulting.html" class="hero-btn secondary" data-es="Propuesta ejecutiva">Executive proposal</a>
     </div>
   </section>
-<section id="tech-section" class="mt-8 text-center">
-  <h2 class="text-2xl font-bold mb-4 neon-text" data-es="NUESTRA TECNOLOGÍA">OUR TECHNOLOGY</h2>
-  <div id="tech-animation" class="relative w-full h-64 mb-8 mx-auto"></div>
-</section>
-  <section class="max-w-3xl mx-auto p-8 text-center">
-    <h2 class="text-3xl md:text-4xl font-bold mb-4" data-es="El Futuro del Juego Comienza Aquí">The Future of Gaming Begins Here</h2>
-    <p class="mb-4" data-es="Diviértete al instante, sin rodeos.">Have fun instantly, no fuss.</p>
-    <p data-es="Creamos videojuegos con inteligencia artificial que entienden, aprenden y evolucionan contigo. En Singame, redefinimos lo que significa jugar.">We create video games with artificial intelligence that understand, learn and evolve with you. At Singame, we redefine what it means to play.</p>
+
+  <!-- TECNOLOGÍA -->
+  <section id="tech-section" class="mt-8 text-center px-4">
+    <h2 class="text-2xl font-bold mb-4 neon-text" data-es="CÓMO TRABAJAMOS">HOW WE WORK</h2>
+    <div id="tech-animation" class="relative w-full h-64 mb-8 mx-auto max-w-3xl"></div>
   </section>
 
-  <section class="bg-indigo-800 bg-opacity-30 p-8 hidden locked">
-    <h3 class="text-2xl font-bold mb-4" data-es="¿Por qué Singame?">🚀 Why Singame?</h3>
-    <ul class="space-y-3 text-lg">
-      <li data-es="IA en todos los niveles – Cada mecánica, enemigo y decisión es impulsada por IA para una experiencia única, dinámica e irrepetible.">AI at every level – Every mechanic, enemy and decision is powered by AI for a unique, dynamic and unrepeatable experience.</li>
-      <li data-es="Juegos que piensan, sienten y responden – Nuestra tecnología permite que los mundos reaccionen a ti. Ya no juegas dentro del juego, ahora formas parte de él.">Games that think, feel and respond – Our technology allows worlds to react to you. You're no longer playing inside the game, you're part of it.</li>
-      <li data-es="Diseño sin límites – Visuales envolventes, animaciones generadas en tiempo real y estilos que se adaptan a tu forma de jugar.">Design without limits – Immersive visuals, real-time generated animations and styles that adapt to how you play.</li>
-    </ul>
+  <!-- SERVICIOS -->
+  <section id="servicios" class="max-w-5xl mx-auto px-6 py-8 w-full">
+    <h2 class="text-3xl font-bold mb-2 text-center" data-es="Servicios">Services</h2>
+    <p class="text-center mb-8 text-indigo-200" data-es="Del prototipo al producto: diseñamos, programamos y acompañamos.">From prototype to product: we design, build and support.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="card">
+        <div class="text-3xl mb-2">🛠️</div>
+        <h3 class="text-xl font-bold mb-2" data-es="Software a medida">Custom software</h3>
+        <p data-es="Aplicaciones web, móviles y de escritorio adaptadas a tu negocio: del análisis a la puesta en producción, con código limpio y documentado.">Web, mobile and desktop apps tailored to your business: from analysis to production, with clean, documented code.</p>
+      </div>
+      <div class="card">
+        <div class="text-3xl mb-2">🎮</div>
+        <h3 class="text-xl font-bold mb-2" data-es="Creación de videojuegos">Video game creation</h3>
+        <p data-es="Diseño y desarrollo de videojuegos 2D/3D en Unity: mecánicas, niveles, física y publicación en Google Play. Nuestro juego Binbunlock lo demuestra.">2D/3D game design and development in Unity: mechanics, levels, physics and Google Play publishing. Our game Binbunlock proves it.</p>
+      </div>
+      <div class="card">
+        <div class="text-3xl mb-2">🤖</div>
+        <h3 class="text-xl font-bold mb-2" data-es="IA aplicada">Applied AI</h3>
+        <p data-es="Agentes inteligentes, automatización y pruebas de concepto con IA para modernizar tus procesos sin humo ni promesas vacías.">Smart agents, automation and AI proofs of concept to modernize your processes — no hype, no empty promises.</p>
+      </div>
+      <div class="card">
+        <div class="text-3xl mb-2">☁️</div>
+        <h3 class="text-xl font-bold mb-2" data-es="Modernización y nube">Modernization & cloud</h3>
+        <p data-es="Migración de sistemas heredados a la nube (AWS), revisión y mejora de código existente, y capacitación tecnológica para tu equipo.">Legacy-to-cloud migration (AWS), review and improvement of existing code, and tech training for your team.</p>
+      </div>
+    </div>
   </section>
 
-  <section class="max-w-3xl mx-auto p-8 text-center">
-    <h3 data-es="🔥 Binbunlock" class="text-2xl font-bold mb-2">🔥 Binbunlock</h3>
-    <p data-es="Guía el trenecito con bombas, fuego y vapor en 12 niveles de física.">Guide the little train with bombs, fire and steam through 12 physics levels.</p>
-    <p class="mt-2 italic" data-es="▶️ Próximamente en Google Play">▶️ Coming soon on Google Play</p>
-    <p class="mt-4"><a href="binbunlock/index.html" class="underline text-indigo-300" data-es="Ver el juego, galería y privacidad →">See the game, gallery and privacy →</a></p>
+  <!-- PROCESO -->
+  <section class="max-w-5xl mx-auto px-6 py-8 w-full">
+    <h2 class="text-3xl font-bold mb-6 text-center" data-es="Un proceso simple, resultados serios">A simple process, serious results</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+      <div class="card">
+        <div class="step-number">1</div>
+        <h3 class="font-bold" data-es="Escuchamos">We listen</h3>
+        <p class="text-sm" data-es="Entendemos tu problema y definimos el alcance.">We understand your problem and define the scope.</p>
+      </div>
+      <div class="card">
+        <div class="step-number">2</div>
+        <h3 class="font-bold" data-es="Prototipamos">We prototype</h3>
+        <p class="text-sm" data-es="Prueba de concepto rápida para validar antes de invertir.">A fast proof of concept to validate before investing.</p>
+      </div>
+      <div class="card">
+        <div class="step-number">3</div>
+        <h3 class="font-bold" data-es="Construimos">We build</h3>
+        <p class="text-sm" data-es="Desarrollo iterativo con entregas visibles.">Iterative development with visible deliveries.</p>
+      </div>
+      <div class="card">
+        <div class="step-number">4</div>
+        <h3 class="font-bold" data-es="Acompañamos">We support</h3>
+        <p class="text-sm" data-es="Soporte, formación y evolución del producto.">Support, training and product evolution.</p>
+      </div>
+    </div>
   </section>
 
-  <section id="minigame-section" class="max-w-3xl mx-auto p-8 text-center">
-    <h3 class="text-2xl font-bold mb-4" data-es="Juega para desbloquear">Play to Unlock</h3>
-    <div id="game-container"></div>
-    <p data-es="Completa este minijuego para revelar más contenido." class="mt-4">Complete this mini-game to reveal more content.</p>
+  <!-- PRODUCTO: BINBUNLOCK -->
+  <section id="producto" class="max-w-5xl mx-auto px-6 py-8 w-full">
+    <div class="card md:flex gap-6 items-center" style="background: linear-gradient(135deg, rgba(85,20,180,0.45), rgba(30,27,75,0.6));">
+      <img src="binbunlock/images/nivel-01-tren.png" alt="Binbunlock: el trenecito en la etapa 1" class="w-full md:w-1/2 rounded-lg shadow-lg" loading="lazy" />
+      <div class="mt-4 md:mt-0">
+        <span class="text-xs uppercase tracking-widest text-indigo-200" data-es="Nuestro videojuego · Próximamente en Google Play">Our video game · Coming soon on Google Play</span>
+        <h3 class="text-3xl font-bold mb-2 mt-1">🔥 Binbunlock</h3>
+        <p class="mb-2" data-es="Guía el trenecito con bombas, fuego y vapor en 12 niveles de física hechos a mano: del salto básico al puzzle de conos y la montaña rusa final.">Guide the little train with bombs, fire and steam through 12 hand-made physics levels: from the basic jump to the cone puzzle and the final rollercoaster.</p>
+        <ul class="list-disc list-inside text-sm space-y-1 mb-4">
+          <li data-es="12 niveles, 3 mecánicas que se combinan">12 levels, 3 combinable mechanics</li>
+          <li data-es="Hecho en Unity, gratis y sin compras in-app">Built in Unity, free with no in-app purchases</li>
+          <li data-es="Galería con capturas reales del juego">Gallery with real in-game screenshots</li>
+        </ul>
+        <a href="binbunlock/index.html" class="hero-btn" data-es="Ver el juego y la galería →">See the game and gallery →</a>
+      </div>
+    </div>
   </section>
 
-  <section class="bg-indigo-800 bg-opacity-30 p-8">
-    <h3 class="text-2xl font-bold mb-4" data-es="💡 Tecnología Propia. IA Real. Diversión Garantizada.">💡 Proprietary Technology. Real AI. Fun Guaranteed.</h3>
-    <p data-es="Desde los primeros prototipos hasta las versiones más avanzadas, cada juego de Singame está construido con una arquitectura de IA que aprende, se adapta y mejora contigo. Nuestra misión:">From the early prototypes to the most advanced versions, every Singame game is built with an AI architecture that learns, adapts and improves with you. Our mission:</p>
-    <blockquote data-es="Convertir cada partida en una experiencia irrepetible." class="border-l-4 border-indigo-500 pl-4 my-4 italic">Turn every match into an unrepeatable experience.</blockquote>
+  <!-- VALORES -->
+  <section class="max-w-5xl mx-auto px-6 py-8 w-full">
+    <h2 class="text-3xl font-bold mb-6 text-center" data-es="Por qué Singame">Why Singame</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+      <div class="card">
+        <div class="text-3xl mb-2">🎯</div>
+        <h3 class="font-bold mb-1" data-es="Producto antes que humo">Product over hype</h3>
+        <p class="text-sm" data-es="Mostramos prototipos jugables y funcionales, no diapositivas.">We show playable, working prototypes — not slides.</p>
+      </div>
+      <div class="card">
+        <div class="text-3xl mb-2">🤝</div>
+        <h3 class="font-bold mb-1" data-es="Trato humano">Human touch</h3>
+        <p class="text-sm" data-es="Equipo pequeño, comunicación directa y código que tu equipo puede mantener.">Small team, direct communication and code your team can maintain.</p>
+      </div>
+      <div class="card">
+        <div class="text-3xl mb-2">🌱</div>
+        <h3 class="font-bold mb-1" data-es="Para crecer contigo">Built to grow with you</h3>
+        <p class="text-sm" data-es="Del encargo puntual a la colaboración a largo plazo.">From a one-off project to a long-term partnership.</p>
+      </div>
+    </div>
   </section>
 
-  <section class="max-w-3xl mx-auto p-8 hidden locked">
-    <h3 class="text-2xl font-bold mb-2" data-es="🌍 Pensado para Todos. Jugado por el Futuro.">🌍 Designed for Everyone. Played by the Future.</h3>
-    <p data-es="Ya no hablamos de videojuegos comunes. Hablamos de un nuevo lenguaje entre humanos y máquinas.">We no longer talk about ordinary video games. We talk about a new language between humans and machines.</p>
-    <p data-es="Un nuevo universo donde tú decides las reglas.">A new universe where you decide the rules.</p>
+  <!-- CONTACTO -->
+  <section id="contacto" class="max-w-3xl mx-auto px-6 py-8 w-full text-center">
+    <div class="card">
+      <h2 class="text-3xl font-bold mb-2" data-es="📬 ¿Hacemos algo grande?">📬 Shall we build something great?</h2>
+      <p class="mb-4" data-es="Cuéntanos tu idea: software a medida, un videojuego o un proyecto con IA. Respondemos en persona, sin formularios fríos.">Tell us your idea: custom software, a video game or an AI project. A real person replies — no cold forms.</p>
+      <p class="mb-4"><a href="mailto:singameconsulting@gmail.com" class="underline text-indigo-200 text-lg">singameconsulting@gmail.com</a></p>
+      <p class="text-sm"><a href="../index.html" class="underline text-indigo-300" data-es="← Volver al perfil de Stojan Gasic">← Back to Stojan Gasic's profile</a></p>
+    </div>
   </section>
 
-  <section class="bg-indigo-800 bg-opacity-30 p-8 hidden locked">
-    <h3 class="text-2xl font-bold mb-2" data-es="👁️ Diseño Futurista. Sin Descargas. Sin Esperas.">👁️ Futuristic Design. No Downloads. No Waiting.</h3>
-    <p data-es="Todo en la nube. Juega desde donde estés.">Everything in the cloud. Play from wherever you are.</p>
-    <p data-es="Compatible con móviles, tablets y PC.">Compatible with mobile, tablet and PC.</p>
-  </section>
+  <footer class="text-center py-4 bg-black bg-opacity-30 text-sm text-white mt-auto">
+    © 2025 Singame
+  </footer>
 
-  <section id="about-us-section" class="max-w-3xl mx-auto p-8 hidden locked">
-    <h3 class="text-2xl font-bold mb-2" data-es="🤖 Un equipo de soñadores, ingenieros y artistas.">🤖 A team of dreamers, engineers and artists.</h3>
-    <p data-es="Singame es más que una empresa.">Singame is more than a company.</p>
-    <p data-es="Es una revolución creativa.">It is a creative revolution.</p>
-    <p data-es="Es una señal de lo que viene.">It is a sign of what's coming.</p>
-  </section>
-<section id="start-section" class="max-w-3xl mx-auto p-8 text-center hidden locked">
-  <h3 class="text-2xl font-bold mb-2" data-es="Cómo Comenzar">How to Get Started</h3>
-  <p data-es='<a href="register.html" class="underline">Regístrate con tu cuenta de Google</a> y sigue el desarrollo.'><a href="register.html" class="underline">Sign up with your Google account</a> and follow the development.</p>
-  <p data-es="Únete a la comunidad y sé parte del futuro del gaming.">Join the community and be part of the future of gaming.</p>
-</section>
-
-  <section class="bg-indigo-800 bg-opacity-30 p-8 text-center hidden locked">
-    <h3 class="text-2xl font-bold mb-2" data-es="📬 ¿Quieres colaborar con nosotros?">📬 Want to collaborate with us?</h3>
-    <p class="mb-4" data-es="Desarrolladores, testers, inversores y soñadores: Contáctanos. El futuro se construye juntos.">Developers, testers, investors and dreamers: Contact us. The future is built together.</p>
-    <a href="https://www.stojangasic.com" class="underline text-indigo-300">www.stojangasic.com</a>
-  </section>
-  <p class="text-center mt-10 text-gray-300 hidden locked" data-es="El inicio de un proyecto futurista sin igual.">The start of a unique futuristic project.</p>
   <script>
-    function initChart(){
-      const ctx = document.getElementById('hero-chart').getContext('2d');
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: [1,2,3,4,5,6],
-          datasets: [{
-            data: [1,3,2,5,4,6],
-            borderColor: '#00ffff',
-            borderWidth: 2,
-            tension: 0.4,
-            pointRadius: 0,
-            fill: false
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: { legend: { display: false } },
-          scales: { x: { display: false }, y: { display: false } }
-        }
-      });
-    }
-
     function initTechAnimation() {
       const container = document.getElementById('tech-animation');
       const svgNS = "http://www.w3.org/2000/svg";
@@ -249,108 +293,20 @@
       animateNetwork();
     }
 
-      function initMiniGame() {
-        const config = {
-          type: Phaser.AUTO,
-          parent: 'game-container',
-          width: 600,
-          height: 400,
-          physics: { default: 'arcade', arcade: { gravity: { y: 500 }, debug: false } },
-          scene: { preload, create, update }
-        };
-
-        let ball, cursors, obstacles, gameOverText, obstacleTimer, winTimer;
-
-        function preload() {}
-
-        function create() {
-          this.cameras.main.setBackgroundColor('#0e112f');
-          ball = this.add.circle(300, 50, 15, 0x00ffff);
-          this.physics.add.existing(ball);
-          ball.body.setBounce(0.6);
-          ball.body.setCollideWorldBounds(true);
-
-          cursors = this.input.keyboard.createCursorKeys();
-          obstacles = this.physics.add.group();
-          this.physics.add.collider(ball, obstacles, hit, null, this);
-
-          obstacleTimer = this.time.addEvent({ delay: 2000, callback: addObstacle, callbackScope: this, loop: true });
-          winTimer = this.time.delayedCall(5000, win, null, this);
-          gameOverText = this.add.text(300, 200, '', { font: '24px Arial', fill: '#fff' }).setOrigin(0.5);
-        }
-
-        function addObstacle() {
-          const gapWidth = Phaser.Math.Between(160, 220);
-          const gapX = Phaser.Math.Between(50, 550 - gapWidth);
-          const leftW = gapX;
-          const rightW = 600 - gapX - gapWidth;
-          if (leftW > 0) {
-            const l = this.add.rectangle(leftW / 2, 420, leftW, 20, 0x5514b4);
-            this.physics.add.existing(l);
-            l.body.setAllowGravity(false);
-            l.body.setImmovable(true);
-            l.body.setVelocityY(-80);
-            obstacles.add(l);
-          }
-          if (rightW > 0) {
-            const r = this.add.rectangle(gapX + gapWidth + rightW / 2, 420, rightW, 20, 0x5514b4);
-            this.physics.add.existing(r);
-            r.body.setAllowGravity(false);
-            r.body.setImmovable(true);
-            r.body.setVelocityY(-80);
-            obstacles.add(r);
-          }
-        }
-
-        function update() {
-          if (gameOverText.text) return;
-          ball.body.setVelocityX(0);
-          if (cursors.left.isDown) ball.body.setVelocityX(-200);
-          else if (cursors.right.isDown) ball.body.setVelocityX(200);
-          obstacles.getChildren().forEach(o => { if (o.y < -20) o.destroy(); });
-          if (ball.y < 0) lose.call(this);
-        }
-
-        function hit() { lose.call(this); }
-
-        function lose() {
-          gameOverText.setText('Game Over');
-          obstacleTimer.remove();
-          winTimer && winTimer.remove();
-          this.time.delayedCall(1000, () => { this.scene.restart(); });
-        }
-
-        function win() {
-          gameOverText.setText('You Win!');
-          obstacleTimer.remove();
-          winTimer && winTimer.remove();
-          document.getElementById('minigame-section').classList.add('hidden');
-          document.querySelectorAll('.locked').forEach(el => el.classList.remove('hidden', 'locked'));
-        }
-
-        new Phaser.Game(config);
+    document.addEventListener("DOMContentLoaded", () => {
+      initTechAnimation();
+      document.querySelectorAll("[data-es]").forEach(el => { el.dataset.en = el.innerHTML; });
+      const toggle = document.getElementById("lang-toggle");
+      if (toggle) {
+        toggle.addEventListener("click", () => {
+          const lang = toggle.dataset.lang === "es" ? "en" : "es";
+          toggle.dataset.lang = lang;
+          toggle.textContent = lang === "es" ? "EN" : "ES";
+          document.documentElement.lang = lang;
+          document.querySelectorAll("[data-es]").forEach(el => { el.innerHTML = el.dataset[lang]; });
+        });
       }
-      document.addEventListener("DOMContentLoaded", () => {
-        initChart();
-        initTechAnimation();
-        const isMobile = window.matchMedia('(max-width: 767px)').matches;
-        if (isMobile) {
-          document.getElementById('minigame-section').classList.add('hidden');
-          document.querySelectorAll('.locked').forEach(el => el.classList.remove('hidden', 'locked'));
-        } else {
-          initMiniGame();
-        }
-        document.querySelectorAll("[data-es]").forEach(el => { el.dataset.en = el.textContent; });
-        const toggle = document.getElementById("lang-toggle");
-        if (toggle) {
-          toggle.addEventListener("click", () => {
-            const lang = toggle.dataset.lang === "es" ? "en" : "es";
-            toggle.dataset.lang = lang;
-            toggle.textContent = lang === "es" ? "EN" : "ES";
-            document.querySelectorAll("[data-es]").forEach(el => { el.textContent = el.dataset[lang]; });
-          });
-        }
-      });
+    });
   </script>
 </body>
 </html>

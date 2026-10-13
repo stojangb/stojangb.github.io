@@ -12,11 +12,19 @@ The bucket is served publicly through Google Cloud Load Balancer and Cloud
 DNS. Caching is disabled with the `setmeta` command to ensure updates are
 visible immediately.
 
+## Estructura Singame
+
+`singame/` es la landing del estudio y consultora Singame: `index.html`
+(servicios), `projects.html` (Binbunlock + consultoría), `consulting.html`
+(propuesta ejecutiva) y `binbunlock/` (juego insignia con galería y
+`privacidad.html` — la URL de privacidad de Google Play, no renombrar).
+Los prototipos antiguos (`game1/`, `game2/`, `register.html`) se eliminaron
+el 13/10/2026 al convertir Singame en empresa/consultora.
+
 ## API Key Handling
 
-El minijuego `singame/game2` (Super Ball) ya no usa servicios externos ni claves de API. Todo
-el código se ejecuta en el navegador, por lo que basta con desplegar el sitio
-estático sin preocuparse por credenciales.
+El sitio es 100 % estático y no usa claves de API en el navegador. Basta con
+desplegar el contenido sin preocuparse por credenciales.
 
 ## GitHub Secrets
 

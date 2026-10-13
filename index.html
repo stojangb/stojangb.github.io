@@ -342,11 +342,11 @@
           { text: "Su profundo conocimiento en su área es evidente en cada proyecto, combinando visión estratégica con soluciones prácticas que transformaron nuestra infraestructura digital.", author: "– Fernanda Aliaga", role: "Accenture" },
           { text: "Stojan destaca por ser una persona confiable y honesta que siempre prioriza las necesidades del cliente. Su expertise en AWS y automatización nos permitió reducir costos operativos.", author: "– Fernando Muñoz", role: "Externo de Transbank / Accenture" }
         ],
-        projects: "🚀 Proyectos Abiertos",
-        projectsSummary: "Portafolio priorizado por valor de negocio, madurez técnica y velocidad de entrega.",
+        projects: "🚀 Proyectos",
+        projectsSummary: "Singame como proyecto principal: estudio y consultora de software, con Binbunlock como videojuego insignia.",
         projectsMetrics: {
-          total: "Proyectos revisados",
-          live: "Con demo disponible",
+          total: "Proyectos publicados",
+          live: "Con página disponible",
           next: "Mejoras implementadas hoy"
         },
         projectLabels: {
@@ -354,50 +354,28 @@
           impact: "Impacto",
           improvements: "Mejoras clave",
           open: "Abrir",
-          pending: "Próximamente"
+          pending: "Próximamente",
+          featured: "⭐ Proyecto principal"
         },
         projectsList: [
           {
-            title: "Migración a Microservicios",
-            description: "Transformación de una estructura monolítica sólida en múltiples microservicios interconectados, mejorando la escalabilidad y la velocidad de implementación.",
-            tech: "AWS, Kubernetes, Terraform, Java Spring Boot",
-            status: "Escalado",
-            impact: "Menor tiempo de despliegue",
-            improvements: ["Definición por dominios de negocio", "Pipeline CI/CD por servicio", "Observabilidad de punta a punta"]
-          },
-          {
-            title: "Desarrollo de Juego de Plataformas en Unity 3D",
-            description: "Creación de un juego de plataformas utilizando Unity 3D y Blender, con mecánicas implementadas en C# que simulan una jugabilidad real.",
-            tech: "Unity 3D, Blender, C#",
-            status: "Demo activa",
-            impact: "Prototipo jugable validado",
-            improvements: ["Optimización de física y colisiones", "Mejoras en UX del menú", "Iteración continua de niveles"],
-            link: "singame/index.html"
-          },
-          {
-            title: "Migración de Procedimientos Almacenados",
-            description: "Reestructuración de procedimientos almacenados de bases de datos a Spring Boot, logrando una arquitectura más robusta y desacoplada.",
-            tech: "Spring Boot, SQL",
-            status: "En evolución",
-            impact: "Reducción de acoplamiento",
-            improvements: ["Estrategia incremental por módulos", "Pruebas de regresión de consultas", "Versionado de contratos de datos"]
-          }
-          , {
-            title: "Fundación Abierta",
-            description: "Creación de una organización para proyectos solidarios y experimentales que impulsen el bien común.",
-            tech: "Organización social",
-            status: "Activa",
-            impact: "Mayor alcance comunitario",
-            improvements: ["Priorización por impacto social", "Transparencia de iniciativas", "Vinculación con voluntariado"],
-            link: "openfoundation/index.html"
-          }, {
-            title: "Singame Consultoría",
-            description: "Empresa de consultoría en desarrollo de software e inteligencia artificial.",
-            tech: "IA, Software a Medida",
+            title: "Singame — Estudio & Consultora de Software",
+            description: "Empresa de software: programas a medida, creación de videojuegos (Binbunlock), IA aplicada y modernización a la nube. Proyecto principal y activo.",
+            tech: "Software a medida · Videojuegos (Unity) · IA · AWS",
             status: "Operativa",
-            impact: "Nuevas oportunidades comerciales",
-            improvements: ["Oferta por paquetes de valor", "Casos de uso por industria", "Ruta de adopción de IA responsable"],
-            link: "singame/consulting.html"
+            impact: "Clientes y producto propio",
+            improvements: ["Servicios por paquetes de valor", "Prototipos y POC para validar antes de invertir", "Videojuego propio publicado como carta de presentación"],
+            link: "singame/index.html",
+            featured: true
+          },
+          {
+            title: "Binbunlock — Videojuego Android",
+            description: "Guía el trenecito con bombas, fuego y vapor en 12 niveles de física hechos a mano. Gratis, sin compras dentro de la app; próximamente en Google Play.",
+            tech: "Unity, C#, Blender",
+            status: "En producción",
+            impact: "Juego insignia del estudio",
+            improvements: ["12 niveles hechos a mano con galería de capturas", "Mecánicas combinables: bomba, fuego y vapor", "Política de privacidad publicada"],
+            link: "singame/binbunlock/index.html"
           }
           , {
             title: "Timegrafia",
@@ -408,6 +386,16 @@
             improvements: ["Estructura modular por temática", "Mejora de rendimiento visual", "Diseño mobile-first"],
             link: "infografias/index.html"
           }
+          // FUTURO (oculto hasta retomarlo): Fundación Abierta.
+          // Para reactivarlo, descomentar el bloque y volver a enlazar openfoundation/index.html.
+          // {
+          //   title: "Fundación Abierta",
+          //   description: "Creación de una organización para proyectos solidarios y experimentales que impulsen el bien común.",
+          //   tech: "Organización social",
+          //   status: "Idea futura",
+          //   impact: "Mayor alcance comunitario",
+          //   improvements: ["Priorización por impacto social", "Transparencia de iniciativas", "Vinculación con voluntariado"]
+          // }
         ],
         contact: "📞 Contacto",
         contactText: "Contáctame cuando quieras, estaré encantado de conversar sobre tu próximo desafío.",
@@ -454,11 +442,11 @@
           { text: "His deep knowledge in his field is evident in every project, combining strategic vision with practical solutions that transformed our digital infrastructure.", author: "– Fernanda Aliaga", role: "Accenture" },
           { text: "Stojan stands out as a reliable and honest person who always prioritizes client needs. His expertise in AWS and automation allowed us to reduce operational costs.", author: "– Fernando Muñoz", role: "Transbank / Accenture" }
         ],
-        projects: "🚀 Open Projects",
-        projectsSummary: "Portfolio prioritized by business value, technical maturity, and delivery speed.",
+        projects: "🚀 Projects",
+        projectsSummary: "Singame as the flagship project: software studio & consultancy, with Binbunlock as its showcase video game.",
         projectsMetrics: {
-          total: "Projects reviewed",
-          live: "Live demos available",
+          total: "Published projects",
+          live: "Live pages available",
           next: "Improvements shipped today"
         },
         projectLabels: {
@@ -466,50 +454,28 @@
           impact: "Impact",
           improvements: "Key improvements",
           open: "Open",
-          pending: "Coming soon"
+          pending: "Coming soon",
+          featured: "⭐ Flagship project"
         },
         projectsList: [
           {
-            title: "Microservices Migration",
-            description: "Transformation of a solid monolithic structure into multiple interconnected microservices, enhancing scalability and deployment speed.",
-            tech: "AWS, Kubernetes, Terraform, Java Spring Boot",
-            status: "Scaled",
-            impact: "Faster deployment cycles",
-            improvements: ["Business-domain service boundaries", "Service-level CI/CD pipelines", "End-to-end observability"]
-          },
-          {
-            title: "Platformer Game Development in Unity 3D",
-            description: "Creation of a platformer game using Unity 3D and Blender, with gameplay mechanics implemented in C# to simulate real-world play.",
-            tech: "Unity 3D, Blender, C#",
-            status: "Live demo",
-            impact: "Playable prototype validated",
-            improvements: ["Physics and collision tuning", "Menu UX improvements", "Continuous level iteration"],
-            link: "singame/index.html"
-          },
-          {
-            title: "Stored Procedures Migration",
-            description: "Migration of database stored procedures to Spring Boot, achieving a more robust and decoupled architecture.",
-            tech: "Spring Boot, SQL",
-            status: "Evolving",
-            impact: "Lower system coupling",
-            improvements: ["Incremental module rollout", "Query regression testing", "Data contract versioning"]
-          }
-          , {
-            title: "Open Foundation",
-            description: "Creation of a foundation to develop community projects and ethical tools for the common good.",
-            tech: "Social organization",
-            status: "Active",
-            impact: "Higher community reach",
-            improvements: ["Social-impact based prioritization", "Transparent initiative tracking", "Volunteer enablement model"],
-            link: "openfoundation/index.html"
-          }, {
-            title: "Singame Consulting",
-            description: "Consulting firm focused on software development and AI solutions.",
-            tech: "AI, Custom Software",
+            title: "Singame — Software Studio & Consultancy",
+            description: "Software company: custom programs, video game creation (Binbunlock), applied AI and cloud modernization. Flagship, active project.",
+            tech: "Custom software · Video games (Unity) · AI · AWS",
             status: "Operating",
-            impact: "New commercial pipeline",
-            improvements: ["Value-package service framing", "Industry-specific use cases", "Responsible AI adoption path"],
-            link: "singame/consulting.html"
+            impact: "Clients and own product",
+            improvements: ["Value-package service framing", "Prototypes and POCs to validate before investing", "Own video game shipped as portfolio proof"],
+            link: "singame/index.html",
+            featured: true
+          },
+          {
+            title: "Binbunlock — Android Video Game",
+            description: "Guide the little train with bombs, fire and steam through 12 hand-made physics levels. Free, no in-app purchases; coming soon on Google Play.",
+            tech: "Unity, C#, Blender",
+            status: "In production",
+            impact: "Studio flagship game",
+            improvements: ["12 hand-made levels with screenshot gallery", "Combinable mechanics: bomb, fire and steam", "Privacy policy published"],
+            link: "singame/binbunlock/index.html"
           }
           , {
             title: "Timegrafia",
@@ -520,6 +486,16 @@
             improvements: ["Topic-based modular structure", "Visual performance tuning", "Mobile-first layout"],
             link: "infografias/index.html"
           }
+          // FUTURE (hidden until resumed): Open Foundation.
+          // To reactivate, uncomment the block and re-link openfoundation/index.html.
+          // {
+          //   title: "Open Foundation",
+          //   description: "Creation of a foundation to develop community projects and ethical tools for the common good.",
+          //   tech: "Social organization",
+          //   status: "Future idea",
+          //   impact: "Higher community reach",
+          //   improvements: ["Social-impact based prioritization", "Transparent initiative tracking", "Volunteer enablement model"]
+          // }
         ],
         contact: "📞 Contact",
         contactText: "Reach out any time—I'd love to hear about your next challenge.",
@@ -599,64 +575,47 @@
         projectsMetrics.appendChild(item);
       });
 
-      // Definir las animaciones SVG para cada proyecto
-      const animation1 = `
-        <svg viewBox="0 0 200 200" class="w-full h-full">
-          <rect id="monolith" x="50" y="50" width="100" height="100" fill="#4f46e5">
-            <animate attributeName="opacity" from="1" to="0" begin="1s" dur="0.5s" fill="freeze" />
-          </rect>
-          <rect id="part1" x="50" y="50" width="50" height="50" fill="#818cf8" opacity="0">
-            <animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
-            <animate attributeName="x" from="50" to="20" begin="1.5s" dur="0.5s" fill="freeze"/>
-            <animate attributeName="y" from="50" to="20" begin="1.5s" dur="0.5s" fill="freeze"/>
-          </rect>
-          <rect id="part2" x="100" y="50" width="50" height="50" fill="#818cf8" opacity="0">
-            <animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
-            <animate attributeName="x" from="100" to="130" begin="1.5s" dur="0.5s" fill="freeze"/>
-            <animate attributeName="y" from="50" to="20" begin="1.5s" dur="0.5s" fill="freeze"/>
-          </rect>
-          <rect id="part3" x="50" y="100" width="50" height="50" fill="#818cf8" opacity="0">
-            <animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
-            <animate attributeName="x" from="50" to="20" begin="1.5s" dur="0.5s" fill="freeze"/>
-            <animate attributeName="y" from="100" to="130" begin="1.5s" dur="0.5s" fill="freeze"/>
-          </rect>
-          <rect id="part4" x="100" y="100" width="50" height="50" fill="#818cf8" opacity="0">
-            <animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
-            <animate attributeName="x" from="100" to="130" begin="1.5s" dur="0.5s" fill="freeze"/>
-            <animate attributeName="y" from="100" to="130" begin="1.5s" dur="0.5s" fill="freeze"/>
-          </rect>
+      // Animaciones SVG por proyecto: Singame (red de servicios), Binbunlock (tren), Timegrafia (barras)
+      const animationSingame = `
+        <svg viewBox="0 0 200 120" class="w-full h-full">
+          <circle cx="100" cy="60" r="16" fill="#9f6aff" />
+          <circle cx="40" cy="30" r="10" fill="#818cf8">
+            <animate attributeName="r" values="10;13;10" dur="2s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="40" cy="90" r="10" fill="#818cf8">
+            <animate attributeName="r" values="10;13;10" dur="2s" begin="0.5s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="160" cy="30" r="10" fill="#818cf8">
+            <animate attributeName="r" values="10;13;10" dur="2s" begin="1s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="160" cy="90" r="10" fill="#818cf8">
+            <animate attributeName="r" values="10;13;10" dur="2s" begin="1.5s" repeatCount="indefinite" />
+          </circle>
+          <line x1="100" y1="60" x2="40" y2="30" stroke="rgba(165,180,252,0.6)" stroke-width="1.5" />
+          <line x1="100" y1="60" x2="40" y2="90" stroke="rgba(165,180,252,0.6)" stroke-width="1.5" />
+          <line x1="100" y1="60" x2="160" y2="30" stroke="rgba(165,180,252,0.6)" stroke-width="1.5" />
+          <line x1="100" y1="60" x2="160" y2="90" stroke="rgba(165,180,252,0.6)" stroke-width="1.5" />
         </svg>
       `;
 
-      const animation2 = `
+      const animationBinbunlock = `
         <svg viewBox="0 0 300 150" class="w-full h-full">
           <rect x="0" y="100" width="300" height="10" fill="#374151" />
           <rect x="200" y="70" width="60" height="10" fill="#4f46e5" />
-          <rect id="character" x="20" y="85" width="15" height="15" fill="#818cf8">
-            <animate attributeName="x" from="20" to="280" begin="0s" dur="3s" repeatCount="indefinite" />
-            <animate attributeName="y" values="85;70;85" keyTimes="0;0.5;1" begin="0s" dur="3s" repeatCount="indefinite" />
-          </rect>
+          <circle cx="60" cy="88" r="10" fill="#818cf8">
+            <animate attributeName="cx" from="20" to="280" begin="0s" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="cy" values="88;70;88" keyTimes="0;0.5;1" begin="0s" dur="3s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="45" cy="95" r="4" fill="#4f46e5">
+            <animate attributeName="cx" from="5" to="265" begin="0s" dur="3s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="75" cy="95" r="4" fill="#4f46e5">
+            <animate attributeName="cx" from="35" to="295" begin="0s" dur="3s" repeatCount="indefinite" />
+          </circle>
         </svg>
       `;
 
-      const animation3 = `
-        <svg viewBox="0 0 200 200" class="w-full h-full">
-          <rect x="40" y="40" width="50" height="50" fill="#4f46e5">
-            <animate attributeName="x" from="40" to="20" begin="1s" dur="0.5s" fill="freeze"/>
-          </rect>
-          <rect x="90" y="40" width="50" height="50" fill="#4f46e5">
-            <animate attributeName="x" from="90" to="110" begin="1s" dur="0.5s" fill="freeze"/>
-          </rect>
-          <rect x="40" y="90" width="50" height="50" fill="#4f46e5">
-            <animate attributeName="y" from="90" to="110" begin="1s" dur="0.5s" fill="freeze"/>
-          </rect>
-          <rect x="90" y="90" width="50" height="50" fill="#4f46e5">
-            <animate attributeName="y" from="90" to="70" begin="1s" dur="0.5s" fill="freeze"/>
-          </rect>
-        </svg>
-      `;
-
-      const animation4 = `
+      const animationTimegrafia = `
         <svg viewBox="0 0 120 100" class="w-full h-full">
           <rect x="15" y="60" width="15" height="40" fill="#4f46e5">
             <animate attributeName="height" from="0" to="40" begin="0s" dur="0.6s" fill="freeze" />
@@ -673,36 +632,33 @@
         </svg>
       `;
 
-      const animation5 = `
-        <svg viewBox="0 0 24 24" class="w-12 h-12">
-          <path fill="#e11d48" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-        </svg>
-      `;
-
       t.projectsList.forEach(project => {
         const div = document.createElement('div');
-        div.className = "p-6 rounded-lg bg-gradient-to-br from-indigo-800 to-purple-800 hover:from-indigo-700 hover:to-purple-700 transition-all border border-indigo-500/40";
+        const isFeatured = Boolean(project.featured);
+        div.className = "p-6 rounded-lg transition-all border " + (isFeatured
+          ? "md:col-span-3 bg-gradient-to-r from-purple-800 via-indigo-800 to-purple-800 hover:from-purple-700 hover:to-indigo-700 border-purple-400/60 shadow-xl"
+          : "bg-gradient-to-br from-indigo-800 to-purple-800 hover:from-indigo-700 hover:to-purple-700 border-indigo-500/40");
         const improvementsList = project.improvements.map(item => `<li>${item}</li>`).join("");
 
-        // Seleccionar la animación según el título (para es y en)
+        // Seleccionar la animación según el proyecto
         let animationHTML = '';
         const titleLower = project.title.toLowerCase();
-        if (titleLower.includes("migración a microservicios") || titleLower.includes("microservices migration")) {
-          animationHTML = animation1;
-        } else if (titleLower.includes("juego") || titleLower.includes("platformer")) {
-          animationHTML = animation2;
-        } else if (titleLower.includes("procedimientos") || titleLower.includes("stored procedures")) {
-          animationHTML = animation3;
-        } else if (titleLower.includes("infografías") || titleLower.includes("infographics") || titleLower.includes("timegrafia")) {
-          animationHTML = animation4;
-        } else if (titleLower.includes("fundación") || titleLower.includes("foundation")) {
-          animationHTML = animation5;
+        if (titleLower.includes("singame")) {
+          animationHTML = animationSingame;
+        } else if (titleLower.includes("binbunlock")) {
+          animationHTML = animationBinbunlock;
+        } else if (titleLower.includes("timegrafia") || titleLower.includes("infograf")) {
+          animationHTML = animationTimegrafia;
         }
 
+        const featuredBadge = isFeatured
+          ? `<div class="mb-3"><span class="px-3 py-1 rounded-full bg-purple-950 text-purple-100 text-xs font-bold">${t.projectLabels.featured}</span></div>`
+          : '';
         div.innerHTML = `
           <div class="flex justify-center mb-4 h-32">
             ${animationHTML}
           </div>
+          ${featuredBadge}
           <h3 class="text-xl font-bold mb-2">${project.title}</h3>
           <p class="mb-4 text-gray-200">${project.description}</p>
           <div class="flex flex-wrap gap-2 mb-3 text-xs">
