@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -426,13 +426,14 @@
       }
     };
 
-    let currentLanguage = "en";
+    let currentLanguage = "es";
     let activeSection = window.location.hash ? window.location.hash.substring(1) : "about";
     if (activeSection === "testimonials") { activeSection = "projects"; }
 
     function updateContent() {
       const t = data[currentLanguage];
       document.title = t.title;
+      document.documentElement.lang = currentLanguage;
       document.getElementById('intro-title').textContent = t.title;
       document.getElementById('about-title').textContent = t.about;
       document.getElementById('about-text1').textContent = t.aboutText1;

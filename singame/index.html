@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,7 +82,7 @@
       <div class="flex justify-between items-center py-4">
         <a href="../index.html" class="text-2xl font-bold tracking-tight">Singame</a>
         <div class="flex items-center">
-          <button id="lang-toggle" class="bg-slate-900 hover:bg-slate-700 text-white px-3 py-1 rounded text-sm" data-lang="en">ES</button>
+          <button id="lang-toggle" class="bg-slate-900 hover:bg-slate-700 text-white px-3 py-1 rounded text-sm" data-lang="es">EN</button>
         </div>
       </div>
     </div>
@@ -208,13 +208,16 @@
     document.addEventListener("DOMContentLoaded", () => {
       document.querySelectorAll("[data-es]").forEach(el => { el.dataset.en = el.innerHTML; });
       const toggle = document.getElementById("lang-toggle");
+      function applyLang(lang) {
+        toggle.dataset.lang = lang;
+        toggle.textContent = lang === "es" ? "EN" : "ES";
+        document.documentElement.lang = lang;
+        document.querySelectorAll("[data-es]").forEach(el => { el.innerHTML = el.dataset[lang]; });
+      }
       if (toggle) {
+        applyLang("es");
         toggle.addEventListener("click", () => {
-          const lang = toggle.dataset.lang === "es" ? "en" : "es";
-          toggle.dataset.lang = lang;
-          toggle.textContent = lang === "es" ? "EN" : "ES";
-          document.documentElement.lang = lang;
-          document.querySelectorAll("[data-es]").forEach(el => { el.innerHTML = el.dataset[lang]; });
+          applyLang(toggle.dataset.lang === "es" ? "en" : "es");
         });
       }
     });
