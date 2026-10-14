@@ -241,8 +241,6 @@
         <section id="projects" class="section mb-12 transition-opacity duration-500">
           <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg text-white border-none shadow-xl p-8">
             <h2 class="text-3xl font-bold mb-6 text-indigo-300" id="projects-title"></h2>
-            <p class="text-gray-200 mb-6" id="projects-summary"></p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6 text-sm" id="projects-metrics"></div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="projects-list">
               <!-- Los proyectos se insertan dinámicamente -->
             </div>
@@ -327,12 +325,6 @@
         ],
         tools: "🧰 Herramientas y Tecnologías",
         projects: "🚀 Proyectos",
-        projectsSummary: "Singame como proyecto principal: estudio y consultora de software, con Binbunlock como videojuego insignia.",
-        projectsMetrics: {
-          total: "Proyectos publicados",
-          live: "Con página disponible",
-          next: "Mejoras implementadas hoy"
-        },
         projectLabels: {
           status: "Estado",
           impact: "Impacto",
@@ -343,7 +335,7 @@
         },
         projectsList: [
           {
-            title: "Singame — Estudio & Consultora de Software",
+            title: "Singame",
             description: "Empresa de software: programas a medida, creación de videojuegos (Binbunlock), IA aplicada y modernización a la nube. Proyecto principal y activo.",
             tech: "Software a medida · Videojuegos (Unity) · IA · AWS",
             status: "Operativa",
@@ -392,12 +384,6 @@
         ],
         tools: "🧰 Tools & Technologies",
         projects: "🚀 Projects",
-        projectsSummary: "Singame as the flagship project: software studio & consultancy, with Binbunlock as its showcase video game.",
-        projectsMetrics: {
-          total: "Published projects",
-          live: "Live pages available",
-          next: "Improvements shipped today"
-        },
         projectLabels: {
           status: "Status",
           impact: "Impact",
@@ -408,7 +394,7 @@
         },
         projectsList: [
           {
-            title: "Singame — Software Studio & Consultancy",
+            title: "Singame",
             description: "Software company: custom programs, video game creation (Binbunlock), applied AI and cloud modernization. Flagship, active project.",
             tech: "Custom software · Video games (Unity) · AI · AWS",
             status: "Operating",
@@ -455,7 +441,6 @@
       document.getElementById('specialization-title').textContent = t.specialization;
       document.getElementById('tools-title').textContent = t.tools;
       document.getElementById('projects-title').textContent = t.projects;
-      document.getElementById('projects-summary').textContent = t.projectsSummary;
       document.getElementById('contact-title').textContent = t.contact;
       document.getElementById('contact-text').textContent = t.contactText;
       document.getElementById('footer-text').textContent = t.footer;
@@ -471,20 +456,6 @@
 
       const projectsContainer = document.getElementById('projects-list');
       projectsContainer.innerHTML = "";
-      const projectsMetrics = document.getElementById('projects-metrics');
-      const liveProjects = t.projectsList.filter(project => Boolean(project.link)).length;
-      const metricsData = [
-        { label: t.projectsMetrics.total, value: t.projectsList.length },
-        { label: t.projectsMetrics.live, value: liveProjects },
-        { label: t.projectsMetrics.next, value: t.projectsList.length * 3 }
-      ];
-      projectsMetrics.innerHTML = "";
-      metricsData.forEach(metric => {
-        const item = document.createElement('div');
-        item.className = "rounded-lg bg-indigo-900 bg-opacity-40 p-3 text-center";
-        item.innerHTML = `<div class="text-2xl font-bold text-white">${metric.value}</div><div class="text-indigo-200">${metric.label}</div>`;
-        projectsMetrics.appendChild(item);
-      });
 
       // Animación SVG: Singame (red de servicios)
       const animationSingame = `
