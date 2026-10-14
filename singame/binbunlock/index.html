@@ -11,9 +11,13 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom right, #0e112f, #1b1b3a);
+      background: #edf0f7;
       color: #cfd9ff;
       line-height: 1.6;
+    }
+    .ribbon {
+      background: linear-gradient(to bottom right, #0e112f, #1b1b3a);
+      clip-path: polygon(3% 0, 97% 0, 100% 100%, 0 100%);
     }
     .neon-text {
       text-shadow: 0 0 5px #fff, 0 0 10px #9f6aff, 0 0 20px #9f6aff;
@@ -62,6 +66,7 @@
     </div>
   </nav>
 
+  <div class="ribbon flex-grow flex flex-col">
   <!-- HERO -->
   <header class="max-w-6xl mx-auto px-6 pt-10 pb-6 w-full">
     <div class="grid grid-cols-1 md:grid-cols-10 gap-8 items-center">
@@ -72,9 +77,9 @@
         <p class="mt-2 italic text-indigo-200" data-es="▶️ Próximamente en Google Play · Gratis, sin compras dentro de la app">▶️ Coming soon on Google Play · Free, no in-app purchases</p>
       </div>
       <div class="md:col-span-3">
-        <div class="card">
-          <h2 class="text-lg font-bold mb-2" data-es="🚂 Sobre el juego">🚂 About the game</h2>
-          <p class="text-sm" data-es="¡Sube a bordo de Binbunlock, el trencito que lo puede con todo! Coloca bombas, dispara fuego y planea con el vapor para superar 12 niveles de física y precisión y alcanzar la llave de cada etapa. Cada bomba recogida es tu punto de control… y cada explosión, un impulso para volar más lejos.">All aboard Binbunlock, the little train that could! Place bombs, shoot fire and glide on steam to beat 12 hand-made physics levels and reach each stage key. Every bomb you pick up is your checkpoint… and every blast is a boost to fly further.</p>
+        <div class="card" style="background: rgba(8, 12, 38, 0.9); border-color: rgba(129, 140, 248, 0.45);">
+          <h2 class="text-2xl md:text-3xl font-bold mb-3" data-es="🚂 Sobre el juego">🚂 About the game</h2>
+          <p class="text-xl md:text-2xl leading-relaxed" data-es="¡Sube a bordo de Binbunlock, el trencito que lo puede con todo! Coloca bombas, dispara fuego y planea con el vapor para superar 12 niveles de física y precisión y alcanzar la llave de cada etapa. Cada bomba recogida es tu punto de control… y cada explosión, un impulso para volar más lejos.">All aboard Binbunlock, the little train that could! Place bombs, shoot fire and glide on steam to beat 12 hand-made physics levels and reach each stage key. Every bomb you pick up is your checkpoint… and every blast is a boost to fly further.</p>
         </div>
       </div>
     </div>
@@ -188,6 +193,7 @@
   <footer class="text-center py-4 bg-black bg-opacity-30 text-sm text-white mt-auto">
     © 2026 Singame · Binbunlock
   </footer>
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
