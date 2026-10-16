@@ -98,7 +98,7 @@
         <p class="mt-2 italic text-amber-300" data-es="▶️ Próximamente en Google Play · Gratis, sin compras dentro de la app">▶️ Coming soon on Google Play · Free, no in-app purchases</p>
       </div>
       <div class="md:col-span-5">
-        <div class="card panel-light">
+        <div class="card panel-light" id="tarjeta-silbato" style="cursor: pointer;" title="Toca para oír el silbato">
           <h2 class="text-2xl md:text-3xl font-bold mb-3" data-es="🚂 Sobre el juego">🚂 About the game</h2>
           <p class="text-xl md:text-2xl leading-relaxed" data-es="¡Sube a bordo de Binbunlock, el trencito que lo puede con todo! Coloca bombas, dispara fuego y planea con el vapor para superar 12 niveles de física y precisión y alcanzar la llave de cada etapa. Cada bomba recogida es tu punto de control… y cada explosión, un impulso para volar más lejos.">All aboard Binbunlock, the little train that could! Place bombs, shoot fire and glide on steam to beat 12 hand-made physics levels and reach each stage key. Every bomb you pick up is your checkpoint… and every blast is a boost to fly further.</p>
         </div>
@@ -225,6 +225,22 @@
   </footer>
   </div>
 
+  <audio id="audio-silbato" preload="none">
+    <source src="audio/silbato.mp3" type="audio/mpeg" />
+    <source src="audio/silbato.ogg" type="audio/ogg" />
+  </audio>
+  <script>
+    // Clic en la tarjeta "Sobre el juego": silbato real de 3 s.
+    document.addEventListener("DOMContentLoaded", () => {
+      const tarjeta = document.getElementById("tarjeta-silbato");
+      const audio = document.getElementById("audio-silbato");
+      if (tarjeta && audio) {
+        tarjeta.addEventListener("click", () => {
+          try { audio.currentTime = 0; audio.play(); } catch (e) { }
+        });
+      }
+    });
+  </script>
   <script>
     // Sin toggle: manda el idioma del navegador, como la app con el movil.
     document.addEventListener("DOMContentLoaded", () => {
