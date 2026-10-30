@@ -96,7 +96,145 @@
         background: rgba(255, 255, 255, .14);
         opacity: 1;
       }
+      #analytics-banner {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 20;
+        display: none;
+        gap: 14px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 12px 16px;
+        background: rgba(15, 16, 20, .96);
+        border-top: 1px solid #3b4049;
+        font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+        color: #d9dce2;
+      }
+      #analytics-banner button {
+        font: 700 14px system-ui, sans-serif;
+        border: 0;
+        border-radius: 8px;
+        padding: 8px 16px;
+        cursor: pointer;
+      }
+      #analytics-si {
+        background: #f5a623;
+        color: #16171b;
+      }
+      #analytics-no {
+        background: #2b2e34;
+        color: #d9dce2;
+        border: 1px solid #484e59;
+      }
+      #salida-aviso {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        padding: 24px;
+        text-align: center;
+        background: #0b0b10;
+        font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+        color: #d9dce2;
+      }
+      #salida-aviso h2 {
+        margin: 0;
+        font-size: 26px;
+        color: #f5a623;
+      }
+      #salida-aviso a {
+        display: inline-block;
+        padding: 10px 22px;
+        border-radius: 10px;
+        background: #f5a623;
+        color: #16171b;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      #salida-aviso small {
+        color: #8d929c;
+      }
     </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3EGMS4M3KZ"></script>
+    <script>
+      // GA4 (misma propiedad que Firebase: G-3EGMS4M3KZ) con consent mode:
+      // sin decision del usuario no se guardan cookies de analitica.
+      (function () {
+        var CLAVE = "BinbunlockAnalytics";
+        var eleccion = null;
+        try { eleccion = localStorage.getItem(CLAVE); } catch (e) { }
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag("consent", "default", {
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied",
+          analytics_storage: eleccion === "1" ? "granted" : "denied"
+        });
+        gtag("js", new Date());
+        gtag("config", "G-3EGMS4M3KZ", { anonymize_ip: true, page_title: "Binbunlock (web)" });
+
+        // Puente para el juego: Assets/Plugins/WebGL/BinbunlockAnalytics.jslib.
+        window.binbunlockTrack = function (nombre, valor) {
+          if (!nombre) return;
+          var params = { origen: "juego-web" };
+          if (valor) params.valor = valor;
+          gtag("event", nombre, params);
+        };
+
+        window.binbunlockConsentimiento = function (aceptado) {
+          try { localStorage.setItem(CLAVE, aceptado ? "1" : "0"); } catch (e) { }
+          gtag("consent", "update", {
+            analytics_storage: aceptado ? "granted" : "denied"
+          });
+          var banner = document.getElementById("analytics-banner");
+          if (banner) banner.style.display = "none";
+        };
+
+        // Salir del juego en el navegador: Application.Quit() no hace nada en
+        // WebGL, asi que se intenta cerrar la pestana y, si el navegador lo
+        // bloquea (solo deja cerrar pestanas abiertas por script), se muestra
+        // un aviso con enlace de vuelta a la web.
+        window.binbunlockSalir = function () {
+          try { gtag("event", "salir", { origen: "juego-web" }); } catch (e) { }
+          // Si el jugador esta en pantalla completa, primero se sale de ella:
+          // cerrar la pestana o cambiar de pagina en fullscreen deja el
+          // navegador en un estado raro y window.close() puede fallar.
+          try {
+            if (document.fullscreenElement || document.webkitFullscreenElement) {
+              var salirFull = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+              if (salirFull) salirFull.call(document);
+            }
+          } catch (e) { }
+          setTimeout(function () {
+            try { window.close(); } catch (e) { }
+            setTimeout(function () {
+              if (document.hidden) return;
+              var aviso = document.getElementById("salida-aviso");
+              if (aviso) aviso.style.display = "flex";
+            }, 250);
+          }, 120);
+        };
+
+        document.addEventListener("DOMContentLoaded", function () {
+          var banner = document.getElementById("analytics-banner");
+          if (!banner || eleccion !== null) return;
+          banner.style.display = "flex";
+          var si = document.getElementById("analytics-si");
+          var no = document.getElementById("analytics-no");
+          if (si) si.onclick = function () { window.binbunlockConsentimiento(true); };
+          if (no) no.onclick = function () { window.binbunlockConsentimiento(false); };
+        });
+      })();
+    </script>
   </head>
   <body>
     <div id="unity-container">
@@ -110,6 +248,16 @@
       <div id="unity-warning"></div>
       <div id="unity-footer">
         <div id="unity-fullscreen-button" title="Fullscreen">&#9974;</div>
+      </div>
+      <div id="analytics-banner">
+        <span>Usamos cookies de analítica para saber cuánta gente juega. ¿Nos ayudas?</span>
+        <button id="analytics-si" type="button">Aceptar</button>
+        <button id="analytics-no" type="button">Rechazar</button>
+      </div>
+      <div id="salida-aviso">
+        <h2>Gracias por jugar · Thanks for playing</h2>
+        <p>Ya puedes cerrar esta pestaña.<br><small>You can close this tab now.</small></p>
+        <a href="https://stojangb.github.io/singame/binbunlock/">Volver a la web · Back to the site</a>
       </div>
     </div>
     <script>
@@ -140,15 +288,15 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/game-webgl.loader.js";
+      var loaderUrl = buildUrl + "/webgl.loader.js";
       var config = {
-        dataUrl: buildUrl + "/game-webgl.data.unityweb",
-        frameworkUrl: buildUrl + "/game-webgl.framework.js.unityweb",
-        codeUrl: buildUrl + "/game-webgl.wasm.unityweb",
+        dataUrl: buildUrl + "/webgl.data.unityweb",
+        frameworkUrl: buildUrl + "/webgl.framework.js.unityweb",
+        codeUrl: buildUrl + "/webgl.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Singame",
         productName: "Binbunlock",
-        productVersion: "0.0.37",
+        productVersion: "0.0.38",
         // El guardado en IndexedDB se sincroniza solo al escribir (sin el
         // aviso de deprecacion de JS_FileSystem_Sync).
         autoSyncPersistentDataPath: true,
